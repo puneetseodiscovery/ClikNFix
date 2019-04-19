@@ -310,6 +310,22 @@
                 android:layout_marginEnd="@dimen/threetwo_dp"
                 android:background="@drawable/background_bordered_white" />
 
+            <Button
+                android:layout_width="match_parent"
+                android:text="@string/signin"
+                android:id="@+id/btn_login1"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteColor"
+                android:textSize="20sp"
+                android:onClick="onLoginButtonClicked"
+                android:layout_height="@dimen/fivezero_dp"
+                android:layout_below="@+id/ll_social_ntw"
+                android:layout_marginLeft="@dimen/threetwo_dp"
+                android:layout_marginStart="@dimen/threetwo_dp"
+                android:layout_marginRight="@dimen/threetwo_dp"
+                android:layout_marginEnd="@dimen/threetwo_dp"
+                android:background="@drawable/background_bordered_white" />
+
         </RelativeLayout>
 
     </ScrollView>
