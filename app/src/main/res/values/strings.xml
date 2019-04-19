@@ -1,0 +1,153 @@
+<resources>
+    <string name="app_name">ClikNFix</string>
+
+    <!-- LOGIN SCREEN STRINGS -->
+    <string name="signin">LOGIN</string>
+    <string name="email_phone_hint">Email/Phone</string>
+    <string name="password_hint">Password</string>
+    <string name="rem_pass">Remember Password</string>
+    <string name="forgot_pass"><u>Forgot Password?</u></string>
+    <string name="signupstartingtext">Don\'t have an account?  </string>
+    <string name="signupendingtext"><u>Sign up</u></string>
+
+    <!-- SINUP SCREEN STRINGS -->
+    <string name="username_hint">Username</string>
+    <string name="email_hint">Email</string>
+    <string name="age_hint">Age</string>
+    <string name="bld_grp_hint">Blood Group</string>
+    <string name="address_hint">Address</string>
+    <string name="confrm_password_hint">Confirm Password</string>
+    <string name="orText">-----------------OR----------------</string>
+    <string name="signUpFormTitle">SIGN-UP</string>
+    <string name="signUpButtonText">SIGN UP</string>
+    <string name="signupTermsCond">I agree all the terms of service</string>
+    <string name="facebook_app_id">575372722948926</string>
+    <string name="fb_login_protocol_scheme">fb575372722948926</string>
+
+
+    <!-- FORGOT PASSWORD SCREEN STRINGS -->
+    <string name="forgot_pass_text">Forgot Password</string>
+    <string name="forgot_pass_pText">Enter your email address and we\'ll send you a link to reset your password</string>
+    <string name="reset_password">RESET PASSWORD</string>
+
+    <!-- CHANGE PASSWORD SCREEN STRINGS -->
+    <string name="change_pass_text">Change Password</string>
+    <string name="old_pass_text">Old Password</string>
+    <string name="new_pass_text">New Password</string>
+    <string name="confirm_pass_text">Confirm Password</string>
+    <string name="change_pass_pText">Enter your old and new Credentials</string>
+    <string name="update_pass_pText">Update Password</string>
+
+    <!-- WELCOME SCREEN STRINGS -->
+    <string name="welcome">WELCOME TO CLIKNFIX</string>
+    <string name="welcome_p1">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s.</string>
+
+    <!-- MOBILE SCREEN STRINGS -->
+    <string name="mobile_p1">We need to text you the otp to authenticate your account</string>
+    <string name="country_code">Country Code</string>
+    <string name="mobile_no">Enter Mobile No</string>
+
+    <!-- OTP SCREEN STRINGS -->
+    <string name="verify_no">Verify Your Number</string>
+    <string name="otp_p1">We have sent an OTP on your number</string>
+    <string name="submit">SUBMIT</string>
+    <string name="resend_otp">Resend OTP?</string>
+    <string name="title_activity_bottom_nav">BottomNavActivity</string>
+    <string name="title_tech_profile">Technician Profile</string>
+    <string name="title_activity_home_screen">HomeScreenActivity</string>
+
+    <!-- HOME SCREEN STRINGS -->
+    <string name="categories">Categories</string>
+    <string name="title_home">Home</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_past_jobs">Past Jobs</string>
+
+    <!-- SEARCH TECHNICIAN SCREEN STRINGS -->
+    <string name="sent_msg_text">Sending message to provider</string>
+
+    <!-- MENTION PROBLEM SCREEN STRINGS -->
+    <string name="write_problem">Please write down your problem</string>
+
+    <!-- PAST JOBS SCREEN STRINGS -->
+    <string name="past_jobs">Past Jobs</string>
+    <string name="status">Status:- </string>
+    <string name="tech_name_text">Technician Name</string>
+    <string name="more_details_text">More Details</string>
+
+    <!-- SETTINGS SCREEN STRINGS -->
+    <string name="settings">Settings</string>
+    <string name="about_us">About Us</string>
+    <string name="profile_settings">Profile Settings</string>
+    <string name="payments">Payments</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="change_password">Change Password</string>
+    <string name="logout">Logout</string>
+
+    <!-- USER PROFILE SCREEN STRINGS -->
+    <string name="user_profile">User Profile</string>
+    <string name="user_name">User name:-</string>
+    <string name="email">Email:-</string>
+    <string name="phone">Phone:-</string>
+    <string name="age">Age:-</string>
+    <string name="bld_grp">Blood Group:-</string>
+    <string name="address">Address:-</string>
+
+    <!-- TECHNICIAN PROFILE SCREEN STRINGS -->
+    <string name="tech_profile">Technician Profile</string>
+    <string name="job_type">Job Type:-</string>
+    <string name="job_date">Job Date:-</string>
+    <string name="payable_amount">Payable Amount:-</string>
+
+    <!-- PAYMENT METHODS SCREEN STRINGS -->
+    <string name="payment">Payment</string>
+
+    <!-- TECHNICIAN TRACKING METHODS SCREEN STRINGS -->
+    <string name="provider">Provider</string>
+
+    <!-- TECHNICIAN LABOUR DETAILS SCREEN STRINGS -->
+    <string name="technician">Technician</string>
+    <string name="rate">Rate:- </string>
+    <string name="min_duration">Minimum Duration:- </string>
+    <string name="otp">OTP:- </string>
+    <string name="track">TRACK</string>
+    <string name="payment_button">PAYMENT</string>
+
+    <!-- CARD DETAILS SCREEN STRINGS -->
+    <string name="visa_card">Visa Card</string>
+    <string name="master_card">Master Card</string>
+    <string name="card_number">Card Number</string>
+    <string name="expiry_date">Expiry Date</string>
+    <string name="cvv">CVV</string>
+    <string name="card_holder_name">Card Holder Name</string>
+    <string name="verify_payment">VERIFY PAYMENT</string>
+
+    <!-- PAYMENT SUCCESS SCREEN STRINGS -->
+    <string name="payment_success">Payment Successful</string>
+    <string name="successful">Successful</string>
+    <string name="payment_approved">Your Payment is Approved</string>
+    <string name="transaction_details_text">Please Check Your Email for Transaction Details</string>
+    <string name="continue_text">CONTINUE</string>
+
+    <!-- TECHNICIAN REVIEW SCREEN STRINGS -->
+    <string name="reviews">Reviews</string>
+    <string name="write_review">Write Review</string>
+
+    <!-- CONGRATULATIONS REVIEW SCREEN STRINGS -->
+    <string name="congrats">Congratulations</string>
+    <string name="job_done">Your job is Successfully Done</string>
+    <string name="btn_done">Done</string>
+
+    <!-- CHAT SCREEN STRINGS -->
+    <string name="chat_title">User/Technician Chat</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_tech_tracking">Map</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_technician_location">Map</string>
+
+    <string name="no_network_connection">Check your internet connection!!!</string>
+
+</resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".homeScreen.HomeScreenActivity"
+    android:id="@+id/ll_ac"
+    android:background="@drawable/login_background"
+    android:orientation="vertical">
+
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:id="@+id/ll_top_title_bar"
+        android:background="@color/edittextHintColor">
+
+        <RelativeLayout
+            android:id="@+id/iv_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/onefive_dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:onClick="onBackClicked">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/back_icon_header" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/payment"
+            android:textColor="@color/whiteColor"
+            android:textSize="19sp"
+            android:paddingTop="@dimen/ten_dp"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

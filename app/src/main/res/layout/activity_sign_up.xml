@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".signUp.SignUpActivity"
+    android:background="@drawable/login_background">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:paddingBottom="@dimen/threetwo_dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_form_fields">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:id="@+id/sign_up_title"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/twozero_dp">
+                <TextView
+                    android:id="@+id/tv_signup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:textColor="@color/whiteColor"
+                    android:text="@string/signUpFormTitle"
+                    android:padding="@dimen/ten_dp"
+                    android:gravity="center"
+                    android:layout_marginRight="@dimen/activity_vertical_margin"/>
+            </RelativeLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_signup_username"
+                android:hint="@string/username_hint"
+                android:textSize="17sp"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                android:layout_below="@+id/sign_up_title"
+                android:layout_marginStart="@dimen/threetwo_dp"
+                android:layout_marginLeft="@dimen/threetwo_dp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginEnd="@dimen/threetwo_dp"
+                android:backgroundTint="@color/editTextBackColor"
+                android:background="@drawable/background_white"
+                android:drawableLeft="@mipmap/login_icon_user"
+                android:drawablePadding="@dimen/ten_dp"
+                android:paddingLeft="@dimen/twofive_dp"
+                android:paddingBottom="@dimen/ten_dp"
+                android:paddingTop="@dimen/ten_dp"
+                android:paddingRight="@dimen/ten_dp"
+                android:textColor="@color/edittextHintColor"
+                android:textCursorDrawable="@null" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_signup_email"
+                android:hint="@string/email_hint"
+                android:textSize="17sp"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                android:layout_below="@+id/et_signup_username"
+                android:layout_marginStart="@dimen/threetwo_dp"
+                android:layout_marginLeft="@dimen/threetwo_dp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginEnd="@dimen/threetwo_dp"
+                android:backgroundTint="@color/editTextBackColor"
+                android:background="@drawable/background_white"
+                android:drawableLeft="@mipmap/email_icon"
+                android:drawablePadding="@dimen/ten_dp"
+                android:paddingLeft="@dimen/twofive_dp"
+                android:paddingBottom="@dimen/ten_dp"
+                android:paddingTop="@dimen/ten_dp"
+                android:paddingRight="@dimen/ten_dp"
+                android:textColor="@color/edittextHintColor"
+                android:textCursorDrawable="@null" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_age_signup"
+                android:hint="@string/age_hint"
+                android:textSize="17sp"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                android:layout_below="@+id/et_signup_email"
+                android:layout_marginStart="@dimen/threetwo_dp"
+                android:layout_marginLeft="@dimen/threetwo_dp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginEnd="@dimen/threetwo_dp"
+                android:backgroundTint="@color/editTextBackColor"
+                android:background="@drawable/background_white"
+                android:drawableLeft="@mipmap/age_icon"
+                android:drawablePadding="@dimen/ten_dp"
+                android:paddingLeft="@dimen/twofive_dp"
+                android:paddingBottom="@dimen/ten_dp"
+                android:paddingTop="@dimen/ten_dp"
+                android:paddingRight="@dimen/ten_dp"
+                android:textColor="@color/edittextHintColor"
+                android:textCursorDrawable="@null" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_bld_grp_signup"
+                android:hint="@string/bld_grp_hint"
+                android:textSize="17sp"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                android:layout_below="@+id/et_age_signup"
+                android:layout_marginStart="@dimen/threetwo_dp"
+                android:layout_marginLeft="@dimen/threetwo_dp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginEnd="@dimen/threetwo_dp"
+                android:backgroundTint="@color/editTextBackColor"
+                android:background="@drawable/background_white"
+                android:drawableLeft="@mipmap/blood_grp_icon"
+                android:drawablePadding="@dimen/ten_dp"
+                android:paddingLeft="@dimen/twofive_dp"
+                android:paddingBottom="@dimen/ten_dp"
+                android:paddingTop="@dimen/ten_dp"
+                android:paddingRight="@dimen/ten_dp"
+                android:textColor="@color/edittextHintColor"
+                android:textCursorDrawable="@null" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_address_signup"
+                android:hint="@string/address_hint"
+                android:textSize="17sp"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                android:layout_below="@+id/et_bld_grp_signup"
+                android:layout_marginStart="@dimen/threetwo_dp"
+                android:layout_marginLeft="@dimen/threetwo_dp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginEnd="@dimen/threetwo_dp"
+                android:backgroundTint="@color/editTextBackColor"
+                android:background="@drawable/background_white"
+                android:drawableLeft="@mipmap/address_icon"
+                android:drawablePadding="@dimen/ten_dp"
+                android:paddingLeft="@dimen/twofive_dp"
+                android:paddingBottom="@dimen/ten_dp"
+                android:paddingTop="@dimen/ten_dp"
+                android:paddingRight="@dimen/ten_dp"
+                android:textColor="@color/edittextHintColor"
+                android:textCursorDrawable="@null" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_password_signup"
+                android:hint="@string/password_hint"
+                android:textSize="17sp"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                android:layout_below="@+id/et_address_signup"
+                android:layout_marginStart="@dimen/threetwo_dp"
+                android:layout_marginLeft="@dimen/threetwo_dp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginEnd="@dimen/threetwo_dp"
+                android:backgroundTint="@color/editTextBackColor"
+                android:background="@drawable/background_white"
+                android:drawableLeft="@mipmap/login_password_icon"
+                android:drawablePadding="@dimen/ten_dp"
+                android:paddingLeft="@dimen/twofive_dp"
+                android:paddingBottom="@dimen/ten_dp"
+                android:paddingTop="@dimen/ten_dp"
+                android:paddingRight="@dimen/ten_dp"
+                android:textColor="@color/edittextHintColor"
+                android:textCursorDrawable="@null" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_cnfrm_password_signup"
+                android:hint="@string/confrm_password_hint"
+                android:textSize="17sp"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                android:layout_below="@+id/et_password_signup"
+                android:layout_marginStart="@dimen/threetwo_dp"
+                android:layout_marginLeft="@dimen/threetwo_dp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginEnd="@dimen/threetwo_dp"
+                android:backgroundTint="@color/editTextBackColor"
+                android:background="@drawable/background_white"
+                android:drawableLeft="@mipmap/login_password_icon"
+                android:drawablePadding="@dimen/ten_dp"
+                android:paddingLeft="@dimen/twofive_dp"
+                android:paddingBottom="@dimen/ten_dp"
+                android:paddingTop="@dimen/ten_dp"
+                android:paddingRight="@dimen/ten_dp"
+                android:textColor="@color/edittextHintColor"
+                android:textCursorDrawable="@null" />
+
+            <CheckBox
+                android:id="@+id/cb_terms_signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="#FFFFFF"
+                android:layout_marginTop="@dimen/ten_dp"
+                android:layout_marginLeft="@dimen/fivezero_dp"
+                android:layout_centerInParent="true"
+                android:maxLines="1"
+                android:text="@string/signupTermsCond"
+                android:textColor="@color/editTextBackColor"
+                android:textSize="13sp"
+                android:layout_below="@+id/et_cnfrm_password_signup"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:text="@string/signUpFormTitle"
+                android:id="@+id/btn_signup"
+                android:textAllCaps="false"
+                android:textColor="@color/blackColor"
+                android:textSize="20sp"
+                android:onClick="onSignUpButtonClicked"
+                android:layout_height="@dimen/fivezero_dp"
+                android:layout_below="@+id/cb_terms_signup"
+                android:layout_marginTop="@dimen/ten_dp"
+                android:layout_marginLeft="@dimen/threetwo_dp"
+                android:layout_marginStart="@dimen/threetwo_dp"
+                android:layout_marginRight="@dimen/threetwo_dp"
+                android:layout_marginEnd="@dimen/threetwo_dp"
+                android:background="@drawable/background_white"
+                android:backgroundTint="@color/logoColor"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/orText"
+                android:id="@+id/tv_or"
+                android:textAllCaps="false"
+                android:textColor="@color/editTextBackColor"
+                android:textSize="15sp"
+                android:maxLines="1"
+                android:layout_centerInParent="true"
+                android:onClick="onSignUpButtonClicked"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_signup"
+                android:layout_marginTop="@dimen/twozero_dp"
+                android:layout_marginLeft="@dimen/threetwo_dp"
+                android:layout_marginStart="@dimen/threetwo_dp"
+                android:layout_marginRight="@dimen/threetwo_dp"
+                android:layout_marginEnd="@dimen/threetwo_dp" />
+
+
+            <LinearLayout android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_or"
+                android:id="@+id/ll_social_ntw"
+                android:layout_marginTop="@dimen/twozero_dp"
+                android:layout_marginBottom="@dimen/twozero_dp"
+                android:weightSum="6"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:id="@+id/iv_fb"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/ten_dp"
+                    android:src="@mipmap/fb_icon"
+                    android:layout_weight="2"
+                    android:visibility="visible"
+                    android:onClick="onFacebookClicked"/>
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:id="@+id/iv_gplus"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/gplus_icon"
+                    android:layout_marginLeft="@dimen/ten_dp"
+                    android:layout_weight="2"
+                    android:visibility="visible"
+                    android:onClick="onGooglePlusClicked"/>
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:id="@+id/iv_linked"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/linked_icon"
+                    android:layout_marginLeft="@dimen/ten_dp"
+                    android:layout_weight="2"
+                    android:visibility="visible"
+                    android:onClick="onLinkedInClicked"/>
+
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:text="@string/signin"
+                android:id="@+id/btn_login"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteColor"
+                android:textSize="20sp"
+                android:onClick="onLoginButtonClicked"
+                android:layout_height="@dimen/fivezero_dp"
+                android:layout_below="@+id/ll_social_ntw"
+                android:layout_marginLeft="@dimen/threetwo_dp"
+                android:layout_marginStart="@dimen/threetwo_dp"
+                android:layout_marginRight="@dimen/threetwo_dp"
+                android:layout_marginEnd="@dimen/threetwo_dp"
+                android:background="@drawable/background_bordered_white" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

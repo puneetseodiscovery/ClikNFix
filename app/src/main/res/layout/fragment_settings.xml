@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:text="@string/settings"
+        android:textColor="@color/whiteColor"
+        android:textSize="19sp"
+        android:background="@color/edittextHintColor"
+        android:gravity="center" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".homeScreen.bottomFragments.SettingsFragment"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/onefive_dp"
+            android:layout_marginLeft="@dimen/onefive_dp"
+            android:layout_marginTop="@dimen/onefive_dp"
+            android:layout_marginEnd="@dimen/onefive_dp">
+
+            <TextView
+                android:id="@+id/tv_about_us"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/about_us_icon"
+                android:drawablePadding="@dimen/onefive_dp"
+                android:text="@string/about_us"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/blackColor"
+                android:textSize="15sp" />
+
+            <View android:layout_height="2dp"
+                android:layout_width="wrap_content"
+                android:background="@color/edittextHintColor"/>
+
+            <TextView
+                android:id="@+id/tv_profile_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/profile_settings_icon"
+                android:drawablePadding="@dimen/onefive_dp"
+                android:text="@string/profile_settings"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/blackColor"
+                android:textSize="15sp" />
+
+            <View android:layout_height="2dp"
+                android:layout_width="wrap_content"
+                android:background="@color/edittextHintColor"/>
+
+            <TextView
+                android:id="@+id/tv_payments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/payments_icon"
+                android:drawablePadding="@dimen/onefive_dp"
+                android:text="@string/payments"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/blackColor"
+                android:textSize="15sp" />
+
+            <View android:layout_height="2dp"
+                android:layout_width="wrap_content"
+                android:background="@color/edittextHintColor"/>
+
+            <TextView
+                android:id="@+id/tv_contact_us"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/contact_us_icon"
+                android:drawablePadding="@dimen/onefive_dp"
+                android:text="@string/contact_us"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/blackColor"
+                android:textSize="15sp" />
+
+            <View android:layout_height="2dp"
+                android:layout_width="wrap_content"
+                android:background="@color/edittextHintColor"/>
+
+            <TextView
+                android:id="@+id/tv_privacy_policy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/privacy_policy_icon"
+                android:drawablePadding="@dimen/onefive_dp"
+                android:text="@string/privacy_policy"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/blackColor"
+                android:textSize="15sp" />
+
+            <View android:layout_height="2dp"
+                android:layout_width="wrap_content"
+                android:background="@color/edittextHintColor"/>
+
+            <TextView
+                android:id="@+id/tv_change_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/privacy_policy_icon"
+                android:drawablePadding="@dimen/onefive_dp"
+                android:text="@string/change_password"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/blackColor"
+                android:textSize="15sp" />
+
+            <View android:layout_height="2dp"
+                android:layout_width="wrap_content"
+                android:background="@color/edittextHintColor"/>
+
+            <TextView
+                android:id="@+id/tv_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/logout_icon"
+                android:drawablePadding="@dimen/onefive_dp"
+                android:text="@string/logout"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/blackColor"
+                android:textSize="15sp" />
+
+            <View android:layout_height="2dp"
+                android:layout_width="wrap_content"
+                android:background="@color/edittextHintColor"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,270 @@
+<!-- TODO: Update blank fragment layout -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteColor"
+    android:orientation="vertical">
+
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/edittextHintColor"
+            android:inputType="textMultiLine"
+            android:text="@string/tech_profile"
+            android:textSize="19sp"
+            android:gravity="center"
+            android:textColor="@color/whiteColor"
+            android:layout_centerInParent="true"/>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.cliknfix.homeScreen.bottomFragments.UserProfileFragment"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/first"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/onefivezero_dp"
+                android:background="@drawable/banner">
+                <FrameLayout
+                    android:layout_width="@dimen/onefivezero_dp"
+                    android:layout_height="@dimen/onefivezero_dp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profilePic"
+                        android:layout_width="@dimen/onetwozero_dp"
+                        android:onClick="onProfileImageClicked"
+                        android:layout_height="@dimen/onetwozero_dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/user_img"
+                        app:civ_border_width="2dp"
+                        app:civ_border_color="#FFFFFF"/>
+                </FrameLayout>
+            </RelativeLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginLeft="@dimen/onefive_dp"
+                android:layout_marginRight="@dimen/onefive_dp"
+                android:weightSum="2">
+
+                <TextView android:layout_height="wrap_content"
+                    android:id="@+id/tv_username_text"
+                    android:layout_width="0dp"
+                    android:text="@string/user_name"
+                    android:textSize="15sp"
+                    android:layout_weight="1"/>
+
+                <TextView android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:text="User name"
+                    android:id="@+id/tv_username"
+                    android:textSize="15sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/blackColor"/>
+
+            </LinearLayout>
+
+            <View android:layout_height="2dp"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/onefive_dp"
+                android:layout_marginRight="@dimen/onefive_dp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:background="@color/edittextHintColor"/>
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginLeft="@dimen/onefive_dp"
+                android:layout_marginRight="@dimen/onefive_dp"
+                android:weightSum="2">
+
+                <TextView android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:id="@+id/tv_email_text"
+                    android:text="@string/email"
+                    android:textSize="15sp"
+                    android:layout_weight="1"/>
+
+                <TextView android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:text="test123@test.com"
+                    android:id="@+id/tv_email"
+                    android:textSize="15sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/blackColor"/>
+
+            </LinearLayout>
+
+            <View android:layout_height="2dp"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/onefive_dp"
+                android:layout_marginRight="@dimen/onefive_dp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:background="@color/edittextHintColor"/>
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginLeft="@dimen/onefive_dp"
+                android:layout_marginRight="@dimen/onefive_dp"
+                android:weightSum="2">
+
+                <TextView android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:id="@+id/tv_phone_text"
+                    android:text="@string/phone"
+                    android:textSize="15sp"
+                    android:layout_weight="1"/>
+
+                <TextView android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:text="123456789"
+                    android:id="@+id/tv_phone"
+                    android:textSize="15sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/blackColor"/>
+
+            </LinearLayout>
+
+            <View android:layout_height="2dp"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/onefive_dp"
+                android:layout_marginRight="@dimen/onefive_dp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:background="@color/edittextHintColor"/>
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginLeft="@dimen/onefive_dp"
+                android:layout_marginRight="@dimen/onefive_dp"
+                android:weightSum="2">
+
+                <TextView android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:id="@+id/tv_job_type_text"
+                    android:text="@string/job_type"
+                    android:textSize="15sp"
+                    android:layout_weight="1"/>
+
+                <TextView android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:text="Carpentry"
+                    android:id="@+id/tv_job_type"
+                    android:textSize="15sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/blackColor"/>
+
+            </LinearLayout>
+
+            <View android:layout_height="2dp"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/onefive_dp"
+                android:layout_marginRight="@dimen/onefive_dp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:background="@color/edittextHintColor"/>
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginLeft="@dimen/onefive_dp"
+                android:layout_marginRight="@dimen/onefive_dp"
+                android:weightSum="2">
+
+                <TextView android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:id="@+id/tv_job_date_text"
+                    android:text="@string/job_date"
+                    android:textSize="15sp"
+                    android:layout_weight="1"/>
+
+                <TextView android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:text="20-March-2019"
+                    android:id="@+id/tv_job_date"
+                    android:textSize="15sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/blackColor"/>
+
+            </LinearLayout>
+
+            <View android:layout_height="2dp"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/onefive_dp"
+                android:layout_marginRight="@dimen/onefive_dp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:background="@color/edittextHintColor"/>
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginLeft="@dimen/onefive_dp"
+                android:layout_marginRight="@dimen/onefive_dp"
+                android:weightSum="2">
+
+                <TextView android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:id="@+id/tv_payable_amt_text"
+                    android:text="@string/payable_amount"
+                    android:textSize="15sp"
+                    android:layout_weight="1"/>
+
+                <TextView android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:text="20"
+                    android:id="@+id/tv_payable_amt"
+                    android:textSize="15sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/blackColor"/>
+
+            </LinearLayout>
+
+            <View android:layout_height="2dp"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="@dimen/onefive_dp"
+                android:layout_marginRight="@dimen/onefive_dp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:background="@color/edittextHintColor"/>
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginLeft="@dimen/onefive_dp"
+                android:layout_marginRight="@dimen/onefive_dp"
+                android:layout_marginBottom="@dimen/threetwo_dp"
+                android:weightSum="2">
+
+                <TextView android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:id="@+id/tv_address_text"
+                    android:text="@string/address"
+                    android:textSize="15sp"
+                    android:layout_weight="1"/>
+
+                <TextView android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:text="#123 Main Stanytown, USA"
+                    android:id="@+id/tv_address"
+                    android:textSize="15sp"
+                    android:layout_weight="1"
+                    android:textColor="@color/blackColor"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

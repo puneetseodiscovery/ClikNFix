@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login.LoginActivity"
+    android:background="@drawable/login_background">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="@dimen/onetwozero_dp"
+                android:layout_height="@dimen/onetwozero_dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/threetwo_dp"
+                android:src="@drawable/login_logo" />
+
+            <TextView
+                android:id="@+id/login_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/logo"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/threetwo_dp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginEnd="@dimen/threetwo_dp"
+                android:drawablePadding="@dimen/ten_dp"
+                android:padding="@dimen/ten_dp"
+                android:text="@string/signin"
+                android:textColor="@color/whiteColor"
+                android:textSize="20sp" />
+
+
+            <EditText
+                android:id="@+id/et_email_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login_text"
+                android:layout_marginStart="@dimen/threetwo_dp"
+                android:layout_marginLeft="@dimen/threetwo_dp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginEnd="@dimen/threetwo_dp"
+                android:backgroundTint="@color/editTextBackColor"
+                android:background="@drawable/background_white"
+                android:drawableLeft="@mipmap/login_icon_user"
+                android:drawablePadding="@dimen/ten_dp"
+                android:hint="@string/email_phone_hint"
+                android:paddingLeft="@dimen/twofive_dp"
+                android:paddingBottom="@dimen/ten_dp"
+                android:paddingTop="@dimen/ten_dp"
+                android:paddingRight="@dimen/ten_dp"
+                android:textColor="@color/edittextHintColor"
+                android:textCursorDrawable="@null"
+                android:textSize="17sp" />
+
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/et_email_login"
+                android:id="@+id/fl_et_password"
+                android:padding="2dp">
+
+                <EditText
+                    android:id="@+id/et_password_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/editTextBackColor"
+                    android:layout_marginStart="@dimen/threetwo_dp"
+                    android:layout_marginLeft="@dimen/threetwo_dp"
+                    android:layout_marginTop="@dimen/onefive_dp"
+                    android:layout_marginEnd="@dimen/threetwo_dp"
+                    android:background="@drawable/background_white"
+                    android:drawableLeft="@mipmap/login_password_icon"
+                    android:drawablePadding="@dimen/ten_dp"
+                    android:hint="@string/password_hint"
+                    android:inputType="textPassword"
+                    android:maxLength="20"
+                    android:paddingLeft="@dimen/twofive_dp"
+                    android:paddingBottom="@dimen/ten_dp"
+                    android:paddingTop="@dimen/ten_dp"
+                    android:paddingRight="@dimen/ten_dp"
+                    android:textColor="@color/edittextHintColor"
+                    android:textCursorDrawable="@null"
+                    android:textSize="17sp" />
+
+                <ImageView
+                    android:layout_gravity="end"
+                    android:id="@+id/iv_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_view"
+                    android:layout_marginTop="@dimen/threezero_dp"
+                    android:layout_marginRight="@dimen/fivezero_dp"
+                    android:tint="@color/blackColor"
+                    android:layout_centerInParent="true"
+                    android:visibility="visible" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_forgotPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fl_et_password"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/threezero_dp"
+                android:layout_marginTop="@dimen/ten_dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <CheckBox
+                    android:id="@+id/cb_remember"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:buttonTint="@color/whiteColor"
+                    android:text="@string/rem_pass"
+                    android:maxLines="1"
+                    android:textSize="9sp"
+                    android:textColor="@color/editTextBackColor" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/tv_forgot_pass"
+                    android:gravity="center"
+                    android:textSize="9sp"
+                    android:maxLines="1"
+                    android:onClick="onForgotPasswordClicked"
+                    android:text="@string/forgot_pass"
+                    android:textColor="@color/forgotPassColor" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_signin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fivezero_dp"
+                android:layout_below="@+id/ll_forgotPass"
+                android:layout_marginStart="@dimen/threetwo_dp"
+                android:layout_marginLeft="@dimen/threetwo_dp"
+                android:layout_marginTop="@dimen/ten_dp"
+                android:layout_marginEnd="@dimen/threetwo_dp"
+                android:layout_marginRight="@dimen/threetwo_dp"
+                android:background="@drawable/background_white"
+                android:backgroundTint="@color/logoColor"
+                android:onClick="onLoginClicked"
+                android:text="@string/signin"
+                android:textAllCaps="false"
+                android:textColor="@color/blackColor"
+                android:textSize="20sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_below="@+id/btn_signin"
+                android:id="@+id/signUpClick"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/fivezero_dp"
+                android:layout_marginLeft="@dimen/threetwo_dp"
+                android:layout_marginStart="@dimen/threetwo_dp"
+                android:layout_marginRight="@dimen/threetwo_dp"
+                android:layout_marginEnd="@dimen/threetwo_dp"
+                android:onClick="onSignUpClicked"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/signUp"
+                    android:text="@string/signupstartingtext"
+                    android:textSize="13sp"
+                    android:textColor="@color/whiteColor"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/signupendingtext"
+                    android:textSize="13sp"
+                    android:id="@+id/signUpClick"
+
+                    android:layout_toRightOf="@+id/signUp"
+                    android:textColor="@color/whiteColor"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>

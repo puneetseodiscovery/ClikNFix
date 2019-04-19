@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/rectangle_rounded_corner"
+            android:layout_height="match_parent">
+
+            <!--Add cardview contents-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                android:id="@+id/ll_past_jobs_view_item"
+                android:padding="@dimen/onefive_dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="4"
+                    android:weightSum="4">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_tech_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"
+                        android:layout_marginTop="@dimen/ten_dp"
+                        android:layout_marginBottom="@dimen/ten_dp"
+                        android:src="@mipmap/user_img"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="2">
+                        <TextView
+                            android:id="@+id/tv_status_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/status"
+                            android:textSize="15sp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/blackColor"
+                            android:singleLine="true"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/tv_status"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Status"
+                            android:textSize="15sp"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/forgotPassColor"
+                            android:singleLine="true"
+                            android:layout_weight="1"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="6"
+                    android:layout_marginLeft="@dimen/ten_dp"
+                    android:layout_marginRight="@dimen/ten_dp">
+
+                    <TextView
+                        android:id="@+id/tv_technician_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tech_name_text"
+                        android:textSize="19sp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/blackColor"
+                        android:singleLine="true"
+                        android:layout_marginLeft="@dimen/ten_dp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/onefive_dp"
+                        android:layout_marginLeft="@dimen/ten_dp">
+
+                        <ImageView
+                            android:id="@+id/iv_calendar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/calender_icon"
+                            android:layout_gravity="center"
+                            android:singleLine="true"/>
+
+                        <TextView
+                            android:id="@+id/tv_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="19-March-2019"
+                            android:layout_marginLeft="@dimen/ten_dp"
+                            android:textSize="15sp"
+                            android:textColor="@color/blackColor"
+                            android:gravity="center_vertical"
+                            android:singleLine="true" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/onefive_dp"
+                        android:layout_marginLeft="@dimen/ten_dp"
+                        android:layout_marginRight="@dimen/ten_dp">
+
+                        <ImageView
+                            android:id="@+id/iv_category"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/category_icon"
+                            android:layout_gravity="center"
+                            android:singleLine="true"/>
+
+                        <TextView
+                            android:id="@+id/tv_category"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Carpentry"
+                            android:layout_marginLeft="@dimen/ten_dp"
+                            android:textSize="15sp"
+                            android:gravity="center_vertical"
+                            android:singleLine="true"
+                            android:textColor="@color/blackColor" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_more_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/twozero_dp"
+                        android:background="@drawable/background_white"
+                        android:backgroundTint="@color/logoColor"
+                        android:onClick="onMoreDetailsClicked"
+                        android:paddingLeft="@dimen/fourzero_dp"
+                        android:paddingRight="@dimen/fourzero_dp"
+                        android:text="@string/more_details_text"
+                        android:textAllCaps="false"
+                        android:maxLines="1"
+                        android:textColor="@color/blackColor"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

@@ -1,0 +1,51 @@
+<!-- TODO: Update blank fragment layout -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteColor"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/edittextHintColor">
+
+        <RelativeLayout
+            android:id="@+id/iv_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/onefive_dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:onClick="onBackClicked">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/back_icon_header" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chat_title"
+            android:textSize="19sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/whiteColor" />
+
+    </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.cliknfix.homeScreen.bottomFragments.UserProfileFragment"
+            android:orientation="vertical"
+            android:background="@drawable/background_chat">
+
+        </LinearLayout>
+
+
+</LinearLayout>

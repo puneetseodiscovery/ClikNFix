@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@mipmap/bottom_home_icon"
+        android:title=""
+        android:color="@color/blackColor"
+        android:tint="@color/blackColor"
+        android:backgroundTint="@color/blackColor"/>
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@mipmap/bottom_settings_icon"
+        android:title="" />
+
+    <item
+        android:id="@+id/navigation_past_jobs"
+        android:icon="@mipmap/bottom_past_jobs_icon"
+        android:title="" />
+
+    <item
+        android:id="@+id/navigation_user_profile"
+        android:icon="@mipmap/bottom_user_profile_icon"
+        android:title="" />
+
+</menu>

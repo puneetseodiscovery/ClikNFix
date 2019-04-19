@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="statusBarColor">#000000</color>
+    <color name="editTextBackColor">#e1e1e1</color>
+    <color name="bottomIconSelection">#FFA7A7A7</color>
+    <color name="forgotPassColor">#fa2727</color>
+    <color name="paymentButtonColor">#009e0f</color>
+    <color name="edittextHintColor">#535353</color>
+    <color name="logoColor">#fbd405</color>
+    <color name="whiteColor">#ffffff</color>
+    <color name="blackColor">#000000</color>
+
+</resources>

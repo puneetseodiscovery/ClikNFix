@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".otp.OtpActivity"
+    android:background="@drawable/login_background">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/fivezero_dp"
+            android:paddingBottom="@dimen/threetwo_dp">
+
+
+            <ImageView
+                android:id="@+id/iv_chat_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/twozero_dp"
+                android:layout_below="@+id/tv_vpno"
+                android:src="@mipmap/chat_cloud_icon"
+                android:gravity="center"
+                android:text="@string/verify_no"
+                android:textColor="@color/whiteColor"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/tv_mobile_screen_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_chat_mobile"
+                android:layout_margin="@dimen/twozero_dp"
+                android:gravity="center"
+                android:lineSpacingExtra="2.5dp"
+                android:text="@string/mobile_p1"
+                android:textColor="@color/whiteColor"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/tv_country_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_mobile_screen_text"
+                android:layout_marginTop="@dimen/threezero_dp"
+                android:layout_marginLeft="@dimen/sevenzero_dp"
+                android:layout_marginRight="@dimen/sevenzero_dp"
+                android:padding="@dimen/ten_dp"
+                android:gravity="center"
+                android:hint="@string/country_code"
+                android:textColor="@color/blackColor"
+                android:textSize="17sp"
+                android:background="@drawable/background_white"
+                android:backgroundTint="@color/editTextBackColor"/>
+
+            <EditText
+                android:id="@+id/et_mobile_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_country_code"
+                android:layout_marginTop="@dimen/threezero_dp"
+                android:layout_marginLeft="@dimen/sevenzero_dp"
+                android:layout_marginRight="@dimen/sevenzero_dp"
+                android:padding="@dimen/ten_dp"
+                android:gravity="center"
+                android:hint="@string/mobile_no"
+                android:textColor="@color/blackColor"
+                android:textSize="17sp"
+                android:background="@drawable/background_white"
+                android:backgroundTint="@color/editTextBackColor"/>
+
+            <ImageButton
+                android:id="@+id/iv_next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/et_mobile_no"
+                android:layout_marginTop="@dimen/threezero_dp"
+                android:layout_marginLeft="@dimen/onefourzero_dp"
+                android:layout_marginRight="@dimen/onefourzero_dp"
+                android:paddingTop="@dimen/twozero_dp"
+                android:paddingBottom="@dimen/twozero_dp"
+                android:gravity="center|bottom"
+                android:src="@mipmap/icon_next"
+                android:layout_centerInParent="true"
+                android:onClick="onNextClicked"
+                android:background="@drawable/background_white"
+                android:backgroundTint="@color/logoColor"/>
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
