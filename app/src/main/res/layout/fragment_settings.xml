@@ -24,7 +24,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".homeScreen.bottomFragments.SettingsFragment"
+            tools:context=".user.homeScreen.bottomFragments.SettingsFragment"
             android:orientation="vertical"
             android:layout_marginStart="@dimen/onefive_dp"
             android:layout_marginLeft="@dimen/onefive_dp"

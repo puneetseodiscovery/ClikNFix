@@ -54,7 +54,7 @@
                 android:layout_marginRight="@dimen/sevenzero_dp"
                 android:padding="@dimen/ten_dp"
                 android:gravity="center"
-                android:hint="@string/country_code"
+                android:text="+91"
                 android:textColor="@color/blackColor"
                 android:textSize="17sp"
                 android:background="@drawable/background_white"
