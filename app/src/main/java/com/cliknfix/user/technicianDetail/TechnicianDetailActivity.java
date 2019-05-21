@@ -67,6 +67,9 @@ public class TechnicianDetailActivity extends BaseClass {
         tvOTP.setTypeface(Utility.typeFaceForBoldText(this));
         btnTrack.setTypeface(Utility.typeFaceForBoldText(this));
         btnPayment.setTypeface(Utility.typeFaceForBoldText(this));
+
+        Log.e("Tech Name","" + getIntent().getStringExtra("name"));
+        tvTechName.setText(getIntent().getStringExtra("name"));
     }
 
     public void onBackClicked(View view){

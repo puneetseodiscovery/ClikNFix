@@ -14,13 +14,10 @@ import android.widget.TextView;
 
 import com.cliknfix.user.R;
 import com.cliknfix.user.homeScreen.HomeScreenActivity;
-import com.cliknfix.user.homeScreen.bottomFragments.model.BeanHomeFragment;
 import com.cliknfix.user.responseModels.CategoriesListResponseModel;
-import com.cliknfix.user.submitProblem.SubmitProblemFragment;
 import com.cliknfix.user.util.Utility;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,8 +48,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         holder.llCatItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(context, "" + list.get(position).getCatName(), Toast.LENGTH_SHORT).show();
-            loadFragment(list.get(position).getServiceName());
+            loadFragment(list.get(position).getServiceName(),list.get(position).getId());
             }
         });
     }
@@ -84,11 +80,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         }
     }
 
-    public void loadFragment(String category) {
+    public void loadFragment(String category,int categoryId) {
         FragmentTransaction transaction = ((HomeScreenActivity) context).getSupportFragmentManager().beginTransaction();
-        SubmitProblemFragment fragment = new SubmitProblemFragment();
+        BlankFragment fragment = new BlankFragment();
         Bundle args = new Bundle();
         args.putString("category", category);
+        args.putInt("categoryId", categoryId);
         fragment.setArguments(args);
         transaction.replace(R.id.frame_container, fragment);
         transaction.addToBackStack(null);

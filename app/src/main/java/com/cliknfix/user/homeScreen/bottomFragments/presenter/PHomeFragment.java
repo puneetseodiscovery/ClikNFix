@@ -8,27 +8,26 @@ import com.cliknfix.user.responseModels.CategoriesListResponseModel;
 
 public class PHomeFragment implements IPHomeFragment {
 
-    HomeFragment homeFragment;
+    IHomeFragment iHomeFragment;
     IMHomeFragment imHomeFragment;
 
     public PHomeFragment(HomeFragment homeFragment) {
-        this.homeFragment = homeFragment;
+        this.iHomeFragment = homeFragment;
         this.imHomeFragment = new MHomeFragment(this);
     }
 
     @Override
     public void getCategoriesList(String token) {
-        imHomeFragment = new MHomeFragment(this);
         imHomeFragment.getCategoriesList(token);
     }
 
     @Override
     public void getCategoriesListSuccessResponse(CategoriesListResponseModel categoriesListResponseModel) {
-        homeFragment.getCategoryListSuccessFromPresenter(categoriesListResponseModel);
+        iHomeFragment.getCategoryListSuccessFromPresenter(categoriesListResponseModel);
     }
 
     @Override
     public void getCategoriesListFailureResponse(String message) {
-        homeFragment.getCategoryListFailureFromPresenter(message);
+        iHomeFragment.getCategoryListFailureFromPresenter(message);
     }
 }

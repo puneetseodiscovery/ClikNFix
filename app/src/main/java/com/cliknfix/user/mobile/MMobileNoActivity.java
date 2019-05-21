@@ -9,17 +9,16 @@ import com.cliknfix.user.retrofit.RetrofitCalls;
 
 public class MMobileNoActivity implements IMMobileActivity {
 
-    PMobileActivity pMobileActivity;
+    IPMobileActivity ipMobileActivity;
 
     public MMobileNoActivity(PMobileActivity pMobileActivity) {
-        this.pMobileActivity = pMobileActivity;
+        this.ipMobileActivity = pMobileActivity;
     }
 
     @Override
-    public void sendOTP(String phone) {
-        Log.e("Model","Working");
+    public void sendOTP(String phone,String user_id,String resend_otp) {
         RetrofitCalls retrofitCalls = new RetrofitCalls();
-        retrofitCalls.sendOTP(phone,mHandler);
+        retrofitCalls.sendOTP(phone,user_id,resend_otp,mHandler);
     }
 
     android.os.Handler mHandler = new android.os.Handler() {
@@ -29,12 +28,12 @@ public class MMobileNoActivity implements IMMobileActivity {
             switch (msg.what) {
                 case APIInterface.SEND_OTP_SUCCESS:
                     MobileNoResponseModel mobileNoResponseModel = (MobileNoResponseModel) msg.obj;
-                    pMobileActivity.onSendOTPSuccess(mobileNoResponseModel);
+                    ipMobileActivity.onSendOTPSuccess(mobileNoResponseModel);
                     break;
 
                 case APIInterface.SEND_OTP_FAILED:
                     String message = (String) msg.obj;
-                    pMobileActivity.onSendOTPFailure(message);
+                    ipMobileActivity.onSendOTPFailure(message);
                     break;
             }
         }

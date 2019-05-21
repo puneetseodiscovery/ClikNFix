@@ -60,8 +60,8 @@
                 android:background="@drawable/background_white"
                 android:backgroundTint="@color/editTextBackColor"/>
 
-            <EditText
-                android:id="@+id/et_mobile_no"
+            <TextView
+                android:id="@+id/tv_mobile_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_country_code"
@@ -80,7 +80,7 @@
                 android:id="@+id/iv_next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/et_mobile_no"
+                android:layout_below="@+id/tv_mobile_no"
                 android:layout_marginTop="@dimen/threezero_dp"
                 android:layout_marginLeft="@dimen/onefourzero_dp"
                 android:layout_marginRight="@dimen/onefourzero_dp"

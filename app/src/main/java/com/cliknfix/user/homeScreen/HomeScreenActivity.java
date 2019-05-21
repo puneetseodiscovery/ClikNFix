@@ -1,11 +1,13 @@
 package com.cliknfix.user.homeScreen;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.cliknfix.user.R;
 import com.cliknfix.user.base.BaseClass;
@@ -22,6 +24,7 @@ public class HomeScreenActivity extends BaseClass {
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
     int defaultTab=0;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,9 @@ public class HomeScreenActivity extends BaseClass {
         if(defaultTab == 1) {
             navigation.getMenu().findItem(R.id.navigation_settings).setChecked(true);
             loadFragment(new SettingsFragment());
+        } else if (defaultTab == 2) {
+            navigation.getMenu().findItem(R.id.navigation_past_jobs).setChecked(true);
+            loadFragment(new PastJobsFragment());
         }
 
     }
@@ -74,15 +80,29 @@ public class HomeScreenActivity extends BaseClass {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        //backPressClicked();
+        int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+        if (backStackEntryCount == 0) {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
 
-    }
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, getResources().getString(R.string.exit), Toast.LENGTH_SHORT).show();
 
-    public void backPressClicked() {
-        int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
-        if(backStackCount ==0){
-            navigation.setSelectedItemId(R.id.navigation_home);
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce=false;
+                }
+            }, 2000);
+
+        } else {
+            super.onBackPressed();
         }
+
+
+
     }
 }

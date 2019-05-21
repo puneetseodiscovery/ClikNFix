@@ -18,7 +18,6 @@
             android:id="@+id/iv_back"
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/onefive_dp"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_centerVertical="true"

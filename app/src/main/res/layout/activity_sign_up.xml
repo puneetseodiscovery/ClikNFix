@@ -42,7 +42,6 @@
                 android:id="@+id/et_signup_username"
                 android:hint="@string/username_hint"
                 android:textSize="17sp"
-                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                 android:layout_below="@+id/sign_up_title"
                 android:layout_marginStart="@dimen/threetwo_dp"
                 android:layout_marginLeft="@dimen/threetwo_dp"
@@ -60,7 +59,6 @@
                 android:textCursorDrawable="@null"
                 android:imeOptions="actionNext"
                 android:inputType="text">
-                <requestFocus />
             </EditText>
 
             <EditText
@@ -84,8 +82,8 @@
                 android:paddingRight="@dimen/ten_dp"
                 android:textColor="@color/edittextHintColor"
                 android:textCursorDrawable="@null"
-                android:imeOptions="actionNext">
-            <requestFocus />
+                android:imeOptions="actionNext"
+                android:inputType="text">
             </EditText>
 
             <EditText
@@ -108,7 +106,10 @@
                 android:paddingTop="@dimen/ten_dp"
                 android:paddingRight="@dimen/ten_dp"
                 android:textColor="@color/edittextHintColor"
-                android:textCursorDrawable="@null" />
+                android:textCursorDrawable="@null"
+                android:inputType="phone"
+                android:maxLength="3"
+                android:imeOptions="actionNext"/>
 
             <Spinner
                 android:layout_width="match_parent"
@@ -153,7 +154,9 @@
                 android:paddingTop="@dimen/ten_dp"
                 android:paddingRight="@dimen/ten_dp"
                 android:textColor="@color/edittextHintColor"
-                android:textCursorDrawable="@null" />
+                android:textCursorDrawable="@null"
+                android:imeOptions="actionNext"
+                android:inputType="text"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -168,7 +171,7 @@
                 android:layout_marginEnd="@dimen/threetwo_dp"
                 android:backgroundTint="@color/editTextBackColor"
                 android:background="@drawable/background_white"
-                android:drawableLeft="@mipmap/login_password_icon"
+                android:drawableLeft="@mipmap/mobile_icon"
                 android:drawablePadding="@dimen/ten_dp"
                 android:paddingLeft="@dimen/twofive_dp"
                 android:paddingBottom="@dimen/ten_dp"
@@ -176,6 +179,8 @@
                 android:paddingRight="@dimen/ten_dp"
                 android:textColor="@color/edittextHintColor"
                 android:textCursorDrawable="@null"
+                android:inputType="phone"
+                android:maxLength="10"
                 android:imeOptions="actionNext"/>
 
             <EditText
@@ -199,6 +204,7 @@
                 android:paddingRight="@dimen/ten_dp"
                 android:textColor="@color/edittextHintColor"
                 android:textCursorDrawable="@null"
+                android:inputType="textPassword"
                 android:imeOptions="actionNext"/>
 
             <EditText
@@ -222,7 +228,8 @@
                 android:paddingRight="@dimen/ten_dp"
                 android:textColor="@color/edittextHintColor"
                 android:textCursorDrawable="@null"
-                android:imeOptions="actionNext"/>
+                android:inputType="textPassword"
+                android:imeOptions="actionDone"/>
 
             <CheckBox
                 android:id="@+id/cb_terms_signup"
@@ -236,8 +243,7 @@
                 android:text="@string/signupTermsCond"
                 android:textColor="@color/editTextBackColor"
                 android:textSize="13sp"
-                android:layout_below="@+id/et_cnfrm_password_signup"
-                android:imeOptions="actionGo"/>
+                android:layout_below="@+id/et_cnfrm_password_signup" />
 
             <Button
                 android:layout_width="match_parent"
@@ -259,15 +265,14 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/orText"
                 android:id="@+id/tv_or"
-                android:textAllCaps="false"
                 android:textColor="@color/editTextBackColor"
                 android:textSize="15sp"
                 android:maxLines="1"
                 android:layout_centerInParent="true"
                 android:onClick="onSignUpButtonClicked"
-                android:layout_height="wrap_content"
                 android:layout_below="@+id/btn_signup"
                 android:layout_marginTop="@dimen/twozero_dp"
                 android:layout_marginLeft="@dimen/threetwo_dp"

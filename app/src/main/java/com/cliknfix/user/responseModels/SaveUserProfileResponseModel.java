@@ -3,7 +3,10 @@ package com.cliknfix.user.responseModels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserModelLoginResponse {
+import java.util.List;
+
+public class SaveUserProfileResponseModel {
+
     @SerializedName("status")
     @Expose
     private String status;
@@ -12,7 +15,7 @@ public class UserModelLoginResponse {
     private String message;
     @SerializedName("data")
     @Expose
-    private Data data;
+    private List<Datum> data = null;
 
     public String getStatus() {
         return status;
@@ -30,15 +33,16 @@ public class UserModelLoginResponse {
         this.message = message;
     }
 
-    public Data getData() {
+    public List<Datum> getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(List<Datum> data) {
         this.data = data;
     }
 
-    public class Data {
+    public class Datum {
+
         @SerializedName("id")
         @Expose
         private Integer id;
@@ -53,13 +57,13 @@ public class UserModelLoginResponse {
         private String password;
         @SerializedName("email_verified_at")
         @Expose
-        private Object emailVerifiedAt;
+        private String emailVerifiedAt;
         @SerializedName("phone")
         @Expose
-        private Object phone;
+        private String phone;
         @SerializedName("age")
         @Expose
-        private Object age;
+        private String age;
         @SerializedName("blood_group")
         @Expose
         private String bloodGroup;
@@ -68,7 +72,7 @@ public class UserModelLoginResponse {
         private Object gender;
         @SerializedName("address")
         @Expose
-        private Object address;
+        private String address;
         @SerializedName("remember_token")
         @Expose
         private String rememberToken;
@@ -83,7 +87,13 @@ public class UserModelLoginResponse {
         private String status;
         @SerializedName("image")
         @Expose
-        private Object image;
+        private String image;
+        @SerializedName("lat")
+        @Expose
+        private Object lat;
+        @SerializedName("lng")
+        @Expose
+        private Object lng;
 
         public Integer getId() {
             return id;
@@ -117,27 +127,27 @@ public class UserModelLoginResponse {
             this.password = password;
         }
 
-        public Object getEmailVerifiedAt() {
+        public String getEmailVerifiedAt() {
             return emailVerifiedAt;
         }
 
-        public void setEmailVerifiedAt(Object emailVerifiedAt) {
+        public void setEmailVerifiedAt(String emailVerifiedAt) {
             this.emailVerifiedAt = emailVerifiedAt;
         }
 
-        public Object getPhone() {
+        public String getPhone() {
             return phone;
         }
 
-        public void setPhone(Object phone) {
+        public void setPhone(String phone) {
             this.phone = phone;
         }
 
-        public Object getAge() {
+        public String getAge() {
             return age;
         }
 
-        public void setAge(Object age) {
+        public void setAge(String age) {
             this.age = age;
         }
 
@@ -157,11 +167,11 @@ public class UserModelLoginResponse {
             this.gender = gender;
         }
 
-        public Object getAddress() {
+        public String getAddress() {
             return address;
         }
 
-        public void setAddress(Object address) {
+        public void setAddress(String address) {
             this.address = address;
         }
 
@@ -197,12 +207,30 @@ public class UserModelLoginResponse {
             this.status = status;
         }
 
-        public Object getImage() {
+        public String getImage() {
             return image;
         }
 
-        public void setImage(Object image) {
+        public void setImage(String image) {
             this.image = image;
         }
+
+        public Object getLat() {
+            return lat;
+        }
+
+        public void setLat(Object lat) {
+            this.lat = lat;
+        }
+
+        public Object getLng() {
+            return lng;
+        }
+
+        public void setLng(Object lng) {
+            this.lng = lng;
+        }
+
     }
+
 }

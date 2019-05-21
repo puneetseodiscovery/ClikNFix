@@ -25,6 +25,7 @@ public class PreferenceHandler {
     public static final String PREF_KEY_USER_PHONE ="PREF_KEY_USER_PHONE" ;
     public static final String PREF_KEY_LOGIN_TOKEN = "PREF_KEY_LOGIN_TOKEN";
     public static final String PREF_KEY_LOGIN_USER_ID = "PREF_KEY_LOGIN_USER_ID";
+    public static final String PREF_KEY_FIREBASE_TOKEN = "PREF_KEY_FIREBASE_TOKEN";
     public static final String PREF_KEY_USER_IMAGE = "PREF_KEY_USER_IMAGE";
 
     public static final String PREF_KEY_EXCEPTION_ENABLE = "PREF_KEY_EXCEPTION_ENABLE";
@@ -42,7 +43,7 @@ public class PreferenceHandler {
         return getPreferences(context).getBoolean(key, defValue);
     }
 
-    public void writeInteger(Context context, String key, int value) {
+        public void writeInteger(Context context, String key, int value) {
         getEditor(context).putInt(key, value).commit();
     }
 

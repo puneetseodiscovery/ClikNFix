@@ -11,12 +11,12 @@ public class PMobileActivity implements IPMobileActivity {
 
     public PMobileActivity(MobileNoActivity mobileNoActivity) {
         iMobileNoActivity = mobileNoActivity;
+        imMobileActivity = new MMobileNoActivity(this);
     }
 
     @Override
-    public void sendOTP(String phone) {
-        imMobileActivity = new MMobileNoActivity(this);
-        imMobileActivity.sendOTP(phone);
+    public void sendOTP(String phone,String user_id,String resend_otp) {
+        imMobileActivity.sendOTP(phone,user_id,resend_otp);
     }
 
     @Override

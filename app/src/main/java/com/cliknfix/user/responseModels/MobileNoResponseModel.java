@@ -3,6 +3,8 @@ package com.cliknfix.user.responseModels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class MobileNoResponseModel {
 
     @SerializedName("status")
@@ -13,7 +15,7 @@ public class MobileNoResponseModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private Data data;
+    private List<Datum> data = null;
 
     public String getStatus() {
         return status;
@@ -31,27 +33,27 @@ public class MobileNoResponseModel {
         this.message = message;
     }
 
-    public Data getData() {
+    public List<Datum> getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(List<Datum> data) {
         this.data = data;
     }
 
-    public class Data {
+    public class Datum {
 
-        @SerializedName("0")
+        @SerializedName("otp")
         @Expose
-        private String _0;
+        private String otp;
 
-        public String get0() {
-            return _0;
+        public String getOtp() {
+            return otp;
         }
 
-        public void set0(String _0) {
-            this._0 = _0;
+        public void setOtp(String otp) {
+            this.otp = otp;
         }
+
     }
-
 }

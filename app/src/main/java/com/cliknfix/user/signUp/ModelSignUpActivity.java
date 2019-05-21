@@ -9,7 +9,6 @@ import com.cliknfix.user.retrofit.RetrofitCalls;
 public class ModelSignUpActivity implements IModleSignUpActivity {
 
     IPSignUp ipSignUp;
-    String status;
 
     public ModelSignUpActivity(PSignUp pSignUp) {
 
@@ -30,7 +29,6 @@ public class ModelSignUpActivity implements IModleSignUpActivity {
 
             switch (msg.what) {
                 case APIInterface.SIGNUP_SUCCESS:
-                    String mes = ((SignUpResponseModel) msg.obj).getMessage();
                     SignUpResponseModel signUpResponseModel = (SignUpResponseModel) msg.obj;
                     ipSignUp.onSignUpResponseSuccessFromModel(signUpResponseModel);
                     break;

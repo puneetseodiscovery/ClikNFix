@@ -17,14 +17,16 @@ import android.widget.Toast;
 import com.cliknfix.user.R;
 import com.cliknfix.user.homeScreen.bottomFragments.presenter.IPUserProfileFragment;
 import com.cliknfix.user.homeScreen.bottomFragments.presenter.PUserProfileFragment;
+import com.cliknfix.user.responseModels.SaveUserProfileResponseModel;
 import com.cliknfix.user.responseModels.UserProfileResponseModel;
 import com.cliknfix.user.util.Utility;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class UserProfileFragment extends Fragment implements View.OnClickListener {
+public class UserProfileFragment extends Fragment implements View.OnClickListener,IUserProfileFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -66,6 +68,8 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
     TextView tvAddressText;
     @BindView(R.id.et_address)
     EditText etAddress;
+    @BindView(R.id.profilePic)
+    CircleImageView ivProfilePic;
 
     IPUserProfileFragment ipUserProfileFragment;
     ProgressDialog progressDialog;
@@ -129,7 +133,7 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
 
 
         progressDialog = Utility.showLoader(getContext());
-        ipUserProfileFragment.getUserProfile(12,Utility.getToken());
+        ipUserProfileFragment.getUserProfile(Utility.getUserId(),Utility.getToken());
 
         ivEdit.setOnClickListener(this);
         ivSave.setOnClickListener(this);
@@ -170,22 +174,48 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
                 etAddress.clearFocus();
                 etAddress.setFocusableInTouchMode(false);
                 mgr.hideSoftInputFromWindow(v.getWindowToken(),0);
+                progressDialog = Utility.showLoader(getContext());
+                ipUserProfileFragment.saveUserProfile(etUserName.getText().toString().trim(),
+                        etPhone.getText().toString().trim(),
+                        etBldGrp.getText().toString().trim(),
+                        etAge.getText().toString().trim(),
+                        etAddress.getText().toString().trim(),
+                        null,
+                        Utility.getToken());
                 break;
         }
     }
 
     public void getUserProfileSuccessFromPresenter(UserProfileResponseModel userProfileResponseModel) {
         progressDialog.dismiss();
-       /* etUserName.setText(userProfileResponseModel.getData().getName());
-        etEmail.setText(userProfileResponseModel.getData().getEmail());
-        etPhone.set(userProfileResponseModel.getData().getPhone());
-        etAge.setText(userProfileResponseModel.getData().getAge());
-        etBldGrp.setText(userProfileResponseModel.getData().getBloodGroup());
-        etAddress.setText(userProfileResponseModel.getData().getAddress());*/
+        etUserName.setText(userProfileResponseModel.getData().get(0).getName());
+        etEmail.setText(userProfileResponseModel.getData().get(0).getEmail());
+        etPhone.setText(userProfileResponseModel.getData().get(0).getPhone());
+        etAge.setText(userProfileResponseModel.getData().get(0).getAge());
+        etBldGrp.setText(userProfileResponseModel.getData().get(0).getBloodGroup());
+        etAddress.setText(userProfileResponseModel.getData().get(0).getAddress());
     }
 
     public void getUserProfileFailureFromPresenter(String message) {
         progressDialog.dismiss();
         Toast.makeText(getContext(), "" + message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void saveUserProfileSuccessFromPresenter(SaveUserProfileResponseModel model) {
+        progressDialog.dismiss();
+        etUserName.setText(model.getData().get(0).getName());
+        etEmail.setText(model.getData().get(0).getEmail());
+        etPhone.setText(model.getData().get(0).getPhone());
+        etAge.setText(model.getData().get(0).getAge());
+        etBldGrp.setText(model.getData().get(0).getBloodGroup());
+        etAddress.setText(model.getData().get(0).getAddress());
+        Toast.makeText(getContext(), "" + model.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void saveUserProfileFailureFromPresenter(String msgg) {
+        progressDialog.dismiss();
+        Toast.makeText(getContext(), "" + msgg, Toast.LENGTH_SHORT).show();
     }
 }

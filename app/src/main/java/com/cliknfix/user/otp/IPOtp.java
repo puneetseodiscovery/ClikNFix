@@ -4,7 +4,7 @@ import com.cliknfix.user.responseModels.OTPResponseModel;
 
 public interface IPOtp {
 
-    void fillOTP(String otp, String phone);
+    void fillOTP(String phone,String otp,String user_id);
     void onFillOTPSuccess(OTPResponseModel otpResponseModel);
     void onFillOTPFailure(String message);
 }

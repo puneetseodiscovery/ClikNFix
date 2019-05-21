@@ -9,21 +9,21 @@ public class POtp implements IPOtp {
 
     public POtp(OtpActivity otpActivity) {
         iOtpActivity = otpActivity;
+        imOtp = new ModelOtp(this);
     }
 
     @Override
-    public void fillOTP(String otp, String phone) {
-        imOtp = new ModelOtp(this);
-        imOtp.fillOTP(otp,phone);
+    public void fillOTP(String phone,String otp, String user_id) {
+        imOtp.fillOTP(phone,otp,user_id);
     }
 
     @Override
     public void onFillOTPSuccess(OTPResponseModel otpResponseModel) {
-
+        iOtpActivity.onFillOTPSuccessFromPresenter(otpResponseModel);
     }
 
     @Override
     public void onFillOTPFailure(String message) {
-
+        iOtpActivity.onFillOTPFailureFromPresenter(message);
     }
 }

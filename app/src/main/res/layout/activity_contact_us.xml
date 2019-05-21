@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/edittextHintColor"
+        android:layout_gravity="center">
+
+        <RelativeLayout
+            android:id="@+id/iv_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:onClick="onBackClicked">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/back_icon_header" />
+        </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:text="@string/forgot_pass_text"
+                android:textSize="19sp"
+                android:gravity="center"
+                android:textColor="@color/whiteColor"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            tools:context=".user.homeScreen.bottomFragments.SettingsFragment"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/onefive_dp"
+            android:layout_marginLeft="@dimen/onefive_dp"
+            android:layout_marginTop="@dimen/onefive_dp"
+            android:layout_marginEnd="@dimen/onefive_dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/email_icon"
+                android:text="@string/email_hint"
+                android:padding="@dimen/ten_dp"
+                android:textColor="@color/blackColor"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:context=".user.homeScreen.bottomFragments.SettingsFragment"
+                android:orientation="vertical"
+                android:layout_marginRight="@dimen/five_dp">
+
+                <TextView
+                    android:id="@+id/tv_email_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email_hint"
+                    android:padding="@dimen/five_dp"
+                    android:textColor="@color/blackColor"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="info@gmail.com"
+                    android:textColor="@color/blackColor"
+                    android:textSize="12sp" />
+
+                <View android:layout_height="2dp"
+                    android:layout_width="wrap_content"
+                    android:background="@color/edittextHintColor"
+                    android:layout_marginTop="@dimen/ten_dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_write_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:lines="20"
+                android:maxLines="30"
+                android:minLines="8"
+                android:gravity="top"
+                android:textColor="@color/blackColor"
+                android:hint="@string/write_msg"
+                android:padding="@dimen/ten_dp"
+                android:textSize="15sp"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginLeft="@dimen/fivezero_dp"
+                android:layout_marginRight="@dimen/threetwo_dp"
+                android:background="@drawable/rectangle_bordered"
+                android:scrollbars="vertical" />
+
+            <Button
+                android:id="@+id/btn_send"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fivezero_dp"
+                android:layout_below="@+id/ll_forgotPass"
+                android:layout_marginStart="@dimen/fivezero_dp"
+                android:layout_marginLeft="@dimen/fivezero_dp"
+                android:layout_marginTop="@dimen/twofive_dp"
+                android:layout_marginEnd="@dimen/fivezero_dp"
+                android:layout_marginRight="@dimen/fivezero_dp"
+                android:background="@drawable/background_white"
+                android:backgroundTint="@color/logoColor"
+                android:onClick="onSendClicked"
+                android:text="@string/send"
+                android:textAllCaps="false"
+                android:textColor="@color/blackColor"
+                android:textSize="20sp" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

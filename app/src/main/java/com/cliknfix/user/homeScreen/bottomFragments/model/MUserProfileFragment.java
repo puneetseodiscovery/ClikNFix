@@ -3,23 +3,31 @@ package com.cliknfix.user.homeScreen.bottomFragments.model;
 import android.os.Message;
 
 import com.cliknfix.user.homeScreen.bottomFragments.UserProfileFragment;
+import com.cliknfix.user.homeScreen.bottomFragments.presenter.IPUserProfileFragment;
 import com.cliknfix.user.homeScreen.bottomFragments.presenter.PUserProfileFragment;
+import com.cliknfix.user.responseModels.SaveUserProfileResponseModel;
 import com.cliknfix.user.responseModels.UserProfileResponseModel;
 import com.cliknfix.user.retrofit.APIInterface;
 import com.cliknfix.user.retrofit.RetrofitCalls;
 
 public class MUserProfileFragment implements IMUserProfileFragment {
 
-    PUserProfileFragment pUserProfileFragment;
+    IPUserProfileFragment ipUserProfileFragment;
 
     public MUserProfileFragment(PUserProfileFragment pUserProfileFragment) {
-        this.pUserProfileFragment = pUserProfileFragment;
+        this.ipUserProfileFragment = pUserProfileFragment;
     }
 
     @Override
     public void getUserProfile(int id, String token) {
         RetrofitCalls retrofitCalls = new RetrofitCalls();
         retrofitCalls.getUserProfile(id,token,mHandler);
+    }
+
+    @Override
+    public void saveUserProfile(String name, String phone, String blood_group, String age, String address, String imgUrl, String token) {
+        RetrofitCalls retrofitCalls = new RetrofitCalls();
+        retrofitCalls.saveUserProfile(name,phone,blood_group,age,address,imgUrl,token,mHandler);
     }
 
     android.os.Handler mHandler = new android.os.Handler() {
@@ -29,12 +37,21 @@ public class MUserProfileFragment implements IMUserProfileFragment {
             switch (msg.what) {
                 case APIInterface.USER_PROFILE_SUCCESS:
                     UserProfileResponseModel userProfileResponseModel = (UserProfileResponseModel) msg.obj;
-                    pUserProfileFragment.getUserProfileSuccess(userProfileResponseModel);
+                    ipUserProfileFragment.getUserProfileSuccess(userProfileResponseModel);
                     break;
 
                 case APIInterface.USER_PROFILE_FAILED:
                     String message = (String) msg.obj;
-                    pUserProfileFragment.getUserProfileFailure(message);
+                    ipUserProfileFragment.getUserProfileFailure(message);
+                    break;
+                case APIInterface.SAVE_USER_PROFILE_SUCCESS:
+                    SaveUserProfileResponseModel model = (SaveUserProfileResponseModel) msg.obj;
+                    ipUserProfileFragment.saveUserProfileSuccess(model);
+                    break;
+
+                case APIInterface.SAVE_USER_PROFILE_FAILURE:
+                    String msgg = (String) msg.obj;
+                    ipUserProfileFragment.saveUserProfileFailure(msgg);
                     break;
             }
         }

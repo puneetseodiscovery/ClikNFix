@@ -1,20 +1,20 @@
 package com.cliknfix.user.paymentMethods;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.cliknfix.user.R;
+import com.cliknfix.user.base.BaseClass;
 import com.cliknfix.user.technicianReview.TechReviewActivity;
 import com.cliknfix.user.util.Utility;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PaymentSuccessActivity extends AppCompatActivity {
+public class PaymentSuccessActivity extends BaseClass {
 
     @BindView(R.id.tv_title)
     TextView tvTitle;

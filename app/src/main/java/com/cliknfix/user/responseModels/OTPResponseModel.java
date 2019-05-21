@@ -15,7 +15,7 @@ public class OTPResponseModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private List<Object> data = null;
+    private List<Datum> data = null;
 
     public String getStatus() {
         return status;
@@ -33,13 +33,14 @@ public class OTPResponseModel {
         this.message = message;
     }
 
-    public List<Object> getData() {
+    public List<Datum> getData() {
         return data;
     }
 
-    public void setData(List<Object> data) {
+    public void setData(List<Datum> data) {
         this.data = data;
     }
 
+    public class Datum{}
 
 }

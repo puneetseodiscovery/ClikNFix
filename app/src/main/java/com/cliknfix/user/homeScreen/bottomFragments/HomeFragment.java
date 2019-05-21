@@ -1,5 +1,6 @@
 package com.cliknfix.user.homeScreen.bottomFragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements IHomeFragment{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -44,6 +45,7 @@ public class HomeFragment extends Fragment {
     TextView tvTitle;
 
     IPHomeFragment ipHomeFragment;
+    ProgressDialog progressDialog;
 
     Context context;
     public HomeFragment() {
@@ -105,10 +107,12 @@ public class HomeFragment extends Fragment {
     public void getCategoriesList() {
         String token = new PreferenceHandler().readString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_TOKEN, "");
         Log.e("token:++++++","" + token);
+        progressDialog = Utility.showLoader(getContext());
         ipHomeFragment.getCategoriesList(Utility.getToken());
     }
 
     public void getCategoryListSuccessFromPresenter(CategoriesListResponseModel categoriesListResponseModel) {
+        progressDialog.dismiss();
         rvCategory.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL, false));
         HomeAdapter adapter = new HomeAdapter(context, categoriesListResponseModel.getData());
         rvCategory.setNestedScrollingEnabled(false);
@@ -116,6 +120,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void getCategoryListFailureFromPresenter(String message) {
+        progressDialog.dismiss();
         Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
     }
 }

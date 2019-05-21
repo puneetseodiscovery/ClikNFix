@@ -2,7 +2,7 @@ package com.cliknfix.user.login;
 
 public class BeanLogin {
 
-    String email, password;
+    String email, password,otp_generated;
 
     public BeanLogin(String email, String password) {
 

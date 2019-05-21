@@ -16,11 +16,14 @@ import android.widget.Toast;
 
 import com.cliknfix.user.R;
 import com.cliknfix.user.base.BaseClass;
+import com.cliknfix.user.base.MyApp;
 import com.cliknfix.user.forgotPassword.ForgotPasswordActivity;
 import com.cliknfix.user.homeScreen.HomeScreenActivity;
 import com.cliknfix.user.mobile.MobileNoActivity;
-import com.cliknfix.user.responseModels.UserModelLoginResponse;
+import com.cliknfix.user.otp.OtpActivity;
+import com.cliknfix.user.responseModels.LoginResponseModel;
 import com.cliknfix.user.signUp.SignUpActivity;
+import com.cliknfix.user.util.PreferenceHandler;
 import com.cliknfix.user.util.Utility;
 
 import butterknife.BindView;
@@ -50,7 +53,7 @@ public class LoginActivity extends BaseClass implements ILoginActivity {
     IPLogin iPresenterLogin;
 
     Boolean passVisible = false;
-    //int treatmentActivity;
+    String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +69,7 @@ public class LoginActivity extends BaseClass implements ILoginActivity {
             if (etEmail.getText().toString().length()>0 && etPassword.getText().toString().length()>0 ) {
                 if (Utility.validEmail(etEmail.getText().toString().trim())) {
                     progressDialog = Utility.showLoader(this);
-                    iPresenterLogin.doLogin(etEmail.getText().toString().trim().toLowerCase(),etPassword.getText().toString().trim());
+                    iPresenterLogin.doLogin(etEmail.getText().toString().trim().toLowerCase(),etPassword.getText().toString().trim(),token);
                 } else {
                     etEmail.setError("Enter a valid email.");
                     etEmail.requestFocus();
@@ -98,27 +101,31 @@ public class LoginActivity extends BaseClass implements ILoginActivity {
 
 
     @Override
-    public void onLoginSuccessFromPresenter(UserModelLoginResponse userModelLoginResponse) {
+    public void onLoginSuccessFromPresenter(LoginResponseModel userModelLoginResponse) {
         progressDialog.dismiss();
-        startActivity(new Intent(this, MobileNoActivity.class));
-        //new PreferenceHandler().writeString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_USER_NAME, userModelLoginResponse.getData().getName());
+        startActivity(new Intent(this, HomeScreenActivity.class));
+    }
 
-       /* if (treatmentActivity==0)
-        {
-            //startActivity(new Intent(this,HomeActivity.class));
-            finish();
-        }else
-        {
-            onBackPressed();
-            finish();
-        }*/
+    @Override
+    public void otpNotVerifiedFromPresenter(LoginResponseModel loginResponseModel) {
+        progressDialog.dismiss();
+        if(loginResponseModel.getData().get(0).getEmailVerifiedAt() == null){
+            Intent intent = new Intent(LoginActivity.this, MobileNoActivity.class);
+            intent.putExtra("phone", "" +loginResponseModel.getData().get(0).getPhone().toString().trim());
+            intent.putExtra("userId", "" +loginResponseModel.getData().get(0).getId().toString().trim());
+            startActivity(intent);
+        } else if(loginResponseModel.getData().get(0).getEmailVerifiedAt().equals("1")) {
+            Intent intent = new Intent(LoginActivity.this, OtpActivity.class);
+            intent.putExtra("phone", "" +loginResponseModel.getData().get(0).getPhone().toString().trim());
+            intent.putExtra("userId", "" +loginResponseModel.getData().get(0).getId().toString().trim());
+            startActivity(intent);
+        }
     }
 
     @Override
     public void onLoginFailedFromPresenter(String message) {
         progressDialog.dismiss();
         Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
-
     }
 
 
@@ -130,8 +137,6 @@ public class LoginActivity extends BaseClass implements ILoginActivity {
         btnLogin.setTypeface(Utility.typeFaceForBoldText(this));
         tvSignUpText1.setTypeface(Utility.typeFaceForBoldText(this));
         tvSignUpText2.setTypeface(Utility.typeFaceForBoldText(this));
-
-        Intent intent = getIntent();
 
         ivPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,13 +166,17 @@ public class LoginActivity extends BaseClass implements ILoginActivity {
                     if (etEmail.getText().toString().length()>0) {
                         if (!Utility.validEmail(etEmail.getText().toString().trim()))
                             etEmail.setError("Invalid email");
-                        etEmail.requestFocus();
                     } else {
                         etEmail.setError(null);
                     }
                 }
             }
         });
+        Log.e("init","working");
+        startService(new Intent(this, LoginFirebaseMessagingService.class));
+        token = new PreferenceHandler().readString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_FIREBASE_TOKEN, "");
+        Log.e("token:",token);
+        Toast.makeText(this, "Token:" + token, Toast.LENGTH_SHORT).show();
     }
 
     public void onSignUpClicked(View view) {

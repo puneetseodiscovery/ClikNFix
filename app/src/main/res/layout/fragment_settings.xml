@@ -98,7 +98,7 @@
                 android:drawableLeft="@mipmap/privacy_policy_icon"
                 android:drawablePadding="@dimen/onefive_dp"
                 android:text="@string/privacy_policy"
-                android:padding="@dimen/ten_dp"
+                android:padding="@dimen/onefive_dp"
                 android:textColor="@color/blackColor"
                 android:textSize="15sp" />
 
@@ -113,7 +113,7 @@
                 android:drawableLeft="@mipmap/privacy_policy_icon"
                 android:drawablePadding="@dimen/onefive_dp"
                 android:text="@string/change_password"
-                android:padding="@dimen/ten_dp"
+                android:padding="@dimen/onefive_dp"
                 android:textColor="@color/blackColor"
                 android:textSize="15sp" />
 
@@ -128,7 +128,7 @@
                 android:drawableLeft="@mipmap/logout_icon"
                 android:drawablePadding="@dimen/onefive_dp"
                 android:text="@string/logout"
-                android:padding="@dimen/ten_dp"
+                android:padding="@dimen/onefive_dp"
                 android:textColor="@color/blackColor"
                 android:textSize="15sp" />
 

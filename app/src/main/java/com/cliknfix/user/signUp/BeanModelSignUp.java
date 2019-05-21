@@ -7,14 +7,16 @@ public class BeanModelSignUp {
     private String age;
     private String blood_group;
     private String address;
+    private String phone;
     private String password;
 
-    public BeanModelSignUp(String name, String email, String age, String blood_group, String address, String password) {
+    public BeanModelSignUp(String name, String email, String age, String blood_group, String address, String phone, String password) {
         this.name = name;
         this.email = email;
         this.age = age;
         this.blood_group = blood_group;
         this.address = address;
+        this.phone = phone;
         this.password = password;
     }
 
@@ -56,6 +58,14 @@ public class BeanModelSignUp {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {

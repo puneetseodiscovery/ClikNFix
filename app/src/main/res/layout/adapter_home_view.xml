@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,15 +19,21 @@
             android:weightSum="10"
             android:id="@+id/ll_cat_view_item">
 
-            <ImageView
-                android:id="@+id/iv_category"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ten_dp"
-                android:layout_marginLeft="@dimen/onefive_dp"
-                android:layout_marginBottom="@dimen/ten_dp"
-                android:src="@mipmap/carpentry_icon"
-                android:layout_weight="2"/>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:cardCornerRadius="10dp"
+                android:layout_margin="@dimen/onefive_dp"
+                android:elevation="10dp">
+
+                <ImageView
+                    android:id="@+id/iv_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/user_img"
+                    android:scaleType="centerCrop" />
+            </android.support.v7.widget.CardView>
 
 
             <TextView
@@ -39,16 +46,18 @@
                 android:layout_marginLeft="@dimen/twozero_dp"
                 android:textColor="@color/blackColor"
                 android:singleLine="true"
-                android:layout_weight="7">
+                android:layout_weight="8.5">
             </TextView>
 
-            <ImageView android:id="@+id/iv_next"
-                android:layout_margin="@dimen/onefive_dp"
+            <ImageView
+                android:id="@+id/iv_next"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/icon_next"
-                android:layout_weight="1"/>
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_marginBottom="@dimen/onefive_dp"
+                android:layout_weight="1"
+                android:src="@mipmap/icon_next" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

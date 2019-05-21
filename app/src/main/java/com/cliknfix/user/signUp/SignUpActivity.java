@@ -4,14 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,12 +23,14 @@ import com.cliknfix.user.base.BaseClass;
 import com.cliknfix.user.login.LoginActivity;
 import com.cliknfix.user.mobile.MobileNoActivity;
 import com.cliknfix.user.responseModels.SignUpResponseModel;
-import com.cliknfix.user.retrofit.APIInterface;
 import com.cliknfix.user.util.Utility;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -41,21 +39,29 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.linkedin.platform.APIHelper;
+import com.linkedin.platform.LISessionManager;
+import com.linkedin.platform.errors.LIApiError;
+import com.linkedin.platform.errors.LIAuthError;
+import com.linkedin.platform.listeners.ApiListener;
+import com.linkedin.platform.listeners.ApiResponse;
+import com.linkedin.platform.listeners.AuthListener;
+import com.linkedin.platform.utils.Scope;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SignUpActivity extends BaseClass implements ISignUpActivity {
 
-    private static final String TAG = SignUpActivity.class.getSimpleName();
     String[] country = {
-            "Select Blood Group...",
+            "Select Blood Group",
             "A+",
             "AB+",
             "O+",
@@ -98,7 +104,6 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
     @BindView(R.id.btn_login)
     Button btnLogin;
 
-
     IPSignUp ipSignUp;
 
     ProgressDialog progressDialog;
@@ -112,60 +117,51 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        beforeFacebookClick();
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
         ipSignUp = new PSignUp(this);
         init();
+        //printHashKey();
+        beforeFacebookClick();
         beforeGoogleSignIn();
-        printHashKey();
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+        Toast.makeText(this, ""+isLoggedIn, Toast.LENGTH_SHORT).show();
+
     }
 
     private void beforeFacebookClick() {
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
-                Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancel() {
-                // App code
-                Toast.makeText(SignUpActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-                Toast.makeText(SignUpActivity.this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     public void onSignUpButtonClicked(View view) {
         if (Utility.isNetworkConnected(this)) {
             if (etUsername.getText().toString().length()>0 && etEmail.getText().toString().length()>0 && etAge.getText().toString().length()>0
-                    &&  etAddress.getText().toString().length()>0 && spBldGrp.getSelectedItem() != "Select Blood Group..." && etPassword.getText().toString().length()>0) {
+                    && etAddress.getText().toString().length()>0 && spBldGrp.getSelectedItem() != "Select Blood Group..." && etPhone.getText().toString().length()>0
+                    && etPassword.getText().toString().length()>0 && etCnfrmPass.getText().toString().length()>0) {
                 if (Utility.validEmail(etEmail.getText().toString().trim())) {
                     if(Utility.validMobile(etPhone.getText().toString().trim())) {
                         if (etPassword.getText().toString().equals(etCnfrmPass.getText().toString())) {
-                            if (etPassword.getText().toString().length()>=6) {
-                                if (Utility.isValidPassword(etPassword.getText().toString().trim())) {
-                                    if(cbTerms.isChecked()) {
-                                        progressDialog = Utility.showLoader(this);
-                                        //ipSignUp.doSignUp(etUsername.getText().toString().trim(), etEmail.getText().toString().trim().toLowerCase(), etAge.getText().toString().trim(), etBldGrp.getText().toString().trim(), etAddress.getText().toString().trim(), etPassword.getText().toString().trim());
-                                    } else
-                                        Toast.makeText(this, "Please accept the Terms and Conditions.", Toast.LENGTH_SHORT).show();
+                            if(new Integer(etAge.getText().toString()).intValue() <=150){
+                                if (etPassword.getText().toString().length()>=6) {
+                                    if (Utility.isValidPassword(etPassword.getText().toString().trim())) {
+                                        if(cbTerms.isChecked()) {
+                                            progressDialog = Utility.showLoader(this);
+                                            ipSignUp.doSignUp(etUsername.getText().toString().trim(), etEmail.getText().toString().trim().toLowerCase(), etAge.getText().toString().trim(), spBldGrp.getSelectedItem().toString(), etAddress.getText().toString().trim(),etPhone.getText().toString().trim(), etPassword.getText().toString().trim());
+                                        } else
+                                            Toast.makeText(this, "Please accept the Terms and Conditions.", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        etPassword.setError("Alphanumeric password needed.Length should be (6-13) ith no spaces");
+                                        etPassword.requestFocus();
+                                    }
                                 } else {
-                                    etPassword.setError("Alphanumeric password needed.Length should be (6-13) ith no spaces");
+                                    etPassword.setError("Minimum 6 characters.");
                                     etPassword.requestFocus();
                                 }
                             } else {
-                                etPassword.setError("Minimum 6 characters.");
-                                etPassword.requestFocus();
+                                etAge.setError("Maximum age limit should be 150.");
+                                etAge.requestFocus();
                             }
                         } else {
                             etCnfrmPass.setError("Password not matched.");
@@ -180,74 +176,62 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
                     etEmail.requestFocus();
                 }
             } else {
-                if(etUsername.getText().toString().length()==0){
-                    etUsername.setError("Enter Username");
-                    etUsername.requestFocus();
-                }
-                if (etEmail.getText().toString().length()==0) {
-                    etEmail.setError("Enter email");
-                    etEmail.requestFocus();
-                }
-                if (etAge.getText().toString().length()==0) {
-                    etAge.setError("Enter age");
-                    etAge.requestFocus();
-                }
-                if (spBldGrp.getSelectedItem() == "Select Blood Group...") {
+                if (etUsername.getText().toString().length()==0 && etEmail.getText().toString().length()==0 && etAge.getText().toString().length()==0
+                        &&  etAddress.getText().toString().length()==0 && spBldGrp.getSelectedItem() == "Select Blood Group..." && etPhone.getText().toString().length()==0
+                        && etPassword.getText().toString().length()==0 && etCnfrmPass.getText().toString().length()==0)
+                {
+                    etUsername.setError("Enter username.");
+                    etEmail.setError("Enter email.");
+                    etAge.setError("Enter age.");
+                    etAddress.setError("Enter address.");
                     validationForSpinner();
-                }
-                if (etAddress.getText().toString().length()==0) {
-                    etAddress.setError("Enter address");
-                    etAddress.requestFocus();
-                }
-                if (etPhone.getText().toString().length()==0) {
-                    etPhone.setError("Enter Phone");
-                    etPhone.requestFocus();
-                }
-                if (etPassword.getText().toString().length()==0) {
-                    etPassword.setError("Enter password");
-                    etPassword.requestFocus();
-                }
-                if (etCnfrmPass.getText().toString().length()==0) {
-                    etCnfrmPass.setError("Enter confirm password");
-                    etCnfrmPass.requestFocus();
-                }
-                /*if (etUsername.getText().toString().length()==0 && etEmail.getText().toString().length()==0 && etAge.getText().toString().length()==0
-                        && etBldGrp.getText().toString().length()==0 && etAddress.getText().toString().length()==0 && etPassword.getText().toString().length()==0
-                        && etCnfrmPass.getText().toString().length()==0) {
-                    etUsername.setError("Enter Username");
-                    etUsername.requestFocus();
-                    etEmail.setError("Enter email");
-                    etAge.setError("Enter age");
-                    etBldGrp.setError("Enter Blood Group");
-                    etAddress.setError("Enter address");
                     etPhone.setError("Enter phone");
-                    etPassword.setError("Enter Password");
-                    etCnfrmPass.setError("Enter Confirm PAssword");
-                } else if (etUsername.getText().toString().length()==0) {
-                    etUsername.setError("Enter Username");
-                    etUsername.requestFocus();
-                } else if (etEmail.getText().toString().length()==0) {
-                    etEmail.setError("Enter email");
-                    etEmail.requestFocus();
-                } else if (etAge.getText().toString().length()==0) {
-                    etAge.setError("Enter age");
-                    etAge.requestFocus();
-                } else if (etBldGrp.getText().toString().length()==0) {
-                    etBldGrp.setError("Enter blood group");
-                    etBldGrp.requestFocus();
-                } else if (etAddress.getText().toString().length()==0) {
-                    etAddress.setError("Enter address");
-                    etAddress.requestFocus();
-                } else if (etPhone.getText().toString().length()==0) {
-                    etPhone.setError("Enter Phone");
-                    etPhone.requestFocus();
-                } else if (etPassword.getText().toString().length()==0) {
                     etPassword.setError("Enter password");
-                    etPassword.requestFocus();
-                } else if (etCnfrmPass.getText().toString().length()==0) {
                     etCnfrmPass.setError("Enter confirm password");
-                    etCnfrmPass.requestFocus();
-                }*/
+                    etUsername.requestFocus();
+                } else {
+                    if (etCnfrmPass.getText().toString().length()==0) {
+                        etCnfrmPass.setError("Enter confirm password");
+                        etCnfrmPass.requestFocus();
+                    }
+                    if (etPassword.getText().toString().length()==0) {
+                        etPassword.setError("Enter password");
+                        etPassword.requestFocus();
+                    }
+                    if (etPhone.getText().toString().length()==0) {
+                        etPhone.setError("Enter phone");
+                        etPhone.requestFocus();
+                    } else {
+                        if (!Utility.validMobile(etPhone.getText().toString().trim())) {
+                            etEmail.setError("Invalid email");
+                            etEmail.requestFocus();
+                        }
+                    }
+                    if (etAddress.getText().toString().length()==0) {
+                        etAddress.setError("Enter address");
+                        etAddress.requestFocus();
+                    }
+                    if (spBldGrp.getSelectedItem() == "Select Blood Group...") {
+                        validationForSpinner();
+                    }
+                    if (etAge.getText().toString().length()==0) {
+                        etAge.setError("Enter age");
+                        etAge.requestFocus();
+                    }
+                    if (etEmail.getText().toString().length()==0) {
+                        etEmail.setError("Enter email");
+                        etEmail.requestFocus();
+                    } else {
+                        if (!Utility.validEmail(etEmail.getText().toString().trim())) {
+                            etEmail.setError("Invalid email");
+                            etEmail.requestFocus();
+                        }
+                    }
+                    if(etUsername.getText().toString().length()==0){
+                        etUsername.setError("Enter username");
+                        etUsername.requestFocus();
+                    }
+                }
             }
         } else {
             Toast.makeText(this, getResources().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
@@ -255,8 +239,47 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
     }
 
     public void onFacebookClicked(View view) {
-        if(Utility.isNetworkConnected(this))
-            LoginManager.getInstance().logInWithReadPermissions(SignUpActivity.this, Arrays.asList("public_profile", "user_friends"));
+        if(Utility.isNetworkConnected(this)) {
+            LoginManager.getInstance().logInWithReadPermissions(SignUpActivity.this, Arrays.asList("public_profile","email"));
+            LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    // App code
+                    Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                    GraphRequest request = GraphRequest.newMeRequest(
+                    loginResult.getAccessToken(),
+                    new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(JSONObject jsonObject, GraphResponse response) {
+                            Log.v("Main", response.toString());
+                            try {
+                                Log.e("obj","" + jsonObject);
+                                Log.e("email","" + jsonObject.getString("email"));
+                                Log.e("name","" +jsonObject.getString("name"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    Bundle parameters = new Bundle();
+                    parameters.putString("fields", "name,email");
+                    request.setParameters(parameters);
+                    request.executeAsync();
+                }
+
+                @Override
+                public void onCancel() {
+                    // App code
+                    Toast.makeText(SignUpActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(FacebookException exception) {
+                    // App code
+                    Toast.makeText(SignUpActivity.this, "Error:" + exception.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
         else
             Toast.makeText(this, getResources().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
 
@@ -271,21 +294,55 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
     }
 
     public void onLinkedInClicked(View view) {
-        if(Utility.isNetworkConnected(this)) {
-           /* LISessionManager.getInstance(getApplicationContext()).init(thisActivity, buildScope(), new AuthListener() {
-                @Override
-                public void onAuthSuccess() {
-                    // Authentication was successful.  You can now do
-                    // other calls with the SDK.
-                }
+        LoginManager.getInstance().logOut();
+//        if(Utility.isNetworkConnected(this)) {
+//            LISessionManager.getInstance(getApplicationContext()).init(SignUpActivity.this, buildScope(), new AuthListener() {
+//                @Override
+//                public void onAuthSuccess() {
+//                    Toast.makeText(getApplicationContext(),"Login Success ",Toast.LENGTH_LONG).show();
+//                    String url = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address)";
+//
+//                    APIHelper apiHelper = APIHelper.getInstance(getApplicationContext());
+//                    apiHelper.getRequest(SignUpActivity.this, url, new ApiListener() {
+//                        @Override
+//                        public void onApiSuccess(ApiResponse apiResponse) {
+//                            Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
+//                            try {
+//                                JSONObject jsonObject = apiResponse.getResponseDataAsJson();
+//                                String firstName = jsonObject.getString("firstName");
+//                                String lastName = jsonObject.getString("lastName");
+//                                String userEmail = jsonObject.getString("emailAddress");
+//
+//                                StringBuilder stringBuilder = new StringBuilder();
+//                                stringBuilder.append("First Name " + firstName + "\n\n");
+//                                stringBuilder.append("Last Name " + lastName + "\n\n");
+//                                stringBuilder.append("Email " + userEmail);
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//                        }
+//
+//                        @Override
+//                        public void onApiError(LIApiError liApiError) {
+//                            // Error making GET request!
+//                            Toast.makeText(getApplicationContext(),"API Error"+liApiError.toString(),Toast.LENGTH_LONG).show();
+//                        }
+//                    });
+//                }
+//
+//                @Override
+//                public void onAuthError(LIAuthError error) {
+//                    // Handle authentication errors
+//                    Toast.makeText(getApplicationContext(),"Login Error "+error.toString(),Toast.LENGTH_LONG).show();
+//                }
+//            }, true);
+//        } else
+//            Toast.makeText(this, getResources().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
+    }
 
-                @Override
-                public void onAuthError(LIAuthError error) {
-                    // Handle authentication errors
-                }
-            }, true);*/
-        } else
-            Toast.makeText(this, getResources().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
+    private static Scope buildScope() {
+        return Scope.build(Scope.R_BASICPROFILE, Scope.R_EMAILADDRESS);
     }
 
     @Override
@@ -299,11 +356,13 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleGoogleSignInResult(task);
         }
+        LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
     }
 
     private void handleGoogleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            Log.e("google signin","" + account);
             // Signed in successfully, show authenticated UI.
             //updateUI(account);
         } catch (ApiException e) {
@@ -326,22 +385,6 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
         tvOr.setTypeface(Utility.typeFaceForText(this));
         btnLogin.setTypeface(Utility.typeFaceForBoldText(this));
         loadSpinner();
-        etEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    // code to execute when EditText loses focus
-                    if (etEmail.getText().toString().length()>0) {
-                        if (!Utility.validEmail(etEmail.getText().toString().trim()))
-                            etEmail.setError("Invalid email");
-                        etEmail.requestFocus();
-                    } else {
-                        etEmail.setError(null);
-                    }
-                }
-            }
-        });
-
     }
 
     public void loadSpinner() {
@@ -364,7 +407,7 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
     public void validationForSpinner() {
         TextView errorText = (TextView)spBldGrp.getSelectedView();
         errorText.setError("Select Value");
-        errorText.setTextColor(Color.RED);//just to highlight that this is an error
+        errorText.setTextColor(getResources().getColor(R.color.edittextHintColor));//just to highlight that this is an error
         errorText.setText("Select Blood Group");//changes the selected item text to this
     }
 
@@ -380,16 +423,20 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
     }
 
     private void printHashKey() {
+        Log.e("printHashKey", "working");
         try {
-            PackageInfo info =     getPackageManager().getPackageInfo("com.cliknfix",     PackageManager.GET_SIGNATURES);
+            PackageInfo info =     getPackageManager().getPackageInfo("com.cliknfix.user",     PackageManager.GET_SIGNATURES);
             for (android.content.pm.Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
-                String sign= Base64.encodeToString(md.digest(), Base64.DEFAULT);
+                 String sign= Base64.encodeToString(md.digest(), Base64.DEFAULT);
                 Log.e("MY KEY HASH:", sign);
+                Log.d("++++++","++ hash key ++"+sign);
             }
         } catch (PackageManager.NameNotFoundException e) {
+            Log.e("error1:", e.getMessage());
         } catch (NoSuchAlgorithmException e) {
+            Log.e("error2:", e.getMessage());
         }
     }
 
@@ -410,7 +457,10 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
     public void onSignUpResponseSuccessFromPresenter(SignUpResponseModel signUpResponseModel) {
         progressDialog.dismiss();
         Toast.makeText(this, "User Successfully Registered.", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, MobileNoActivity.class));
+        Intent intent = new Intent(SignUpActivity.this, MobileNoActivity.class);
+        intent.putExtra("phone", "" +signUpResponseModel.getData().get(0).getPhone().toString().trim());
+        intent.putExtra("userId", "" +signUpResponseModel.getData().get(0).getId().toString().trim());
+        startActivity(intent);
     }
 
     @Override

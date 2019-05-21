@@ -5,16 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cliknfix.user.R;
 import com.cliknfix.user.base.BaseClass;
+import com.cliknfix.user.login.LoginActivity;
 import com.cliknfix.user.otp.OtpActivity;
 import com.cliknfix.user.responseModels.MobileNoResponseModel;
 import com.cliknfix.user.util.Utility;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,12 +25,14 @@ public class MobileNoActivity extends BaseClass implements IMobileNoActivity
     TextView tvP1;
     @BindView(R.id.tv_country_code)
     TextView tvCC;
-    @BindView(R.id.et_mobile_no)
-    EditText etMobile;
+    @BindView(R.id.tv_mobile_no)
+    TextView tvMobile;
 
     IPMobileActivity ipMobileActivity;
     ProgressDialog progressDialog;
     String phone;
+    String mobileNo,user_id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,24 +45,19 @@ public class MobileNoActivity extends BaseClass implements IMobileNoActivity
 
     public void init() {
         tvP1.setTypeface(Utility.typeFaceForText(this));
+        //tvMobile.setText("9463924817");
+        mobileNo = getIntent().getStringExtra("phone");
+        user_id = getIntent().getStringExtra("userId");
+        Log.e("Mobile phone","" + mobileNo);
+        Log.e("Mobile password","" + user_id);
+        tvMobile.setText(mobileNo);
     }
 
     public void onNextClicked(View view) {
-        //startActivity(new Intent(this, OtpActivity.class));
         if (Utility.isNetworkConnected(this)) {
-            if (etMobile.getText().toString().length()>0){
-                if (Utility.validMobile(etMobile.getText().toString().trim())){
-                    progressDialog = Utility.showLoader(this);
-                     phone = tvCC.getText()+ " " + etMobile.getText().toString().trim().toLowerCase();
-                    ipMobileActivity.sendOTP(phone);
-                } else {
-                    etMobile.setError("Enter  valid Mobile Number");
-                    etMobile.requestFocus();
-                }
-            } else {
-                etMobile.setError("Enter Mobile Number");
-                etMobile.requestFocus();
-            }
+            progressDialog = Utility.showLoader(this);
+            phone = tvCC.getText()+ " " + tvMobile.getText().toString().trim().toLowerCase();
+            ipMobileActivity.sendOTP(phone,user_id,"0");
         }
     }
 
@@ -68,12 +65,14 @@ public class MobileNoActivity extends BaseClass implements IMobileNoActivity
         progressDialog.dismiss();
         Toast.makeText(this, "" + mobileNoResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(MobileNoActivity.this, OtpActivity.class);
-        //intent.putExtra("otp", mobileNoResponseModel.getData().get0());
         intent.putExtra("phone", phone);
+        intent.putExtra("userId", user_id);
         startActivity(intent);
     }
 
     public void onSendOTPFailureFromPresenter(String message) {
-
+        progressDialog.dismiss();
+        Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, OtpActivity.class));
     }
 }

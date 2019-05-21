@@ -24,7 +24,7 @@
                 android:layout_height="@dimen/onetwozero_dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/threetwo_dp"
-                android:src="@drawable/login_logo" />
+                android:src="@mipmap/login_logo" />
 
             <TextView
                 android:id="@+id/login_text"
@@ -62,8 +62,8 @@
                 android:paddingRight="@dimen/ten_dp"
                 android:textColor="@color/edittextHintColor"
                 android:textSize="17sp"
-
-                android:inputType="text"/>
+                android:inputType="text"
+                android:imeOptions="actionNext"/>
 
             <FrameLayout
                 android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                     android:paddingTop="@dimen/ten_dp"
                     android:paddingRight="@dimen/ten_dp"
                     android:textColor="@color/edittextHintColor"
-
+                    android:imeOptions="actionDone"
                     android:textSize="17sp" />
 
                 <ImageView
@@ -117,7 +117,6 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/threezero_dp"
                 android:layout_marginTop="@dimen/ten_dp"
-                android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -129,20 +128,8 @@
                     android:buttonTint="@color/whiteColor"
                     android:text="@string/rem_pass"
                     android:maxLines="1"
-                    android:textSize="13sp"
+                    android:textSize="15sp"
                     android:textColor="@color/editTextBackColor" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:id="@+id/tv_forgot_pass"
-                    android:gravity="center"
-                    android:textSize="13sp"
-                    android:maxLines="1"
-                    android:onClick="onForgotPasswordClicked"
-                    android:text="@string/forgot_pass"
-                    android:textColor="@color/forgotPassColor" />
 
             </LinearLayout>
 
@@ -164,11 +151,24 @@
                 android:textColor="@color/blackColor"
                 android:textSize="20sp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_forgot_pass"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:maxLines="1"
+                android:layout_marginTop="@dimen/onefive_dp"
+                android:layout_below="@+id/btn_signin"
+                android:onClick="onForgotPasswordClicked"
+                android:text="@string/forgot_pass"
+                android:textColor="@color/forgotPassColor" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_below="@+id/btn_signin"
+                android:layout_below="@+id/tv_forgot_pass"
                 android:gravity="center"
-                android:layout_marginTop="@dimen/fivezero_dp"
+                android:layout_marginTop="@dimen/ten_dp"
                 android:layout_marginLeft="@dimen/threetwo_dp"
                 android:layout_marginStart="@dimen/threetwo_dp"
                 android:layout_marginRight="@dimen/threetwo_dp"
@@ -182,7 +182,7 @@
                     android:textSize="15sp"
                     android:layout_centerInParent="true"
                     android:textColor="@color/whiteColor"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -192,7 +192,7 @@
                     android:layout_toRightOf="@+id/signUp"
                     android:textColor="@color/whiteColor"
                     android:gravity="center"
-                    android:layout_height="50dp"
+                    android:layout_height="match_parent"
                     android:onClick="onSignUpClicked"/>
 
             </RelativeLayout>

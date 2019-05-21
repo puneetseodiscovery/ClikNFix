@@ -15,13 +15,10 @@ public class PSignUp implements IPSignUp {
     }
 
     @Override
-    public void doSignUp(String username, String email, String age, String bloodGroup, String address, String password)
+    public void doSignUp(String username, String email, String age, String bloodGroup, String address, String phone, String password)
     {
-
-        BeanModelSignUp beanModelSignUp = new BeanModelSignUp(username,email,age,bloodGroup,address,password);
+        BeanModelSignUp beanModelSignUp = new BeanModelSignUp(username,email,age,bloodGroup,address,phone,password);
         iModleSignUpActivity.signUpRestCall(beanModelSignUp);
-
-
     }
 
     @Override

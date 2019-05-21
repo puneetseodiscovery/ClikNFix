@@ -1,12 +1,12 @@
 package com.cliknfix.user.chat;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.cliknfix.user.R;
+import com.cliknfix.user.base.BaseClass;
 
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends BaseClass {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

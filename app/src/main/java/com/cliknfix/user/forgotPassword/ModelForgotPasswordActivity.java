@@ -32,13 +32,11 @@ public class ModelForgotPasswordActivity implements IModelForgotPasswordActivity
 
             switch (msg.what) {
                 case APIInterface.FORGOT_SUCCESS:
-                    Log.e("FORGOT_SUCCESS","Success");
                     ForgotPasswordResponseModel forgotPasswordResponseModel = (ForgotPasswordResponseModel) msg.obj;
                     ipForgotPasswordActivity.onForgotPasswordSuccessResponse(forgotPasswordResponseModel);
 
                     break;
                 case APIInterface.FORGOT_FAILED:
-                    Log.e("FORGOT_FAILED","Success");
                     String message = (String) msg.obj;
                     ipForgotPasswordActivity.onForgotPasswordFailureResponse(message);
                     break;

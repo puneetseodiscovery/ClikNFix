@@ -2,21 +2,22 @@ package com.cliknfix.user.otp;
 
 import android.os.Message;
 
+import com.cliknfix.user.responseModels.OTPResponseModel;
 import com.cliknfix.user.retrofit.APIInterface;
 import com.cliknfix.user.retrofit.RetrofitCalls;
 
 public class ModelOtp implements IMOtp {
 
-    POtp pOtp;
+    IPOtp ipOtp;
 
     public ModelOtp(POtp pOtp) {
-        this.pOtp = pOtp;
+        this.ipOtp = pOtp;
     }
 
     @Override
-    public void fillOTP(String otp,String phone) {
+    public void fillOTP(String phone,String otp,String user_id) {
         RetrofitCalls retrofitCalls = new RetrofitCalls();
-        retrofitCalls.fillOTP(otp,phone,mHandler);
+        retrofitCalls.fillOTP(phone,otp,user_id,mHandler);
     }
 
     android.os.Handler mHandler = new android.os.Handler() {
@@ -25,13 +26,13 @@ public class ModelOtp implements IMOtp {
 
             switch (msg.what) {
                 case APIInterface.FILL_OTP_SUCCESS:
-                   /* MobileNoResponseModel mobileNoResponseModel = (MobileNoResponseModel) msg.obj;
-                    pMobileActivity.onSendOTPSuccess(mobileNoResponseModel);*/
+                    OTPResponseModel otpResponseModel = (OTPResponseModel) msg.obj;
+                    ipOtp.onFillOTPSuccess(otpResponseModel);
                     break;
 
                 case APIInterface.FILL_OTP_FAILURE:
                     String message = (String) msg.obj;
-                    //pMobileActivity.onSendOTPFailure(message);
+                    ipOtp.onFillOTPFailure(message);
                     break;
             }
         }

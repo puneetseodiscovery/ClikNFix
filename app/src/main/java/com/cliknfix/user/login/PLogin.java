@@ -1,7 +1,7 @@
 package com.cliknfix.user.login;
 
 
-import com.cliknfix.user.responseModels.UserModelLoginResponse;
+import com.cliknfix.user.responseModels.LoginResponseModel;
 
 public class PLogin implements IPLogin {
 
@@ -10,24 +10,27 @@ public class PLogin implements IPLogin {
 
     public PLogin(LoginActivity loginActivity) {
         iLogin = loginActivity;
-    }
-
-    @Override
-    public void doLogin(String email, String password) {
-        BeanLogin beanLogin = new BeanLogin(email,password);
         iModelLogin = new ModelLogin(this);
-        iModelLogin.loginRestCall(beanLogin);
     }
 
     @Override
-    public void onLoginSuccess(UserModelLoginResponse userModelLoginResponse) {
+    public void doLogin(String email, String password,String device_token) {
+        //BeanLogin beanLogin = new BeanLogin(email,password,device_token);
+        iModelLogin.loginRestCall(email,password,device_token);
+    }
 
+    @Override
+    public void onLoginSuccess(LoginResponseModel userModelLoginResponse) {
         iLogin.onLoginSuccessFromPresenter(userModelLoginResponse);
     }
 
     @Override
-    public void onLoginFailed(String message) {
+    public void otpNotVerified(LoginResponseModel loginResponseModel) {
+        iLogin.otpNotVerifiedFromPresenter(loginResponseModel);
+    }
 
+    @Override
+    public void onLoginFailed(String message) {
         iLogin.onLoginFailedFromPresenter(message);
     }
 }

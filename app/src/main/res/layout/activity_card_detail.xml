@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".user.login.LoginActivity"
+    tools:context=".login.LoginActivity"
     android:background="@drawable/login_background"
     android:orientation="vertical">
 
@@ -17,7 +17,6 @@
             android:id="@+id/iv_back"
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/onefive_dp"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_centerVertical="true"
@@ -46,45 +45,41 @@
 
         <LinearLayout android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/twozero_dp"
             android:orientation="vertical"
-            android:weightSum="10">
+            android:layout_marginTop="@dimen/twozero_dp">
 
-            <LinearLayout android:layout_width="match_parent"
+            <LinearLayout android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/ten_dp"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:layout_gravity="left"
+                android:layout_marginLeft="@dimen/onefive_dp">
 
                 <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="2"
-                    android:layout_weight="1">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                    <LinearLayout android:layout_width="match_parent"
+                    <LinearLayout android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/ten_dp"
+                        android:padding="@dimen/onefive_dp"
                         android:background="@drawable/rectangle_rounded_corner"
                         android:orientation="horizontal"
                         android:layout_marginRight="@dimen/ten_dp">
 
                         <ImageView
                             android:layout_height="wrap_content"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:src="@mipmap/visa_card_icon"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="1"/>
+                            android:layout_gravity="center_vertical" />
 
                         <TextView
                             android:id="@+id/tv_visa_card"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/visa_card"
                             android:textColor="@color/edittextHintColor"
                             android:textSize="13sp"
-                            android:layout_weight="1"
+                            android:layout_marginLeft="@dimen/ten_dp"
                             android:layout_gravity="center"/>
                     </LinearLayout>
 
@@ -98,35 +93,30 @@
                 </FrameLayout>
 
                 <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="2"
-                    android:layout_weight="1">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
                     <LinearLayout android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/ten_dp"
+                        android:padding="@dimen/onefive_dp"
                         android:background="@drawable/rectangle_rounded_corner"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="@dimen/ten_dp"
-                        android:layout_marginRight="@dimen/five_dp">
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_height="wrap_content"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:src="@mipmap/master_card_icon"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="1"/>
+                            android:layout_gravity="center_vertical" />
 
                         <TextView
                             android:id="@+id/tv_master_card"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
                             android:text="@string/master_card"
                             android:textColor="@color/edittextHintColor"
-                            android:textSize="10sp"
-                            android:layout_weight="1"
+                            android:textSize="13sp"
+                            android:maxLines="1"
+                            android:layout_marginLeft="@dimen/ten_dp"
                             android:layout_gravity="center"/>
                     </LinearLayout>
                     <ImageView
@@ -140,13 +130,15 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/rectangle_rounded_corner"
                 android:orientation="vertical"
+                android:layout_marginLeft="@dimen/onefive_dp"
+                android:layout_marginRight="@dimen/onefive_dp"
                 android:layout_marginTop="@dimen/twozero_dp"
-                android:padding="@dimen/twofive_dp">
+                android:padding="@dimen/ten_dp">
 
                 <TextView
                     android:id="@+id/tv_card_number_text"
@@ -175,7 +167,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="2"
                     android:layout_marginTop="@dimen/onefive_dp">
 
                     <LinearLayout

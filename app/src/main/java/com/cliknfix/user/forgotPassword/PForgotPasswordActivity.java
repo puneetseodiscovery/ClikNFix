@@ -10,7 +10,6 @@ public class PForgotPasswordActivity implements IPForgotPasswordActivity {
     private IModelForgotPasswordActivity iModelForgotPasswordActivity;
 
     public PForgotPasswordActivity(ForgotPasswordActivity forgotPasswordActivity) {
-
         iForgotPasswordActivity = forgotPasswordActivity;
         iModelForgotPasswordActivity = new ModelForgotPasswordActivity(this);
     }

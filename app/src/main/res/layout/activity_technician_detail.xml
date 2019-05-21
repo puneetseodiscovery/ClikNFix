@@ -17,7 +17,6 @@
             android:id="@+id/iv_back"
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/onefive_dp"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_centerVertical="true"
@@ -193,8 +192,7 @@
                 android:layout_marginTop="@dimen/twozero_dp"
                 android:layout_marginBottom="@dimen/twozero_dp"
                 android:layout_marginLeft="@dimen/onefive_dp"
-                android:layout_marginRight="@dimen/onefive_dp"
-                >
+                android:layout_marginRight="@dimen/onefive_dp">
 
                 <Button
                     android:id="@+id/btn_track"
@@ -204,8 +202,8 @@
                     android:text="@string/track"
                     android:textSize="17sp"
                     android:layout_alignParentLeft="true"
-                    android:paddingLeft="@dimen/fivezero_dp"
-                    android:paddingRight="@dimen/fivezero_dp"
+                    android:paddingLeft="@dimen/threezero_dp"
+                    android:paddingRight="@dimen/threezero_dp"
                     android:background="@drawable/background_white"
                     android:backgroundTint="@color/forgotPassColor"
                     android:textColor="@color/whiteColor"
@@ -216,11 +214,11 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:gravity="center"
-                    android:text="@string/payment_button"
+                    android:text="@string/payment"
                     android:textSize="17sp"
                     android:layout_alignParentRight="true"
-                    android:paddingLeft="@dimen/threetwo_dp"
-                    android:paddingRight="@dimen/threetwo_dp"
+                    android:paddingLeft="@dimen/twofive_dp"
+                    android:paddingRight="@dimen/twofive_dp"
                     android:background="@drawable/background_white"
                     android:layout_alignRight="@+id/btn_track"
                     android:backgroundTint="@color/paymentButtonColor"

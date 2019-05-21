@@ -10,6 +10,7 @@
     <color name="paymentButtonColor">#009e0f</color>
     <color name="edittextHintColor">#535353</color>
     <color name="logoColor">#fbd405</color>
+    <color name="reviewStarColor">#ff9900</color>
     <color name="whiteColor">#ffffff</color>
     <color name="blackColor">#000000</color>
 

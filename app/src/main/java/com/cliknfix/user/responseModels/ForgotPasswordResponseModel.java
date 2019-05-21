@@ -3,6 +3,8 @@ package com.cliknfix.user.responseModels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class ForgotPasswordResponseModel {
 
     @SerializedName("status")
@@ -13,7 +15,7 @@ public class ForgotPasswordResponseModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private Data data;
+    private List<Object> data = null;
 
     public String getStatus() {
         return status;
@@ -31,13 +33,12 @@ public class ForgotPasswordResponseModel {
         this.message = message;
     }
 
-    public Data getData() {
+    public List<Object> getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(List<Object> data) {
         this.data = data;
     }
 
-    public class Data {}
 }

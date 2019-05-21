@@ -1,8 +1,23 @@
 package com.cliknfix.user.otp;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +30,11 @@ import com.cliknfix.user.homeScreen.HomeScreenActivity;
 import com.cliknfix.user.login.LoginActivity;
 import com.cliknfix.user.responseModels.OTPResponseModel;
 import com.cliknfix.user.util.Utility;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +63,12 @@ public class OtpActivity extends BaseClass implements IOtpActivity {
 
     ProgressDialog progressDialog;
     IPOtp ipOtp;
+    String val = "";
+    public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
+    String message;
+    String phone,mobileNo;
+    String user_id;
+    public static final int REQUEST_CODE = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +76,12 @@ public class OtpActivity extends BaseClass implements IOtpActivity {
         setContentView(R.layout.activity_otp);
         ButterKnife.bind(this);
         ipOtp = new POtp(this);
-        init();
+        /*if (checkAndRequestPermissions()) {
+            init();
+        }*/
+        if (checkForPermission()){
+            init();
+        }
     }
 
     public void init() {
@@ -65,6 +96,68 @@ public class OtpActivity extends BaseClass implements IOtpActivity {
         etOTP2.setSelection(0);
         etOTP3.setSelection(0);
         etOTP4.setSelection(0);
+
+        phone = getIntent().getExtras().getString("phone");
+        user_id = getIntent().getExtras().getString("userId");
+        LocalBroadcastManager.getInstance(this).
+                registerReceiver(receiver, new IntentFilter("otp"));
+    }
+
+    /*private  boolean checkAndRequestPermissions() {
+        int permissionSendMessage = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.SEND_SMS);
+
+        int receiveSMS = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECEIVE_SMS);
+
+        int readSMS = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_SMS);
+        List<String> listPermissionsNeeded = new ArrayList<>();
+
+        if (receiveSMS != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.RECEIVE_MMS);
+        }
+        if (readSMS != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_SMS);
+        }
+        if (permissionSendMessage != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.SEND_SMS);
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(this,
+                    listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),
+                    REQUEST_ID_MULTIPLE_PERMISSIONS);
+            return false;
+        }
+        return true;
+    }*/
+
+    public boolean checkForPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{
+                            android.Manifest.permission.SEND_SMS,
+                            android.Manifest.permission.RECEIVE_SMS,
+                            android.Manifest.permission.READ_SMS},
+                    REQUEST_CODE);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{
+                                android.Manifest.permission.SEND_SMS,
+                                android.Manifest.permission.RECEIVE_SMS,
+                                android.Manifest.permission.READ_SMS},
+                        REQUEST_CODE);
+            }
+        }
     }
 
     public void onSubmitClicked(View view) {
@@ -74,7 +167,8 @@ public class OtpActivity extends BaseClass implements IOtpActivity {
                 String otp = etOTP1.getText().toString().trim().toLowerCase() + etOTP2.getText().toString().trim().toLowerCase()
                         + etOTP3.getText().toString().trim().toLowerCase() + etOTP4.getText().toString().trim().toLowerCase();
                 progressDialog = Utility.showLoader(this);
-                ipOtp.fillOTP(otp,getIntent().getExtras().getString("phone"));
+                mobileNo = "+91 " + phone;
+                ipOtp.fillOTP(mobileNo,otp,user_id);
             } else {
                 etOTP4.setError("Enter OTP Number");
                 etOTP4.requestFocus();
@@ -98,5 +192,54 @@ public class OtpActivity extends BaseClass implements IOtpActivity {
     @Override
     public void onFillOTPFailureFromPresenter(String message) {
         Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("Resgister","working");
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("UnResgister","working");
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.e("onReceive","working");
+            if (intent.getAction().equalsIgnoreCase("otp")) {
+                message = intent.getStringExtra("message");
+                Log.e("Receive OTP Message:",message);
+                Log.e("OTP phone","" + phone);
+                Log.e("OTP password","" + user_id);
+                if(phone!=null && user_id!=null)
+                    fillOTP();
+            }
+        }
+    };
+
+    private void fillOTP() {
+        Log.e("fillOTP","phone:");
+        Pattern pattern = Pattern.compile("(\\d{4})");
+        Matcher matcher = pattern.matcher(message);
+
+        if (matcher.find()) {
+            val = matcher.group(0);  // 4 digit number
+        }
+        Log.e("OTP:",val);
+
+        String [] arr = val.split("");
+        if(arr.length == 4) {
+            etOTP1.setText(arr[0]);
+            etOTP2.setText(arr[1]);
+            etOTP3.setText(arr[2]);
+            etOTP4.setText(arr[3]);
+        }
+        Log.e("OTP VAL","" + arr);
     }
 }

@@ -94,9 +94,9 @@ public class Utility {
         return new PreferenceHandler().readString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_TOKEN, "");
     }
 
-    public static Integer getUserId()
+    public static int getUserId()
     {
-        return new PreferenceHandler().readInteger(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_TOKEN, 0);
+        return new PreferenceHandler().readInteger(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_USER_ID, 0);
     }
 
     public static ProgressDialog showLoader(Context context) {

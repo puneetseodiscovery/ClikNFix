@@ -1,24 +1,36 @@
 package com.cliknfix.user.homeScreen.bottomFragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cliknfix.user.R;
+import com.cliknfix.user.aboutUs.AboutUsActivity;
 import com.cliknfix.user.changePassword.ChangePasswordActivity;
+import com.cliknfix.user.contact.ContactUsActivity;
 import com.cliknfix.user.homeScreen.HomeScreenActivity;
+import com.cliknfix.user.homeScreen.bottomFragments.presenter.IPSettingsFragment;
+import com.cliknfix.user.homeScreen.bottomFragments.presenter.PSettingsFragment;
+import com.cliknfix.user.login.LoginActivity;
+import com.cliknfix.user.privacyPolicy.PrivacyPolicyActivity;
+import com.cliknfix.user.responseModels.LogoutResponseModel;
 import com.cliknfix.user.util.Utility;
+import com.facebook.login.LoginManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SettingsFragment extends Fragment implements View.OnClickListener {
+public class SettingsFragment extends Fragment implements View.OnClickListener,ISettingsFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -46,6 +58,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     TextView tvLogout;
 
     Context context;
+    IPSettingsFragment ipSettingsFragment;
+    ProgressDialog progressDialog;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -85,6 +99,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         View view =inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this,view);
         context = getContext();
+        ipSettingsFragment = new PSettingsFragment(this);
         init();
         return view;
     }
@@ -113,6 +128,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         int id = v.getId();
         switch (id){
             case R.id.tv_about_us:
+                startActivity(new Intent((HomeScreenActivity)context, AboutUsActivity.class));
                 break;
             case R.id.tv_profile_settings:
                 FragmentTransaction transaction = ((HomeScreenActivity) context).getSupportFragmentManager().beginTransaction();
@@ -123,16 +139,53 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.tv_payments:
                 break;
             case R.id.tv_contact_us:
+                startActivity(new Intent((HomeScreenActivity)context, ContactUsActivity.class));
                 break;
             case R.id.tv_privacy_policy:
+                startActivity(new Intent((HomeScreenActivity)context, PrivacyPolicyActivity.class));
                 break;
             case R.id.tv_change_password:
                 startActivity(new Intent((HomeScreenActivity)context, ChangePasswordActivity.class));
                 break;
             case R.id.tv_logout:
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                alertDialogBuilder.setTitle("Logout");
+                alertDialogBuilder
+                    .setMessage("" +
+                            "\nAre you sure you want to logout?")
+                    .setCancelable(false)
+                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            progressDialog = Utility.showLoader(context);
+                            ipSettingsFragment.doLogout(12);
+                            LoginManager.getInstance().logOut();
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
                 break;
 
         }
 
+    }
+
+    @Override
+    public void logoutSuccessFromPresenter(LogoutResponseModel logoutResponseModel) {
+        progressDialog.dismiss();
+        startActivity(new Intent((HomeScreenActivity)context, LoginActivity.class));
+    }
+
+    @Override
+    public void logoutFailureFromPresenter(String message) {
+        progressDialog.dismiss();
+        Toast.makeText(context, ""+message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -3,6 +3,8 @@ package com.cliknfix.user.responseModels;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class SignUpResponseModel {
 
     @SerializedName("status")
@@ -13,7 +15,7 @@ public class SignUpResponseModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private Data data;
+    private List<Datum> data = null;
 
     public String getStatus() {
         return status;
@@ -31,15 +33,15 @@ public class SignUpResponseModel {
         this.message = message;
     }
 
-    public Data getData() {
+    public List<Datum> getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(List<Datum> data) {
         this.data = data;
     }
 
-    public class Data {
+    public class Datum {
 
         @SerializedName("id")
         @Expose
@@ -61,7 +63,7 @@ public class SignUpResponseModel {
         private Object phone;
         @SerializedName("age")
         @Expose
-        private Object age;
+        private String age;
         @SerializedName("blood_group")
         @Expose
         private String bloodGroup;
@@ -70,7 +72,7 @@ public class SignUpResponseModel {
         private Object gender;
         @SerializedName("address")
         @Expose
-        private Object address;
+        private String address;
         @SerializedName("remember_token")
         @Expose
         private String rememberToken;
@@ -135,11 +137,11 @@ public class SignUpResponseModel {
             this.phone = phone;
         }
 
-        public Object getAge() {
+        public String getAge() {
             return age;
         }
 
-        public void setAge(Object age) {
+        public void setAge(String age) {
             this.age = age;
         }
 
@@ -159,11 +161,11 @@ public class SignUpResponseModel {
             this.gender = gender;
         }
 
-        public Object getAddress() {
+        public String getAddress() {
             return address;
         }
 
-        public void setAddress(Object address) {
+        public void setAddress(String address) {
             this.address = address;
         }
 
