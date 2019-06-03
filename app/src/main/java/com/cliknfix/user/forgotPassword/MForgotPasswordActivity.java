@@ -1,18 +1,17 @@
 package com.cliknfix.user.forgotPassword;
 
 import android.os.Message;
-import android.util.Log;
 
 import com.cliknfix.user.responseModels.ForgotPasswordResponseModel;
 import com.cliknfix.user.retrofit.APIInterface;
 import com.cliknfix.user.retrofit.RetrofitCalls;
 
-public class ModelForgotPasswordActivity implements IModelForgotPasswordActivity {
+public class MForgotPasswordActivity implements IMForgotPasswordActivity {
 
     IPForgotPasswordActivity ipForgotPasswordActivity;
     String value;
 
-    public ModelForgotPasswordActivity(PForgotPasswordActivity pForgotPasswordActivity) {
+    public MForgotPasswordActivity(PForgotPasswordActivity pForgotPasswordActivity) {
 
         ipForgotPasswordActivity = pForgotPasswordActivity;
     }

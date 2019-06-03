@@ -13,6 +13,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.cliknfix.user.R;
 import com.cliknfix.user.base.MyApp;
@@ -47,7 +48,8 @@ public class LoginFirebaseMessagingService extends FirebaseMessagingService {
                         }
                         // Get new Instance ID token
                         token = task.getResult().getToken();
-                        Log.d("Token", token);
+                        Log.e("Firebase Token", token);
+                        Toast.makeText(LoginFirebaseMessagingService.this, "Firebase Token:"+ token, Toast.LENGTH_SHORT).show();
                         new PreferenceHandler().writeString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_FIREBASE_TOKEN, token);
                         String mLoginToken = new PreferenceHandler().readString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_FIREBASE_TOKEN, "");
                         Log.d("1mLoginToken", mLoginToken);

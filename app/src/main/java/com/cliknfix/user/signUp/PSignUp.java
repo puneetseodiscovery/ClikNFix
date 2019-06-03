@@ -1,6 +1,7 @@
 package com.cliknfix.user.signUp;
 
 import com.cliknfix.user.responseModels.SignUpResponseModel;
+import com.cliknfix.user.responseModels.SocialLoginResponseModel;
 
 public class PSignUp implements IPSignUp {
 
@@ -29,5 +30,25 @@ public class PSignUp implements IPSignUp {
     @Override
     public void onSignUpResponseFailureFromModel(String message) {
         iSignUpActivity.onSignUpResponseFailureFromPresenter(message);
+    }
+
+    @Override
+    public void doLogin(String email, String username, String deviceToken) {
+        iModleSignUpActivity.doLogin(email,username,deviceToken);
+    }
+
+    @Override
+    public void onLoginResponseSuccessFromModel(SocialLoginResponseModel socialLoginResponseModel) {
+        iSignUpActivity.onLoginSuccessFromPresenter(socialLoginResponseModel);
+    }
+
+    @Override
+    public void onLoginResponseFailureFromModel(String msgg) {
+        iSignUpActivity.onLoginFailedFromPresenter(msgg);
+    }
+
+    @Override
+    public void otpNotVerified(SocialLoginResponseModel model) {
+        iSignUpActivity.otpNotVerifiedFromPresenter(model);
     }
 }

@@ -11,12 +11,15 @@ import com.cliknfix.user.responseModels.LogoutResponseModel;
 import com.cliknfix.user.responseModels.MobileNoResponseModel;
 import com.cliknfix.user.responseModels.OTPResponseModel;
 import com.cliknfix.user.responseModels.PastJobsResponseModel;
+import com.cliknfix.user.responseModels.PaymentDoneResponseModel;
 import com.cliknfix.user.responseModels.PrivacyPolicyResponseModel;
 import com.cliknfix.user.responseModels.SaveUserProfileResponseModel;
 import com.cliknfix.user.responseModels.SearchTechResponseModel;
 import com.cliknfix.user.responseModels.SignUpResponseModel;
 import com.cliknfix.user.responseModels.LoginResponseModel;
+import com.cliknfix.user.responseModels.SocialLoginResponseModel;
 import com.cliknfix.user.responseModels.SubmitTechReviewResponseModel;
+import com.cliknfix.user.responseModels.TechDetailResponseModel;
 import com.cliknfix.user.responseModels.UserProfileResponseModel;
 import com.cliknfix.user.signUp.BeanModelSignUp;
 
@@ -67,10 +70,13 @@ public interface APIInterface {
     public static final int PAST_JOBS_SUCCESS= 34;
     public static final int PAST_JOBS_NO_DATA= 35;
     public static final int PAST_JOBS_FAILED= 36;
-    public static final int GETTREATMENTDETAIL_SUCCESS= 36;
-    public static final int GETTREATMENTDETAIL_FAILED= 37;
-    public static final int GETPOPULARLIST_SUCCESS= 38;
-    public static final int GETPOPULARLIST_FAILED= 39;
+    public static final int SOCIAL_LOGIN_SUCCESS = 37;
+    public static final int SOCIAL_LOGIN_FAILED = 38;
+    public static final int SOCIAL_OTP_NOT_VERIFIED = 39;
+    public static final int PAYMENT_DONE_SUCCESS= 40;
+    public static final int PAYMENT_DONE_FAILED= 41;
+    public static final int TECH_DETAIL_SUCCESS= 42;
+    public static final int TECH_DETAIL_FAILED= 43;
     public static final int GETNEARBYLIST_SUCCESS= 40;
     public static final int GETNEARBYLIST_FAILED= 41;
     public static final int ADDTOBASKET_SUCCESS= 42;
@@ -176,6 +182,26 @@ public interface APIInterface {
     @Headers({"Accept: application/json"})
     @GET("/Cliknfixx/api/checkPastjobs")
     Call<PastJobsResponseModel> getPastJobsList(@Header("token") String token);
+
+    @Headers({"Accept: application/json"})
+    @POST("/Cliknfixx/api/socialLogin")
+    Call<SocialLoginResponseModel> doLogin(
+            @Query("email") String email,
+            @Query("name") String username,
+            @Query("device_token") String device_token
+    );
+
+    @Headers({"Accept: application/json"})
+    @POST("/Cliknfixx/api/payment")
+    Call<PaymentDoneResponseModel> paymentDone(
+            @Query("total_earning") String total_earning,
+            @Header("token") String token);
+
+    @Headers({"Accept: application/json"})
+    @POST("/Cliknfixx/api/showTechnicianProfile")
+    Call<TechDetailResponseModel> getTechDetail(
+            @Query("technician_id") int id,
+            @Header("token") String token);
 
     /*
     @Headers({"Accept: application/json"})

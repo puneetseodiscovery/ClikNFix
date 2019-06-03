@@ -126,11 +126,27 @@
                     android:textColor="@color/blackColor" />
 
                 <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:text="Rs."
+                    android:textSize="17sp"
+                    android:textColor="@color/forgotPassColor" />
+
+                <TextView
                     android:id="@+id/tv_rate"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:gravity="center"
-                    android:text="$10/Hour"
+                    android:text="10"
+                    android:textSize="17sp"
+                    android:textColor="@color/forgotPassColor" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:text="/Hour"
                     android:textSize="17sp"
                     android:textColor="@color/forgotPassColor" />
 

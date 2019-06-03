@@ -3,6 +3,7 @@ package com.cliknfix.user.retrofit;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import com.cliknfix.user.base.MyApp;
@@ -16,12 +17,15 @@ import com.cliknfix.user.responseModels.LogoutResponseModel;
 import com.cliknfix.user.responseModels.MobileNoResponseModel;
 import com.cliknfix.user.responseModels.OTPResponseModel;
 import com.cliknfix.user.responseModels.PastJobsResponseModel;
+import com.cliknfix.user.responseModels.PaymentDoneResponseModel;
 import com.cliknfix.user.responseModels.PrivacyPolicyResponseModel;
 import com.cliknfix.user.responseModels.SaveUserProfileResponseModel;
 import com.cliknfix.user.responseModels.SearchTechResponseModel;
 import com.cliknfix.user.responseModels.SignUpResponseModel;
 import com.cliknfix.user.responseModels.LoginResponseModel;
+import com.cliknfix.user.responseModels.SocialLoginResponseModel;
 import com.cliknfix.user.responseModels.SubmitTechReviewResponseModel;
+import com.cliknfix.user.responseModels.TechDetailResponseModel;
 import com.cliknfix.user.responseModels.UserProfileResponseModel;
 import com.cliknfix.user.signUp.BeanModelSignUp;
 import com.cliknfix.user.util.PreferenceHandler;
@@ -39,39 +43,39 @@ public class RetrofitCalls {
     }
 
     public void loginUser(String email, String password,String device_token, final Handler mHandler) {
-                    final Message message = new Message();
-                    Call<LoginResponseModel> call = apiInterface.loginUser(email,password,device_token);
-                    call.enqueue(new Callback<LoginResponseModel>() {
-                        @Override
-                        public void onResponse(Call<LoginResponseModel> call, Response<LoginResponseModel> response) {
-                            if (response.body() != null) {
-                                Log.e("Status().code","" + response.code());
-                                if (response.body().getStatus().equalsIgnoreCase("200")) {
-                                    message.what = apiInterface.LOGIN_SUCCESS;
-                                    message.obj = response.body();
-                                    String token = response.body().getData().get(0).getRememberToken();
-                                    int id = response.body().getData().get(0).getId();
-                                    Log.d("+++++++++", "++ access token++" + token);
-                                    Log.d("+++++++++", "++ id++" + id);
-                                    new PreferenceHandler().writeString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_TOKEN, token);
-                                    new PreferenceHandler().writeInteger(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_USER_ID, id);
-                                    String mLoginToken = new PreferenceHandler().readString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_TOKEN, "");
-                                    int userId = new PreferenceHandler().readInteger(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_USER_ID, 0);
-                                    Log.d("+++++++++", "++ access token read++" + mLoginToken);
-                                    Log.d("+++++++++", "++ id read++" + userId);
-                                    mHandler.sendMessage(message);
-                                } else if(response.body().getStatus().equalsIgnoreCase("401")){
-                                    message.what = apiInterface.OTP_NOT_VERIFIED;
-                                    message.obj = response.body();
-                                    mHandler.sendMessage(message);
-                                }else {
-                                    message.what = apiInterface.LOGIN_FAILED;
-                                    message.obj = response.body().getMessage();
-                                    mHandler.sendMessage(message);
-                                }
-                            }
+        final Message message = new Message();
+        Call<LoginResponseModel> call = apiInterface.loginUser(email,password,device_token);
+        call.enqueue(new Callback<LoginResponseModel>() {
+            @Override
+                public void onResponse(Call<LoginResponseModel> call, Response<LoginResponseModel> response) {
+                    if (response.body() != null) {
+                        Log.e("Status().code","" + response.code());
+                        if (response.body().getStatus().equalsIgnoreCase("200")) {
+                            message.what = apiInterface.LOGIN_SUCCESS;
+                            message.obj = response.body();
+                            String token = response.body().getData().get(0).getRememberToken();
+                            int id = response.body().getData().get(0).getId();
+                            Log.d("+++++++++", "++ access token++" + token);
+                            Log.d("+++++++++", "++ id++" + id);
+                            new PreferenceHandler().writeString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_TOKEN, token);
+                            new PreferenceHandler().writeInteger(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_USER_ID, id);
+                            String mLoginToken = new PreferenceHandler().readString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_TOKEN, "");
+                            int userId = new PreferenceHandler().readInteger(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_USER_ID, 0);
+                            Log.d("+++++++++", "++ access token read++" + mLoginToken);
+                            Log.d("+++++++++", "++ id read++" + userId);
+                            mHandler.sendMessage(message);
+                        } else if(response.body().getStatus().equalsIgnoreCase("401")){
+                            message.what = apiInterface.OTP_NOT_VERIFIED;
+                            message.obj = response.body();
+                            mHandler.sendMessage(message);
+                        }else {
+                            message.what = apiInterface.LOGIN_FAILED;
+                            message.obj = response.body().getMessage();
+                            mHandler.sendMessage(message);
+                        }
+                    }
 
-            }
+                }
 
             @Override
             public void onFailure(Call<LoginResponseModel> call, Throwable t) {
@@ -507,7 +511,7 @@ public class RetrofitCalls {
                         mHandler.sendMessage(message);
                     } else if (response.body().getStatus().equals("401")) {
                         message.what = apiInterface.PAST_JOBS_NO_DATA;
-                        message.obj = response.body();
+                        message.obj = response.body().getMessage();
                         mHandler.sendMessage(message);
                     } else {
                         message.what = apiInterface.PAST_JOBS_FAILED;
@@ -527,5 +531,106 @@ public class RetrofitCalls {
     }
 
 
+    public void doLogin(String email, String name, String deviceToken, final Handler mHandler) {
+        final Message message = new Message();
+        Call<SocialLoginResponseModel> call = apiInterface.doLogin(email,name,deviceToken);
+        call.enqueue(new Callback<SocialLoginResponseModel>() {
+            @Override
+            public void onResponse(Call<SocialLoginResponseModel> call, Response<SocialLoginResponseModel> response) {
+                if (response.body() != null) {
+                    if (response.body().getStatus().equalsIgnoreCase("200")) {
+                        message.what = apiInterface.SOCIAL_LOGIN_SUCCESS;
+                        message.obj = response.body();
+                        String token = response.body().getData().get(0).getRememberToken();
+                        int id = response.body().getData().get(0).getId();
+                        Log.d("+++++++++", "++ access token++" + token);
+                        Log.d("+++++++++", "++ id++" + id);
+                        new PreferenceHandler().writeString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_TOKEN, token);
+                        new PreferenceHandler().writeInteger(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_USER_ID, id);
+                        String mLoginToken = new PreferenceHandler().readString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_TOKEN, "");
+                        int userId = new PreferenceHandler().readInteger(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_USER_ID, 0);
+                        Log.d("+++++++++", "++ access token read++" + mLoginToken);
+                        Log.d("+++++++++", "++ id read++" + userId);
+                        mHandler.sendMessage(message);
+                    } else if(response.body().getStatus().equalsIgnoreCase("401")){
+                        message.what = apiInterface.SOCIAL_OTP_NOT_VERIFIED;
+                        message.obj = response.body();
+                        mHandler.sendMessage(message);
+                    }else {
+                        message.what = apiInterface.SOCIAL_LOGIN_FAILED;
+                        message.obj = response.body().getMessage();
+                        mHandler.sendMessage(message);
+                    }
+                }
 
+            }
+
+            @Override
+            public void onFailure(Call<SocialLoginResponseModel> call, Throwable t) {
+                Log.e("Status().equals(200)","SUCCESS");
+                message.what = apiInterface.SOCIAL_LOGIN_FAILED;
+                message.obj = t.getMessage();
+                Log.e("Error msg","" + t.getMessage());
+                mHandler.sendMessage(message);
+            }
+        });
+    }
+
+    public void paymentDone(String total_earning, String token, final Handler mHandler) {
+        final Message message = new Message();
+        Call<PaymentDoneResponseModel> call = apiInterface.paymentDone(total_earning,token);
+        call.enqueue(new Callback<PaymentDoneResponseModel>() {
+            @Override
+            public void onResponse(Call<PaymentDoneResponseModel> call, Response<PaymentDoneResponseModel> response) {
+                if (response.body() != null) {
+                    if (response.body().getStatus().equalsIgnoreCase("200")) {
+                        message.what = apiInterface.PAYMENT_DONE_SUCCESS;
+                        message.obj = response.body();
+                        mHandler.sendMessage(message);
+                    } else {
+                        message.what = apiInterface.PAYMENT_DONE_FAILED;
+                        message.obj = response.body().getMessage();
+                        mHandler.sendMessage(message);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<PaymentDoneResponseModel> call, Throwable t) {
+                message.what = apiInterface.PAYMENT_DONE_FAILED;
+                message.obj = t.getMessage();
+                mHandler.sendMessage(message);
+            }
+        });
+    }
+
+    public void getTechDetail(int id, String token, final Handler mHandler) {
+        final Message message = new Message();
+        Call<TechDetailResponseModel> call = apiInterface.getTechDetail(id,token);
+        call.enqueue(new Callback<TechDetailResponseModel>() {
+            @Override
+            public void onResponse(Call<TechDetailResponseModel> call, Response<TechDetailResponseModel> response) {
+                if (response.body() != null) {
+                    if (response.body().getStatus().equalsIgnoreCase("200")) {
+                        message.what = apiInterface.TECH_DETAIL_SUCCESS;
+                        message.obj = response.body();
+                        mHandler.sendMessage(message);
+                    } else {
+                        message.what = apiInterface.TECH_DETAIL_FAILED;
+                        message.obj = response.body().getMessage();
+                        mHandler.sendMessage(message);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<TechDetailResponseModel> call, Throwable t) {
+                message.what = apiInterface.TECH_DETAIL_FAILED;
+                message.obj = t.getMessage();
+                mHandler.sendMessage(message);
+            }
+        });
+    }
 }

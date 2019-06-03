@@ -98,20 +98,21 @@
                     android:hint="-"
                     android:ellipsize="start"
                     android:textColorHint="@color/blackColor"
-                    android:inputType="textNoSuggestions"
+                    android:inputType="phone"
                     android:textCursorDrawable="@null"
                     android:maxLength="1"
                     android:id="@+id/et_otp1"
                     android:textColor="@color/blackColor"
                     android:background="@android:color/transparent"
-                    android:textSize="19sp" />
+                    android:textSize="19sp"
+                    android:imeOptions="actionNext"/>
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:hint="-"
                     android:textColorHint="@color/blackColor"
-                    android:inputType="textNoSuggestions"
+                    android:inputType="phone"
                     android:textCursorDrawable="@null"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:id="@+id/et_otp2"
@@ -120,7 +121,8 @@
                     android:paddingLeft="@dimen/ten_dp"
                     android:textColor="@color/blackColor"
                     android:background="@android:color/transparent"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:imeOptions="actionNext"/>
 
                 <EditText
                     android:layout_width="wrap_content"
@@ -131,12 +133,13 @@
                     android:paddingLeft="@dimen/ten_dp"
                     android:hint="-"
                     android:textColorHint="@color/blackColor"
-                    android:inputType="textNoSuggestions"
+                    android:inputType="phone"
                     android:maxLength="1"
                     android:ellipsize="start"
                     android:textColor="@color/blackColor"
                     android:background="@android:color/transparent"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:imeOptions="actionNext"/>
 
                 <EditText
                     android:layout_width="wrap_content"
@@ -148,11 +151,12 @@
                     android:hint="-"
                     android:ellipsize="start"
                     android:textColorHint="@color/blackColor"
-                    android:inputType="textNoSuggestions"
+                    android:inputType="phone"
                     android:maxLength="1"
                     android:textColor="@color/blackColor"
                     android:background="@android:color/transparent"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:imeOptions="actionDone"/>
             </LinearLayout>
 
             <Button

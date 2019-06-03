@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.cliknfix.user.R;
 import com.cliknfix.user.base.BaseClass;
+import com.cliknfix.user.homeScreen.HomeScreenActivity;
 import com.cliknfix.user.paymentMethods.adapter.PaymentAdapter;
 import com.cliknfix.user.paymentMethods.model.BeanPayment;
 import com.cliknfix.user.technicianDetail.TechnicianDetailActivity;
@@ -26,6 +27,7 @@ public class PaymentMethodsActivity extends BaseClass {
     ArrayList<BeanPayment> paymentArrayList ;
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    String phone,amount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,23 +38,29 @@ public class PaymentMethodsActivity extends BaseClass {
     }
 
     private void init() {
+        phone = getIntent().getStringExtra("phone");
+        amount = getIntent().getStringExtra("amount");
+
         tvTitle.setTypeface(Utility.typeFaceForBoldText(this));
         paymentArrayList=new ArrayList<>();
 
-        paymentArrayList.add(new BeanPayment(R.mipmap.paytm_icon,"Paytm"));
-        paymentArrayList.add(new BeanPayment(R.mipmap.pay4u_icon    ,"Pay4u"));
-        paymentArrayList.add(new BeanPayment(R.mipmap.debit_icon,"Debit Card"));
-        paymentArrayList.add(new BeanPayment(R.mipmap.credit_icon,"Credit Card"));
-        paymentArrayList.add(new BeanPayment(R.mipmap.cash_icon,"Cash"));
+       // paymentArrayList.add(new BeanPayment(R.mipmap.paytm_icon,"Paytm"));
+        paymentArrayList.add(new BeanPayment(R.mipmap.pay4u_icon,"Pay4u"));
+       // paymentArrayList.add(new BeanPayment(R.mipmap.debit_icon,"Debit Card"));
+       // paymentArrayList.add(new BeanPayment(R.mipmap.credit_icon,"Credit Card"));
+        //paymentArrayList.add(new BeanPayment(R.mipmap.cash_icon,"Cash"));
 
 
         rvPayment.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
-        PaymentAdapter adapter = new PaymentAdapter(this, paymentArrayList);
+        PaymentAdapter adapter = new PaymentAdapter(this, paymentArrayList,phone,amount);
         rvPayment.setNestedScrollingEnabled(false);
         rvPayment.setAdapter(adapter);
     }
 
     public void onBackClicked(View view) {
-        startActivity(new Intent(this, TechnicianDetailActivity.class));
+        //startActivity(new Intent(this, HomeScreenActivity.class));
+        Intent intent = new Intent(this, HomeScreenActivity.class);
+        intent.putExtra("DefaultTab", 1);
+        startActivity(intent);
     }
 }

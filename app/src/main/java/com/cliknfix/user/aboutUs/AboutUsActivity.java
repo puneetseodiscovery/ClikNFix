@@ -3,6 +3,7 @@ package com.cliknfix.user.aboutUs;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +54,7 @@ public class AboutUsActivity extends BaseClass implements IAboutUsActivity {
     @Override
     public void aboutUsSuccessResponseFromPresenter(AboutUsResponseModel aboutUsResponseModel) {
         progressDialog.dismiss();
-        tvAboutUs.setText(aboutUsResponseModel.getData().get(0).getAboutUs());
+        tvAboutUs.setText(Html.fromHtml(aboutUsResponseModel.getData().get(0).getAboutUs()));
     }
 
     @Override

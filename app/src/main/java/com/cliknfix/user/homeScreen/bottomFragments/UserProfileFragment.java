@@ -148,6 +148,7 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
             case R.id.iv_edit:
                 ivEdit.setVisibility(View.GONE);
                 ivSave.setVisibility(View.VISIBLE);
+                //etUserName.setEnabled(true);
                 etUserName.setFocusableInTouchMode(true);
                 etEmail.setFocusableInTouchMode(true);
                 etPhone.setFocusableInTouchMode(true);
@@ -161,18 +162,12 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
                 ivEdit.setVisibility(View.VISIBLE);
                 ivSave.setVisibility(View.GONE);
                 llUserProfile.clearFocus();
-                etUserName.clearFocus();
-                etUserName.setFocusableInTouchMode(false);
-                etEmail.clearFocus();
-                etEmail.setFocusableInTouchMode(false);
-                etPhone.clearFocus();
-                etPhone.setFocusableInTouchMode(false);
-                etAge.clearFocus();
-                etAge.setFocusableInTouchMode(false);
-                etBldGrp.clearFocus();
-                etBldGrp.setFocusableInTouchMode(false);
-                etAddress.clearFocus();
-                etAddress.setFocusableInTouchMode(false);
+                etUserName.setFocusable(false);
+                etEmail.setFocusable(false);
+                etPhone.setFocusable(false);
+                etAge.setFocusable(false);
+                etBldGrp.setFocusable(false);
+                etAddress.setFocusable(false);
                 mgr.hideSoftInputFromWindow(v.getWindowToken(),0);
                 progressDialog = Utility.showLoader(getContext());
                 ipUserProfileFragment.saveUserProfile(etUserName.getText().toString().trim(),

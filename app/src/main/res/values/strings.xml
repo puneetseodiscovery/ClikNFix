@@ -5,7 +5,7 @@
     <string name="signin">LOGIN</string>
     <string name="email_phone_hint">Email/Phone</string>
     <string name="password_hint">Password</string>
-    <string name="rem_pass">Remember Password</string>
+    <string name="rem_me">Remember Me</string>
     <string name="forgot_pass"><u>Forgot Password?</u></string>
     <string name="signupstartingtext">Don\'t have an account?  </string>
     <string name="signupendingtext"><u>Sign up</u></string>
@@ -69,6 +69,7 @@
 
     <!-- MENTION PROBLEM SCREEN STRINGS -->
     <string name="write_problem">Please write down your problem</string>
+    <string name="permission_denied">Location Permission Denied</string>
 
     <!-- PAST JOBS SCREEN STRINGS -->
     <string name="past_jobs">Past Jobs</string>
@@ -154,8 +155,8 @@
 
     <!-- TRACKING SCREEN STRINGS -->
     <string name="firebase_path" translatable="false">locations</string>
-    <string name="firebase_email" translatable="false">sapna20arora27@gmail.com</string>
-    <string name="firebase_password" translatable="false">sapna20arora27@gmail.com</string>
+    <string name="firebase_email" translatable="false">sapna.testing27@gmail.com</string>
+    <string name="firebase_password" translatable="false">sapna.testing27@gmail.com</string>
 
     <!-- CONTACT US SCREEN STRINGS -->
     <string name="write_msg" translatable="false">Please write your message.</string>

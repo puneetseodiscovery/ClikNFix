@@ -70,6 +70,14 @@ public class PastTechDetailActivity extends BaseClass {
         tvPayAmt.setTypeface(Utility.typeFaceForText(this));
         tvAddressText.setTypeface(Utility.typeFaceForText(this));
         tvAddress.setTypeface(Utility.typeFaceForText(this));
+
+        tvUserName.setText(getIntent().getStringExtra("username"));
+        tvEmail.setText(getIntent().getStringExtra("email"));
+        tvPhone.setText(getIntent().getStringExtra("phone"));
+        /*tvJobType.setText(getIntent().getStringExtra("jobType"));
+        tvJobDate.setText(getIntent().getStringExtra("jobDate"));
+        tvPayAmt.setText(getIntent().getStringExtra("payableAmt"));*/
+        tvAddress.setText(getIntent().getStringExtra("address"));
     }
 
     public void onBackClicked(View view) {

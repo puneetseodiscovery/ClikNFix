@@ -12,8 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cliknfix.user.R;
+import com.cliknfix.user.paymentMethods.AmountDetails;
 import com.cliknfix.user.paymentMethods.CardDetailActivity;
 import com.cliknfix.user.paymentMethods.PaymentSuccessActivity;
+import com.cliknfix.user.paymentMethods.StartPaymentActivity;
 import com.cliknfix.user.paymentMethods.model.BeanPayment;
 import com.cliknfix.user.util.Utility;
 
@@ -26,10 +28,13 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
 
     Context context;
     ArrayList<BeanPayment> list = new ArrayList<>();
+    String amount,phone;
 
-    public PaymentAdapter(Context context, ArrayList<BeanPayment> list) {
+    public PaymentAdapter(Context context, ArrayList<BeanPayment> list,String phone, String amount) {
         this.context = context;
         this.list = list;
+        this.phone = phone;
+        this.amount = amount;
     }
 
     @NonNull
@@ -81,8 +86,13 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
 
     public void loadNewActivity(String paymentMethod) {
         if(paymentMethod.equalsIgnoreCase("Cash") || paymentMethod.equalsIgnoreCase("Paytm")
-                || paymentMethod.equals("Pay4u"))
-            context.startActivity(new Intent(context, PaymentSuccessActivity.class));
+                || paymentMethod.equals("Pay4u")) {
+            Intent intent = new Intent(context, StartPaymentActivity.class);
+            intent.putExtra("phone", phone);
+            intent.putExtra("amount", amount);
+            context.startActivity(intent);
+            //context.startActivity(new Intent(context, AmountDetails.class));
+        }
         else if(paymentMethod.equalsIgnoreCase("Debit Card") || paymentMethod.equalsIgnoreCase("Credit Card")) {
             Intent intent = new Intent(context, CardDetailActivity.class);
             intent.putExtra("paymentMethod", paymentMethod);

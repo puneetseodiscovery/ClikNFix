@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -16,19 +17,26 @@ import android.widget.Toast;
 
 import com.cliknfix.user.R;
 import com.cliknfix.user.aboutUs.AboutUsActivity;
+import com.cliknfix.user.base.MyApp;
 import com.cliknfix.user.changePassword.ChangePasswordActivity;
 import com.cliknfix.user.contact.ContactUsActivity;
 import com.cliknfix.user.homeScreen.HomeScreenActivity;
 import com.cliknfix.user.homeScreen.bottomFragments.presenter.IPSettingsFragment;
 import com.cliknfix.user.homeScreen.bottomFragments.presenter.PSettingsFragment;
 import com.cliknfix.user.login.LoginActivity;
+import com.cliknfix.user.paymentMethods.PaymentMethodsActivity;
 import com.cliknfix.user.privacyPolicy.PrivacyPolicyActivity;
 import com.cliknfix.user.responseModels.LogoutResponseModel;
+import com.cliknfix.user.util.PreferenceHandler;
 import com.cliknfix.user.util.Utility;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.cliknfix.user.base.BaseClass.mGoogleSignInClient;
 
 public class SettingsFragment extends Fragment implements View.OnClickListener,ISettingsFragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -137,6 +145,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener,I
                 transaction.commit();
                 break;
             case R.id.tv_payments:
+                startActivity(new Intent((HomeScreenActivity)context, PaymentMethodsActivity.class));
                 break;
             case R.id.tv_contact_us:
                 startActivity(new Intent((HomeScreenActivity)context, ContactUsActivity.class));
@@ -157,8 +166,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener,I
                     .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             progressDialog = Utility.showLoader(context);
-                            ipSettingsFragment.doLogout(12);
-                            LoginManager.getInstance().logOut();
+                            ipSettingsFragment.doLogout(Utility.getUserId());
                             dialog.dismiss();
                         }
                     })
@@ -177,10 +185,30 @@ public class SettingsFragment extends Fragment implements View.OnClickListener,I
 
     }
 
+    private void googlePlusSignOut() {
+        mGoogleSignInClient.signOut()
+                .addOnCompleteListener((HomeScreenActivity)getContext(), new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // ...
+                        //Toast.makeText((HomeScreenActivity)getContext(), "Signed out", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void facebookSignOut() {
+        LoginManager.getInstance().logOut();
+    }
+
     @Override
     public void logoutSuccessFromPresenter(LogoutResponseModel logoutResponseModel) {
         progressDialog.dismiss();
-        startActivity(new Intent((HomeScreenActivity)context, LoginActivity.class));
+        facebookSignOut();
+        googlePlusSignOut();
+        new PreferenceHandler().clearSavedPrefrences(MyApp.getInstance().getApplicationContext());
+        Intent intent = new Intent(context,LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override

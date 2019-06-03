@@ -18,11 +18,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.cliknfix.user.R;
 import com.cliknfix.user.base.BaseClass;
+import com.cliknfix.user.homeScreen.HomeScreenActivity;
 import com.cliknfix.user.login.LoginActivity;
 import com.cliknfix.user.mobile.MobileNoActivity;
 import com.cliknfix.user.responseModels.SignUpResponseModel;
+import com.cliknfix.user.responseModels.SocialLoginResponseModel;
 import com.cliknfix.user.util.Utility;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -33,20 +41,12 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.firebase.client.Firebase;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.linkedin.platform.APIHelper;
-import com.linkedin.platform.LISessionManager;
-import com.linkedin.platform.errors.LIApiError;
-import com.linkedin.platform.errors.LIAuthError;
-import com.linkedin.platform.listeners.ApiListener;
-import com.linkedin.platform.listeners.ApiResponse;
-import com.linkedin.platform.listeners.AuthListener;
-import com.linkedin.platform.utils.Scope;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -109,9 +109,11 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
     ProgressDialog progressDialog;
 
     CallbackManager callbackManager;
-    GoogleSignInClient mGoogleSignInClient;
+    //GoogleSignInClient mGoogleSignInClient;
     int RC_GP_SIGNIN=1;
     private static final String EMAIL = "email";
+    boolean socialLogin;
+    String email,username;
 
 
     @Override
@@ -124,10 +126,63 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
         //printHashKey();
         beforeFacebookClick();
         beforeGoogleSignIn();
+
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
         Toast.makeText(this, ""+isLoggedIn, Toast.LENGTH_SHORT).show();
+        Log.e("device Token signup","" + deviceToken);
+        // Check for existing Google Sign In account, if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+        /*GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        Toast.makeText(this, "account:"+account.getDisplayName(), Toast.LENGTH_SHORT).show();*/
+    }
 
+    private void registerUserToFirebase(final String userId, final String password) {
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Loading...");
+        pd.show();
+
+        String url = "https://cliknfix-1558498832364.firebaseio.com/users.json";
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String s) {
+                Firebase reference = new Firebase("https://cliknfix-1558498832364.firebaseio.com/users");
+
+                if(s.equals("null")) {
+                    reference.child(userId).child("password").setValue(password);
+                    Toast.makeText(SignUpActivity.this, "registration successful", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    try {
+                        JSONObject obj = new JSONObject(s);
+
+                        if (!obj.has(userId)) {
+                            reference.child(userId).child("password").setValue(password);
+                            Log.e("firebase","registration successful");
+                            //Toast.makeText(SignUpActivity.this, "registration successful", Toast.LENGTH_LONG).show();
+                        } else {
+                            Log.e("firebase","username already exists");
+                            //Toast.makeText(SignUpActivity.this, "username already exists", Toast.LENGTH_LONG).show();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                pd.dismiss();
+            }
+
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                System.out.println("" + volleyError );
+                pd.dismiss();
+            }
+        });
+
+        RequestQueue rQueue = Volley.newRequestQueue(SignUpActivity.this);
+        rQueue.add(request);
     }
 
     private void beforeFacebookClick() {
@@ -253,9 +308,14 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
                         public void onCompleted(JSONObject jsonObject, GraphResponse response) {
                             Log.v("Main", response.toString());
                             try {
+                                //registerUserToFirebase();
+                                email= jsonObject.getString("email");
+                                username= jsonObject.getString("name");
                                 Log.e("obj","" + jsonObject);
                                 Log.e("email","" + jsonObject.getString("email"));
                                 Log.e("name","" +jsonObject.getString("name"));
+                                progressDialog = Utility.showLoader(SignUpActivity.this);
+                                ipSignUp.doLogin(email,username,deviceToken);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -295,55 +355,11 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
 
     public void onLinkedInClicked(View view) {
         LoginManager.getInstance().logOut();
-//        if(Utility.isNetworkConnected(this)) {
-//            LISessionManager.getInstance(getApplicationContext()).init(SignUpActivity.this, buildScope(), new AuthListener() {
-//                @Override
-//                public void onAuthSuccess() {
-//                    Toast.makeText(getApplicationContext(),"Login Success ",Toast.LENGTH_LONG).show();
-//                    String url = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address)";
-//
-//                    APIHelper apiHelper = APIHelper.getInstance(getApplicationContext());
-//                    apiHelper.getRequest(SignUpActivity.this, url, new ApiListener() {
-//                        @Override
-//                        public void onApiSuccess(ApiResponse apiResponse) {
-//                            Toast.makeText(SignUpActivity.this, "Success", Toast.LENGTH_SHORT).show();
-//                            try {
-//                                JSONObject jsonObject = apiResponse.getResponseDataAsJson();
-//                                String firstName = jsonObject.getString("firstName");
-//                                String lastName = jsonObject.getString("lastName");
-//                                String userEmail = jsonObject.getString("emailAddress");
-//
-//                                StringBuilder stringBuilder = new StringBuilder();
-//                                stringBuilder.append("First Name " + firstName + "\n\n");
-//                                stringBuilder.append("Last Name " + lastName + "\n\n");
-//                                stringBuilder.append("Email " + userEmail);
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//                        }
-//
-//                        @Override
-//                        public void onApiError(LIApiError liApiError) {
-//                            // Error making GET request!
-//                            Toast.makeText(getApplicationContext(),"API Error"+liApiError.toString(),Toast.LENGTH_LONG).show();
-//                        }
-//                    });
-//                }
-//
-//                @Override
-//                public void onAuthError(LIAuthError error) {
-//                    // Handle authentication errors
-//                    Toast.makeText(getApplicationContext(),"Login Error "+error.toString(),Toast.LENGTH_LONG).show();
-//                }
-//            }, true);
-//        } else
-//            Toast.makeText(this, getResources().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
     }
 
-    private static Scope buildScope() {
-        return Scope.build(Scope.R_BASICPROFILE, Scope.R_EMAILADDRESS);
-    }
+//    private static Scope buildScope() {
+//        return Scope.build(Scope.R_BASICPROFILE, Scope.R_EMAILADDRESS);
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -356,13 +372,20 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleGoogleSignInResult(task);
         }
-        LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
+        //LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
     }
 
     private void handleGoogleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
+            //registerUserToFirebase();
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            email= account.getEmail();
+            username= account.getDisplayName();
             Log.e("google signin","" + account);
+            Log.e("name","" + account.getDisplayName());
+            Log.e("email","" + account.getEmail());
+            progressDialog = Utility.showLoader(SignUpActivity.this);
+            ipSignUp.doLogin(email,username,deviceToken);
             // Signed in successfully, show authenticated UI.
             //updateUI(account);
         } catch (ApiException e) {
@@ -441,24 +464,22 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
     }
 
     private void beforeGoogleSignIn(){
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        /*GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(SignUpActivity.this, gso);
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(SignUpActivity.this);
+        mGoogleSignInClient = GoogleSignIn.getClient(SignUpActivity.this, gso);*/
     }
 
     @Override
     public void onSignUpResponseSuccessFromPresenter(SignUpResponseModel signUpResponseModel) {
+        String userId = signUpResponseModel.getData().get(0).getId().toString().trim();
+        String password = signUpResponseModel.getData().get(0).getPassword().toString().trim();
+        registerUserToFirebase(userId,password);
         progressDialog.dismiss();
         Toast.makeText(this, "User Successfully Registered.", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(SignUpActivity.this, MobileNoActivity.class);
-        intent.putExtra("phone", "" +signUpResponseModel.getData().get(0).getPhone().toString().trim());
+        intent.putExtra("socialMedia","0");
+        intent.putExtra("phone", "" +signUpResponseModel.getData().get(0).getPhone().toString());
         intent.putExtra("userId", "" +signUpResponseModel.getData().get(0).getId().toString().trim());
         startActivity(intent);
     }
@@ -467,5 +488,36 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
     public void onSignUpResponseFailureFromPresenter(String message) {
         progressDialog.dismiss();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLoginSuccessFromPresenter(SocialLoginResponseModel socialLoginResponseModel) {
+        progressDialog.dismiss();
+        startActivity(new Intent(this, HomeScreenActivity.class));
+    }
+
+    @Override
+    public void onLoginFailedFromPresenter(String msgg) {
+        progressDialog.dismiss();
+        Toast.makeText(this, "" + msgg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void otpNotVerifiedFromPresenter(SocialLoginResponseModel model) {
+        progressDialog.dismiss();
+        Log.e("model:","" + model.getData().get(0).getEmailVerifiedAt());
+        Toast.makeText(this, "model:"+model, Toast.LENGTH_SHORT).show();
+        if(model.getData().get(0).getEmailVerifiedAt() == null || model.getData().get(0).getEmailVerifiedAt().equals("")){
+            Intent intent = new Intent(SignUpActivity.this, MobileNoActivity.class);
+            intent.putExtra("socialMedia","1");
+            intent.putExtra("phone", "" + model.getData().get(0).getPhone());
+            intent.putExtra("userId", "" + model.getData().get(0).getId().toString());
+            startActivity(intent);
+        } else if(model.getData().get(0).getEmailVerifiedAt().equals("1")) {
+            Intent intent = new Intent(SignUpActivity.this, MobileNoActivity.class);
+            intent.putExtra("socialMedia","1");
+            intent.putExtra("userId",model.getData().get(0).getId().toString());
+            startActivity(intent);
+        }
     }
 }

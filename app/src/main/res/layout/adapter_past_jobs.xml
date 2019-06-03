@@ -149,7 +149,6 @@
                         android:layout_marginTop="@dimen/onefive_dp"
                         android:background="@drawable/background_white"
                         android:backgroundTint="@color/logoColor"
-                        android:onClick="onMoreDetailsClicked"
                         android:paddingLeft="@dimen/twozero_dp"
                         android:paddingRight="@dimen/twozero_dp"
                         android:layout_marginLeft="@dimen/onefive_dp"

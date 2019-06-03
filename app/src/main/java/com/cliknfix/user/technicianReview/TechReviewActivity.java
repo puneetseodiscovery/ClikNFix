@@ -45,9 +45,24 @@ public class TechReviewActivity extends BaseClass implements ITechReviewActivity
     }
 
     public void onSubmitClicked(View view) {
+        if (Utility.isNetworkConnected(this)) {
+            if(etReview.getText().toString().length() > 0 && ratingBar.getNumStars()>0){
+                progressDialog = Utility.showLoader(this);
+                ipTechReviewActivity.submitTechReview(String.valueOf(ratingBar.getNumStars()),etReview.getText().toString().trim(),28,Utility.getToken());
+            } else {
+                if(ratingBar.getNumStars() == 0){
+                    Toast.makeText(this, "Please provide rating to Technician.", Toast.LENGTH_SHORT).show();
+                }
 
-        progressDialog = Utility.showLoader(this);
-        ipTechReviewActivity.submitTechReview(String.valueOf(ratingBar.getNumStars()),etReview.getText().toString().trim(),28,Utility.getToken());
+                if(etReview.getText().toString().length() == 0){
+                    etReview.setError("Enter Reviews");
+                    etReview.requestFocus();
+                }
+            }
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public void init() {

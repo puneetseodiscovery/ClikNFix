@@ -71,7 +71,6 @@
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/profilePic"
                         android:layout_width="@dimen/onetwozero_dp"
-                        android:onClick="onProfileImageClicked"
                         android:layout_height="@dimen/onetwozero_dp"
                         android:layout_gravity="center"
                         android:src="@mipmap/user_img"

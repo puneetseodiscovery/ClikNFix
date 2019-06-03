@@ -1,14 +1,18 @@
 package com.cliknfix.user.submitProblem;
 
-
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -26,7 +30,6 @@ import android.widget.Toast;
 
 import com.cliknfix.user.R;
 import com.cliknfix.user.homeScreen.HomeScreenActivity;
-import com.cliknfix.user.search.SearchActivity;
 import com.cliknfix.user.util.Utility;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -41,10 +44,8 @@ import static android.content.Context.LOCATION_SERVICE;
 import static com.google.android.gms.location.LocationServices.API;
 import static com.google.android.gms.location.LocationServices.FusedLocationApi;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class SubmitProblemFragment extends Fragment implements View.OnClickListener
+
+public class BlankFragment extends Fragment implements View.OnClickListener
         , GoogleApiClient.ConnectionCallbacks
         , GoogleApiClient.OnConnectionFailedListener
         , LocationListener {
@@ -67,16 +68,16 @@ public class SubmitProblemFragment extends Fragment implements View.OnClickListe
 
     private static final int LOCATION_PERMISSIONS_REQUEST = 1;
 
-    public SubmitProblemFragment() {
+    public BlankFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_submit_problem, container, false);
+        //return inflater.inflate(R.layout.fragment_blank, container, false);
+        View view = inflater.inflate(R.layout.fragment_blank, container, false);
         ButterKnife.bind(this, view);
         this.context = getActivity();
         init();
@@ -90,34 +91,37 @@ public class SubmitProblemFragment extends Fragment implements View.OnClickListe
         tvTitle.setTypeface(Utility.typeFaceForBoldText(getContext()));
         btnSubmit.setTypeface(Utility.typeFaceForBoldText(getContext()));
 
-        mGoogleApiClient = new GoogleApiClient.Builder((HomeScreenActivity)context)
-                // The next two lines tell the new client that “this” current class will handle connection stuff
+        if(Utility.isNetworkConnected(context))
+            enableGPS();
+        else
+            Toast.makeText(context, getResources().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
+
+
+        mGoogleApiClient = new GoogleApiClient.Builder(getContext())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
-                //fourth line adds the LocationServices API endpoint from GooglePlayServices
-                .addApi(API)
+                .addApi(LocationServices.API)
                 .build();
 
-        // Create the LocationRequest object
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)        // 10 seconds, in milliseconds
                 .setFastestInterval(1 * 1000); // 1 second, in milliseconds
 
-        if(Utility.isNetworkConnected(context))
-            enableGPS();
-        else
-            Toast.makeText(context, getResources().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
     }
 
-    private void enableGPS() {
+    private boolean enableGPS() {
         // Check GPS is enabled
-        LocationManager lm = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            Toast.makeText(context, "Please enable location services", Toast.LENGTH_SHORT).show();
+        boolean isGpsOn = false;
+        LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            isGpsOn = false;
+
         } else {
+            isGpsOn = true;
             checkPermissions();
         }
+        return isGpsOn;
     }
 
 
@@ -135,6 +139,21 @@ public class SubmitProblemFragment extends Fragment implements View.OnClickListe
                     LOCATION_PERMISSIONS_REQUEST);
         }
     }
+
+    /*@Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{
+                                android.Manifest.permission.SEND_SMS,
+                                android.Manifest.permission.RECEIVE_SMS,
+                                android.Manifest.permission.READ_SMS},
+                        REQUEST_CODE);
+            }
+        }
+    }*/
 
     @Override
     public void onClick(View v) {
@@ -172,6 +191,27 @@ public class SubmitProblemFragment extends Fragment implements View.OnClickListe
         super.onResume();
         //Now lets connect to the API
         mGoogleApiClient.connect();
+        if (!enableGPS())
+            showGPSDisabledAlertToUser();
+    }
+
+
+
+    private void showGPSDisabledAlertToUser() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setMessage("GPS")
+                .setCancelable(false)
+                .setPositiveButton("Enable your GPS",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent viewIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                startActivity(viewIntent);
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
     }
 
     @Override
@@ -187,32 +227,40 @@ public class SubmitProblemFragment extends Fragment implements View.OnClickListe
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        Log.e("onLocationChanged","working");
-        currentLatitude = location.getLatitude();
-        currentLongitude = location.getLongitude();
-    }
-
-
-    @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Log.e("onConnected","working");
-        int permission = ContextCompat.checkSelfPermission(((HomeScreenActivity)context),
-                Manifest.permission.ACCESS_FINE_LOCATION);
-        if (permission == PackageManager.PERMISSION_GRANTED) {
-            Location location = FusedLocationApi.getLastLocation(mGoogleApiClient);
-
-            if (location == null) {
-                FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-
+        Log.e("onConnected", "Working");
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (location == null) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        } else {
+            //If everything went fine lets get latitude and longitude
+            if (String.valueOf(location.getLatitude()).isEmpty()) {
             } else {
-                //If everything went fine lets get latitude and longitude
                 currentLatitude = location.getLatitude();
-                currentLongitude = location.getLongitude();
-                Log.e("Lat","" + currentLatitude);
-                Log.e("Lon","" + currentLongitude);
-                Toast.makeText(((HomeScreenActivity)context), currentLatitude + " WORKS " + currentLongitude + "", Toast.LENGTH_LONG).show();
+                currentLatitude = location.getLongitude();
+                Log.e("my_latitude", String.valueOf(location.getLatitude()));
+                Log.e("my_longitude", String.valueOf(location.getLongitude()));
+
+               /* if (my_latitude.isEmpty()) {
+
+                } else {
+                    googleMap.clear();
+
+                    MarkerOptions mp = new MarkerOptions();
+
+                    mp.position(new LatLng(Double.parseDouble(my_latitude), Double.parseDouble(my_longitude)));
+
+                    googleMap.addMarker(mp);
+
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                            new LatLng(location.getLatitude(), location.getLongitude()), 11));
+                }
+*/
             }
+
         }
     }
 
@@ -248,5 +296,12 @@ public class SubmitProblemFragment extends Fragment implements View.OnClickListe
              */
             Log.e("Error", "Location services connection failed with code " + connectionResult.getErrorCode());
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.e("onLocationChanged","working");
+        currentLatitude = location.getLatitude();
+        currentLongitude = location.getLongitude();
     }
 }

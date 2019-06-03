@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cliknfix.user">
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -15,17 +16,54 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+    <uses-feature android:name="android.hardware.location.gps" />
+
     <application
         android:name=".base.MyApp"
-        android:allowBackup="true"
+
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".search.NoTechFoundActivity"
-            android:theme="@style/AppTheme.StatusBarWithNoActionbar"/>
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity android:name=".TestActivity" />
+
+        <activity
+            android:name=".paymentMethods.AmountDetails"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".paymentMethods.StartPaymentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <service
+            android:name=".base.BaseFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".search.NoTechFoundActivity"
+            android:theme="@style/AppTheme.StatusBarWithNoActionbar" />
         <!--
 Set custom default icon. This is used when no icon is set for incoming notification messages.
 See README(https://goo.gl/l4GJaQ) for more.
@@ -40,16 +78,19 @@ See README(https://goo.gl/l4GJaQ) for more.
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
-
-        <service
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <!--
+<service
             android:name=".login.LoginFirebaseMessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service>
-
+    </service>
+        -->
         <activity
             android:name=".aboutUs.AboutUsActivity"
             android:theme="@style/AppTheme.StatusBarWithNoActionbar" />
@@ -83,9 +124,6 @@ See README(https://goo.gl/l4GJaQ) for more.
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -131,15 +169,20 @@ See README(https://goo.gl/l4GJaQ) for more.
             android:theme="@style/AppTheme.StatusBarWithNoActionbar" />
         <activity
             android:name=".mobile.MobileNoActivity"
-            android:theme="@style/AppTheme.StatusBarWithNoActionbar" />
+            android:theme="@style/AppTheme.StatusBarWithNoActionbar">
+            <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+                    <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".splash.SplashActivity"
             android:theme="@style/AppTheme.StatusBarWithNoActionbar">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".login.LoginActivity"
@@ -150,7 +193,8 @@ See README(https://goo.gl/l4GJaQ) for more.
             android:theme="@style/AppTheme.StatusBarWithNoActionbar" />
         <activity
             android:name=".forgotPassword.ForgotPasswordActivity"
-            android:theme="@style/AppTheme.StatusBarWithNoActionbar" />
+            android:theme="@style/AppTheme.StatusBarWithNoActionbar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".signUp.SignUpActivity"
             android:theme="@style/AppTheme.StatusBarWithNoActionbar" />

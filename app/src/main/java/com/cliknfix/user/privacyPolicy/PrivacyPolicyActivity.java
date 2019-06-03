@@ -3,6 +3,7 @@ package com.cliknfix.user.privacyPolicy;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,7 +53,7 @@ public class PrivacyPolicyActivity extends BaseClass implements IPrivacyPolicyAc
     @Override
     public void privacyPolicySuccessResponseFromPresenter(PrivacyPolicyResponseModel privacyPolicyResponseModel) {
         progressDialog.dismiss();
-        tvPrivacyPolicy.setText(privacyPolicyResponseModel.getData().get(0).getPrivacyPolicy());
+        tvPrivacyPolicy.setText(Html.fromHtml(privacyPolicyResponseModel.getData().get(0).getPrivacyPolicy()));
     }
 
     @Override

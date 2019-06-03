@@ -43,5 +43,62 @@ public class PastJobsResponseModel {
 
     public class Datum {
 
+        @SerializedName("id")
+        @Expose
+        private Integer id;
+        @SerializedName("name")
+        @Expose
+        private String name;
+        @SerializedName("created_at")
+        @Expose
+        private String createdAt;
+        @SerializedName("category")
+        @Expose
+        private String category;
+        @SerializedName("service_price")
+        @Expose
+        private String servicePrice;
+
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getCreatedAt() {
+            return createdAt;
+        }
+
+        public void setCreatedAt(String createdAt) {
+            this.createdAt = createdAt;
+        }
+
+        public String getCategory() {
+            return category;
+        }
+
+        public void setCategory(String category) {
+            this.category = category;
+        }
+
+        public String getServicePrice() {
+            return servicePrice;
+        }
+
+        public void setServicePrice(String servicePrice) {
+            this.servicePrice = servicePrice;
+        }
+
     }
 }

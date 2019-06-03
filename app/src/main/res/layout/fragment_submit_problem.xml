@@ -43,6 +43,9 @@
 
     </RelativeLayout>
 
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <EditText
         android:id="@+id/et_send_msg"
@@ -73,6 +76,7 @@
         android:layout_marginTop="@dimen/threetwo_dp"
         android:layout_marginEnd="@dimen/threetwo_dp"
         android:layout_marginRight="@dimen/threetwo_dp"
+        android:layout_marginBottom="@dimen/fivezero_dp"
         android:background="@drawable/background_white"
         android:backgroundTint="@color/logoColor"
         android:text="@string/submit"
@@ -81,6 +85,6 @@
         android:textColor="@color/blackColor"
         android:textSize="19sp" />
 
-
+    </LinearLayout>
 
 </LinearLayout>

@@ -60,6 +60,8 @@ public class TechnicianLocationActivity extends FragmentActivity implements OnMa
             checkPermissions();
         else
             Toast.makeText(this, getResources().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
+
+        Log.e("TechId","" + getIntent().getStringExtra("techId"));
     }
 
     public boolean checkPermissions() {
@@ -80,6 +82,7 @@ public class TechnicianLocationActivity extends FragmentActivity implements OnMa
             }
             return false;
         } else {
+
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
@@ -195,7 +198,8 @@ public class TechnicianLocationActivity extends FragmentActivity implements OnMa
         // its value in mMarkers, which contains all the markers
         // for locations received, so that we can build the
         // boundaries required to show them all on the map at once
-        String key = dataSnapshot.getKey();
+        //String key = dataSnapshot.getKey();
+        String key = getIntent().getStringExtra("techId");
         HashMap<String, Object> value = (HashMap<String, Object>) dataSnapshot.getValue();
         double lat = Double.parseDouble(value.get("latitude").toString());
         double lng = Double.parseDouble(value.get("longitude").toString());

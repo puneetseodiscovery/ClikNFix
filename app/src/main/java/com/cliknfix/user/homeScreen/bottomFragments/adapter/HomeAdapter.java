@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.cliknfix.user.R;
 import com.cliknfix.user.homeScreen.HomeScreenActivity;
 import com.cliknfix.user.responseModels.CategoriesListResponseModel;
+import com.cliknfix.user.submitProblem.BlankFragment;
+import com.cliknfix.user.submitProblem.SubmitProblemFragmentt;
 import com.cliknfix.user.util.Utility;
 import com.squareup.picasso.Picasso;
 
@@ -82,7 +84,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     public void loadFragment(String category,int categoryId) {
         FragmentTransaction transaction = ((HomeScreenActivity) context).getSupportFragmentManager().beginTransaction();
-        BlankFragment fragment = new BlankFragment();
+        SubmitProblemFragmentt fragment = new SubmitProblemFragmentt();
         Bundle args = new Bundle();
         args.putString("category", category);
         args.putInt("categoryId", categoryId);

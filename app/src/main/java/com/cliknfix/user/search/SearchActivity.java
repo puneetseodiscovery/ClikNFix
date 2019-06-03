@@ -90,8 +90,10 @@ public class SearchActivity extends BaseClass implements ISearchActivity
 
         categoryId = getIntent().getIntExtra("categoryId", 0);
         userQuery = getIntent().getStringExtra("userQuery");
-        currentLatitude = Double.parseDouble(getIntent().getStringExtra("currentLatitude"));
-        currentLongitude = Double.parseDouble(getIntent().getStringExtra("currentLongitude"));
+        currentLatitude = getIntent().getDoubleExtra("currentLatitude",0.0);
+        currentLongitude = getIntent().getDoubleExtra("currentLongitude",0.0);
+        Log.e("current lat","" + currentLatitude);
+        Log.e("current lng","" + currentLongitude);
         ipSearchActivity.searchTech(categoryId,userQuery,currentLatitude,currentLongitude,Utility.getToken());
     }
 

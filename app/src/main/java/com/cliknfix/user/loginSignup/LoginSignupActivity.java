@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.cliknfix.user.R;
 import com.cliknfix.user.base.BaseClass;
 import com.cliknfix.user.login.LoginActivity;
-import com.cliknfix.user.mobile.MobileNoActivity;
 import com.cliknfix.user.signUp.SignUpActivity;
 import com.cliknfix.user.util.Utility;
 
@@ -68,9 +67,5 @@ public class LoginSignupActivity extends BaseClass {
 
     public void onSignupClicked(View view) {
         startActivity(new Intent(this, SignUpActivity.class));
-    }
-
-    public void onSkipClicked(View view){
-        startActivity(new Intent(this, MobileNoActivity.class));
     }
 }

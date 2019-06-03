@@ -1,11 +1,16 @@
 package com.cliknfix.user.homeScreen;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -15,6 +20,12 @@ import com.cliknfix.user.homeScreen.bottomFragments.HomeFragment;
 import com.cliknfix.user.homeScreen.bottomFragments.PastJobsFragment;
 import com.cliknfix.user.homeScreen.bottomFragments.SettingsFragment;
 import com.cliknfix.user.homeScreen.bottomFragments.UserProfileFragment;
+import com.cliknfix.user.util.Utility;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,17 +34,18 @@ public class HomeScreenActivity extends BaseClass {
 
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
-    int defaultTab=0;
+    int defaultTab = 0;
     boolean doubleBackToExitPressedOnce = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         ButterKnife.bind(this);
-        defaultTab = getIntent().getIntExtra("DefaultTab",0);
+        defaultTab = getIntent().getIntExtra("DefaultTab", 0);
         init();
-        if(defaultTab == 1) {
+        if (defaultTab == 1) {
             navigation.getMenu().findItem(R.id.navigation_settings).setChecked(true);
             loadFragment(new SettingsFragment());
         } else if (defaultTab == 2) {
@@ -46,6 +58,7 @@ public class HomeScreenActivity extends BaseClass {
     private void init() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         loadFragment(new HomeFragment());
+        firebaseUsername = String.valueOf(Utility.getUserId());
     }
 
     public void loadFragment(Fragment fragment) {
@@ -83,7 +96,7 @@ public class HomeScreenActivity extends BaseClass {
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
         if (backStackEntryCount == 0) {
             if (doubleBackToExitPressedOnce) {
-                super.onBackPressed();
+                finishAffinity();
                 return;
             }
 
@@ -101,8 +114,5 @@ public class HomeScreenActivity extends BaseClass {
         } else {
             super.onBackPressed();
         }
-
-
-
     }
 }

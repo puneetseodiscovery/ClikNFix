@@ -7,33 +7,11 @@ public class PreferenceHandler {
 
     public static final int MODE = Context.MODE_PRIVATE;
     public static final String PREF_NAME = "APPFRAMEWORK_PREFERENCES";
-
-    public static final String PREF_KEY_USER_VIEW_LOGIN = "PREF_KEY_USER_VIEW_LOGIN";
-    public static final String PREF_KEY_USER_VIEW_LOGIN_PASSWORD = "PREF_KEY_USER_VIEW_LOGIN_PASSWORD";
-    public static final String FCM_TOKEN = "FCM_TOKEN";
-
-    public static final String PREF_KEY_LOGIN = "PREF_KEY_LOGIN";
-    public static final String PREF_KEY_LOGIN_REMEMBER = "PREF_KEY_LOGIN_REMEMBER";
-    public static final String PREF_KEY_USER_ID = "PREF_KEY_USER_ID";
-    public static final String PREF_KEY_USER_NOTIFICATION_ON = "PREF_KEY_USER_NOTIFICATION_ON";
-    public static final String PREF_KEY_USER_LOGIN_TYPE = "PREF_KEY_USER_LOGIN_TYPE";
-    public static final String PREF_KEY_TOKEN = "PREF_KEY_TOKEN";
-    public static final String PREF_KEY_USER_NAME = "PREF_KEY_USER_NAME";
     public static final String PREF_KEY_USER_EMAIL = "PREF_KEY_USER_EMAIL";
-    public static final String PREF_KEY_USER_AUTHTOKEN = "PREF_KEY_USER_AUTHTOKEN";
-    public static final String PREF_KEY_IS_USER_LOGIN="PREF_IS_USER_LOGIN";
-    public static final String PREF_KEY_USER_PHONE ="PREF_KEY_USER_PHONE" ;
+    public static final String PREF_KEY_USER_PASSWORD = "PREF_KEY_USER_PASSWORD";
     public static final String PREF_KEY_LOGIN_TOKEN = "PREF_KEY_LOGIN_TOKEN";
     public static final String PREF_KEY_LOGIN_USER_ID = "PREF_KEY_LOGIN_USER_ID";
     public static final String PREF_KEY_FIREBASE_TOKEN = "PREF_KEY_FIREBASE_TOKEN";
-    public static final String PREF_KEY_USER_IMAGE = "PREF_KEY_USER_IMAGE";
-
-    public static final String PREF_KEY_EXCEPTION_ENABLE = "PREF_KEY_EXCEPTION_ENABLE";
-    public static final String PREF_KEY_EXCEPTION_DIALOG_ENABLE = "PREF_KEY_EXCEPTION_DIALOG_ENABLE";
-
-    public static final String PREF_KEY_SHOW_CREDENTIALS = "PREF_KEY_SHOW_CREDENTIALS";
-
-
     public void writeBoolean(Context context, String key, boolean value) {
         getEditor(context).putBoolean(key, value).commit();
     }

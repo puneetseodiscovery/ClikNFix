@@ -42,8 +42,8 @@ public class ForgotPasswordActivity extends BaseClass implements IForgotPassword
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
         ButterKnife.bind(this);
-        init();
         ipForgotPasswordActivity = new PForgotPasswordActivity(this);
+        init();
     }
 
     public  void init() {
