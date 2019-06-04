@@ -203,95 +203,16 @@ public interface APIInterface {
             @Query("technician_id") int id,
             @Header("token") String token);
 
-    /*
     @Headers({"Accept: application/json"})
-    @POST("/api/varify_otp")
-    Call<OtpVerifyResponseModel> verifyOtp(@Body HashMap verify);
+    @POST("/Cliknfixx/api/register")
+    Call<SignUpResponseModel> doSignUp(
+            @Query("name") String name,
+            @Query("email") String email,
+            @Query("age") String age,
+            @Query("bg") String bg,
+            @Query("add") String add,
+            @Query("phone") String phone,
+            @Query("pass") String pass);
 
-    @Headers({"Accept: application/json"})
-    @GET("/api/types")
-    Call<FilterTypeResponseModel> getTypesOfFilter(@Header("Authorization") String token);
-
-    @Headers({"Accept: application/json"})
-    @GET("/api/services")
-    Call<FilterServicesResponseModel> getServicesOfFilter(@Header("Authorization") String token);
-
-    @Headers({"Accept: application/json"})
-    @GET("/api/facilities")
-    Call<FilterFacilitiesResponseModel> getFacilitiesOfFilter(@Header("Authorization") String token);
-
-    @Headers({"Accept: application/json"})
-    @GET("/api/searchBusiness")
-    Call<SearchResponseModel> getSearchResult(@Query("X") HashMap hashMap);
-
-    @Headers({"Accept:application/json"})
-    @Multipart
-    @POST("/api/uploadProfileImage")
-    Call<UploadImageResponseModel> postImage(@Header("Authorization") String token, @Part("image") RequestBody fileName, @Part MultipartBody.Part image);
-
-    @Headers({"Accept: application/json"})
-    @GET("/api/userProfile")
-    Call<GetProfileResponseModel> getUserProfile(@Header("Authorization") String token);
-
-    @Headers({"Accept: application/json"})
-    @POST("/api/changePassword")
-    Call<ChangePasswordResponseModel> changeUserPassword(@Header("Authorization") String token, @Body HashMap hashMap);
-
-    @Headers({"Accept: application/json"})
-    @POST("/api/updateProfile")
-    Call<EditProfileResponseModel> changeUserDetails(@Header("Authorization") String token, @Body HashMap hashMap);
-
-    @Headers({"Accept: application/json"})
-    @POST("/api/changePhonenumber")
-    Call<EditMobileNumberResponseModel> changeMobileNumber(@Header("Authorization") String token, @Body HashMap hashMap);
-
-    @Headers({"Accept: application/json"})
-    @GET("/api/searchBusiness")
-    Call<SearchResponseModel> getSimpleSearchResult(@Query("X") HashMap hashMap);
-
-    @Headers({"Accept: application/json"})
-    @GET("/api/searchBusiness")
-    Call<SearchResponseModel> getSimpleSearchResultWithApi(
-            @Query("name") String name
-    );
-
-    @Headers({"Accept: application/json"})
-    @GET("/api/businessDetail")
-    Call<SingleSpaDetailResponseModel> getSpaDetail(
-            @Query("id") int id
-    );
-
-    @Headers({"Accept: application/json"})
-    @GET("/api/businessTreatment")
-    Call<TreatmentsResponseModel> getTreatments(
-            @Query("id") int id
-    );
-
-    @Headers({"Accept: application/json"})
-    @GET("/api/treatmentDetail")
-    Call<TreatmentDetailsResponseModel> getTreatmentDetail(
-            @Query("id") int id
-    );
-
-    @Headers({"Accept: application/json"})
-    @GET("/api/PopularBusiness")
-    Call<PopularListResponseModel> getPopularList(
-            @Query("lat") String lat,
-            @Query("lng") String lng,
-            @Query("distance") String distance
-    );
-
-    @Headers({"Accept: application/json"})
-    @GET("/api/RecentBusiness")
-    Call<NearByListResponseModel> getNearByList(
-            @Query("lat") String lat,
-            @Query("lng") String lng,
-            @Query("distance") String distance
-    );
-
-    @Headers({"Accept: application/json"})
-    @POST("/api/addBasket")
-    Call<AddToBasketResponseModel> addToBasket(@Header("Authorization") String token, @Body HashMap hashMap
-    ); */
 
 }

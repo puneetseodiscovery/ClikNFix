@@ -22,6 +22,7 @@ import com.cliknfix.user.base.BaseClass;
 import com.cliknfix.user.login.LoginActivity;
 import com.cliknfix.user.otp.OtpActivity;
 import com.cliknfix.user.responseModels.MobileNoResponseModel;
+import com.cliknfix.user.responseModels.SignUpResponseModel;
 import com.cliknfix.user.util.Utility;
 
 
@@ -40,7 +41,7 @@ public class MobileNoActivity extends BaseClass implements IMobileNoActivity
     IPMobileActivity ipMobileActivity;
     ProgressDialog progressDialog;
     String phone;
-    String mobileNo,user_id;
+    String mobileNo,user_id,name,email;
     String socialMediaLogin;
     public static final int REQUEST_CODE = 10;
 
@@ -162,14 +163,15 @@ public class MobileNoActivity extends BaseClass implements IMobileNoActivity
 
     public void init() {
         tvP1.setTypeface(Utility.typeFaceForText(this));
-        user_id = "85";
-        etMobile.setText("9463924817");
-        socialMediaLogin = "0";
-        /*socialMediaLogin = getIntent().getStringExtra("socialMedia");
+        //user_id = "85";
+        //etMobile.setText("9463924817");
+        //socialMediaLogin = "0";
+        socialMediaLogin = getIntent().getStringExtra("socialMedia");
         if(socialMediaLogin.equalsIgnoreCase("1"))
         {
-            //user_id = getIntent().getStringExtra("userId");
-            user_id = "85";
+            user_id = getIntent().getStringExtra("userId");
+            email = getIntent().getStringExtra("email");
+            name = getIntent().getStringExtra("name");
             Log.e("Mobile user_id", "" + user_id);
             Toast.makeText(this, "userId:" + user_id, Toast.LENGTH_SHORT).show();
             //etMobile.setEnabled(true);
@@ -184,7 +186,9 @@ public class MobileNoActivity extends BaseClass implements IMobileNoActivity
             Log.e("Mobile phone", "" + mobileNo);
             Log.e("Mobile user_id", "" + user_id);
             etMobile.setText(mobileNo);
-        }*/
+        }
+
+
     }
 
     public void onNextClicked(View view) {
@@ -192,7 +196,7 @@ public class MobileNoActivity extends BaseClass implements IMobileNoActivity
             if(etMobile.getText().toString().length()>0) {
                 progressDialog = Utility.showLoader(this);
                 phone = tvCC.getText() + " " + etMobile.getText().toString().trim().toLowerCase();
-                ipMobileActivity.sendOTP(phone, user_id, "0");
+                ipMobileActivity.doSignUp(name, email, "", "", "",phone, phone);
             } else {
                 etMobile.setError("Enter a valid email.");
                 etMobile.requestFocus();
@@ -215,5 +219,15 @@ public class MobileNoActivity extends BaseClass implements IMobileNoActivity
     public void onSendOTPFailureFromPresenter(String message) {
         progressDialog.dismiss();
         Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSignUpResponseSuccessFromPresenter(SignUpResponseModel signUpResponseModel) {
+        ipMobileActivity.sendOTP(phone, user_id, "0");
+    }
+
+    @Override
+    public void onSignUpResponseFailureFromPresenter(String msgg) {
+        Toast.makeText(this, "" + msgg, Toast.LENGTH_SHORT).show();
     }
 }

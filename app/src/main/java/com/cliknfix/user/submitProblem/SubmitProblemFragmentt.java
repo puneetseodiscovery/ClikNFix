@@ -3,12 +3,14 @@ package com.cliknfix.user.submitProblem;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -95,51 +97,14 @@ public class SubmitProblemFragmentt extends Fragment implements View.OnClickList
 
     public void init() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
-        if (Utility.isNetworkConnected(context)) {
-            if (checkPermissions()) {
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    ActivityCompat.requestPermissions((HomeScreenActivity)context,
-                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
-                            LOCATION_PERMISSIONS_REQUEST);
-                }
-                fusedLocationClient.getLastLocation()
-                        .addOnSuccessListener((HomeScreenActivity)context, new OnSuccessListener<Location>() {
-                            @Override
-                            public void onSuccess(Location location) {
-                                // Got last known location. In some rare situations this can be null.
-                                if (location != null) {
-                                    // Logic to handle location object
-                                    currentLatitude = location.getLatitude();
-                                    currentLongitude = location.getLongitude();
-                                    Toast.makeText(context, currentLatitude + "WORKS" + currentLongitude, Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-            }
-        } else {
-            Toast.makeText(context, getResources().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
-        }
+
         ivBack.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
         tvTitle.setText(getArguments().getString("category"));
         tvTitle.setTypeface(Utility.typeFaceForBoldText(getContext()));
         btnSubmit.setTypeface(Utility.typeFaceForBoldText(getContext()));
 
-        /*if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((HomeScreenActivity)context,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
                     LOCATION_PERMISSIONS_REQUEST);
@@ -156,112 +121,8 @@ public class SubmitProblemFragmentt extends Fragment implements View.OnClickList
                     Toast.makeText(context, currentLatitude + "WORKS" + currentLongitude, Toast.LENGTH_SHORT).show();
                 }
             }
-        });*/
+        });
 
-    }
-
-
-    private boolean checkPermissions() {
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((HomeScreenActivity)context,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
-                    LOCATION_PERMISSIONS_REQUEST);
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case LOCATION_PERMISSIONS_REQUEST: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // location-related task you need to do.
-
-                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        ActivityCompat.requestPermissions((HomeScreenActivity)context,
-                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
-                                LOCATION_PERMISSIONS_REQUEST);
-                    }
-                    fusedLocationClient.getLastLocation()
-                            .addOnSuccessListener((HomeScreenActivity)context, new OnSuccessListener<Location>() {
-                                @Override
-                                public void onSuccess(Location location) {
-                                    // Got last known location. In some rare situations this can be null.
-                                    if (location != null) {
-                                        // Logic to handle location object
-                                        currentLatitude = location.getLatitude();
-                                        currentLongitude = location.getLongitude();
-                                        Toast.makeText(context, currentLatitude + "WORKS" + currentLongitude, Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-
-                } else {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                    && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                        // user also CHECKED "never ask again"
-                        // you can either enable some fall back,
-                        // disable features of your app
-                        // or open another dialog explaining
-                        // again the permission and directing to
-                        // the app setting
-                        ActivityCompat.requestPermissions((HomeScreenActivity)context,
-                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
-                                LOCATION_PERMISSIONS_REQUEST);
-                    }
-                    else {
-                        // user did NOT check "never ask again"
-                        // this is a good place to explain the user
-                        // why you need the permission and ask if he wants
-                        // to accept it (the rationale)
-                        // No explanation needed, we can request the permission.
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                        alertDialogBuilder.setMessage(getResources().getString(R.string.permission_denied))
-                                .setCancelable(false)
-                                .setPositiveButton(getResources().getString(R.string.settings),
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                Intent viewIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                                startActivity(viewIntent);
-                                                dialog.cancel();
-                                            }
-                                        });
-
-                        AlertDialog alert = alertDialogBuilder.create();
-                        alert.show();
-                    }
-
-                        /*AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                        alertDialogBuilder.setMessage(getResources().getString(R.string.permission_denied))
-                                .setCancelable(false)
-                                .setPositiveButton(getResources().getString(R.string.settings),
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                Intent viewIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                                startActivity(viewIntent);
-                                                dialog.cancel();
-                                            }
-                                        });
-
-                        AlertDialog alert = alertDialogBuilder.create();
-                        alert.show();*/
-
-                }
-            }
-
-        }
     }
 
     @Override

@@ -26,11 +26,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.cliknfix.user.R;
 import com.cliknfix.user.base.BaseClass;
+import com.cliknfix.user.base.MyApp;
 import com.cliknfix.user.homeScreen.HomeScreenActivity;
 import com.cliknfix.user.login.LoginActivity;
 import com.cliknfix.user.mobile.MobileNoActivity;
+import com.cliknfix.user.otp.OtpActivity;
 import com.cliknfix.user.responseModels.SignUpResponseModel;
 import com.cliknfix.user.responseModels.SocialLoginResponseModel;
+import com.cliknfix.user.util.PreferenceHandler;
 import com.cliknfix.user.util.Utility;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -114,6 +117,7 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
     private static final String EMAIL = "email";
     boolean socialLogin;
     String email,username;
+    SocialLoginResponseModel socialLoginResponseModel;
 
 
     @Override
@@ -130,6 +134,13 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
         Toast.makeText(this, ""+isLoggedIn, Toast.LENGTH_SHORT).show();
+        if(isLoggedIn){
+            String mLoginToken = new PreferenceHandler().readString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_TOKEN, "");
+            int userId = new PreferenceHandler().readInteger(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_USER_ID, 0);
+            Log.d("+++++++++", "++ access token read++" + mLoginToken);
+            Log.d("+++++++++", "++ id read++" + userId);
+            //startActivity(new Intent(this, HomeScreenActivity.class));
+        }
         Log.e("device Token signup","" + deviceToken);
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
@@ -493,6 +504,12 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
     @Override
     public void onLoginSuccessFromPresenter(SocialLoginResponseModel socialLoginResponseModel) {
         progressDialog.dismiss();
+        new PreferenceHandler().writeString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_TOKEN, socialLoginResponseModel.getData().get(0).getRememberToken());
+        new PreferenceHandler().writeInteger(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_USER_ID, socialLoginResponseModel.getData().get(0).getId());
+        String mLoginToken = new PreferenceHandler().readString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_TOKEN, "");
+        int userId = new PreferenceHandler().readInteger(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_USER_ID, 0);
+        Log.d("+++++++++", "++ access token read++" + mLoginToken);
+        Log.d("+++++++++", "++ id read++" + userId);
         startActivity(new Intent(this, HomeScreenActivity.class));
     }
 
@@ -504,20 +521,73 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
 
     @Override
     public void otpNotVerifiedFromPresenter(SocialLoginResponseModel model) {
+        String userId = model.getData().get(0).getId().toString().trim();
+        String password = model.getData().get(0).getPassword().toString().trim();
+        registerUserToFirebase(userId,password);
+        loginUsertoFirebase(userId,password);
         progressDialog.dismiss();
-        Log.e("model:","" + model.getData().get(0).getEmailVerifiedAt());
-        Toast.makeText(this, "model:"+model, Toast.LENGTH_SHORT).show();
         if(model.getData().get(0).getEmailVerifiedAt() == null || model.getData().get(0).getEmailVerifiedAt().equals("")){
             Intent intent = new Intent(SignUpActivity.this, MobileNoActivity.class);
             intent.putExtra("socialMedia","1");
             intent.putExtra("phone", "" + model.getData().get(0).getPhone());
+            intent.putExtra("name",model.getData().get(0).getName().toString());
+            intent.putExtra("email",model.getData().get(0).getEmail().toString());
             intent.putExtra("userId", "" + model.getData().get(0).getId().toString());
             startActivity(intent);
         } else if(model.getData().get(0).getEmailVerifiedAt().equals("1")) {
             Intent intent = new Intent(SignUpActivity.this, MobileNoActivity.class);
             intent.putExtra("socialMedia","1");
+            intent.putExtra("name",model.getData().get(0).getName().toString());
+            intent.putExtra("email",model.getData().get(0).getEmail().toString());
             intent.putExtra("userId",model.getData().get(0).getId().toString());
             startActivity(intent);
         }
+    }
+
+    private void loginUsertoFirebase(final String userId, final String password) {
+        String url = "https://cliknfix-1558498832364.firebaseio.com/users.json";
+        /*final ProgressDialog pd = new ProgressDialog(LoginActivity.this);
+        pd.setMessage("Loading...");
+        pd.show();*/
+
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String s) {
+                if(s.equals("null")){
+                    Toast.makeText(SignUpActivity.this, "user not found", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    try {
+                        JSONObject obj = new JSONObject(s);
+
+                        if(!obj.has(userId)){
+                            Toast.makeText(SignUpActivity.this, "user not found", Toast.LENGTH_LONG).show();
+                        }
+                        else if(obj.getJSONObject(userId).getString("password").equals(password)){
+                            firebaseUsername = userId;
+                            firebasePassword = password;
+                            //startActivity(new Intent(LoginActivity.this, Users.class));
+                        }
+                        else {
+                            Log.e("firebase","incorrect password");
+                            //Toast.makeText(LoginActivity.this, "incorrect password", Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                //pd.dismiss();
+            }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                System.out.println("" + volleyError);
+                //pd.dismiss();
+            }
+        });
+
+        RequestQueue rQueue = Volley.newRequestQueue(SignUpActivity.this);
+        rQueue.add(request);
     }
 }

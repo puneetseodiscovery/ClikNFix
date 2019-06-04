@@ -633,4 +633,34 @@ public class RetrofitCalls {
             }
         });
     }
+
+    public void doSignUp(String name, String email, String age, String bg, String add, String phone, String pass, final Handler mHandler) {
+        final Message message = new Message();
+        Call<SignUpResponseModel> call = apiInterface.doSignUp(name,email,age,bg,add,phone,pass);
+        call.enqueue(new Callback<SignUpResponseModel>() {
+            @Override
+            public void onResponse(Call<SignUpResponseModel> call, Response<SignUpResponseModel> response) {
+
+                if (response.body() != null) {
+                    if (response.body().getStatus().equals("200")) {
+                        message.what = apiInterface.SIGNUP_SUCCESS;
+                        message.obj = response.body();
+                        mHandler.sendMessage(message);
+                    } else {
+                        message.what = apiInterface.SIGNUP_FAILED;
+                        message.obj = response.body().getMessage();
+                        mHandler.sendMessage(message);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SignUpResponseModel> call, Throwable t) {
+                message.what = apiInterface.SIGNUP_FAILED;
+                message.obj = t.getMessage();
+                mHandler.sendMessage(message);
+            }
+        });
+
+    }
 }

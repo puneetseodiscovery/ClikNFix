@@ -4,6 +4,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.cliknfix.user.responseModels.MobileNoResponseModel;
+import com.cliknfix.user.responseModels.SignUpResponseModel;
 import com.cliknfix.user.retrofit.APIInterface;
 import com.cliknfix.user.retrofit.RetrofitCalls;
 
@@ -21,6 +22,12 @@ public class MMobileNoActivity implements IMMobileActivity {
         retrofitCalls.sendOTP(phone,user_id,resend_otp,mHandler);
     }
 
+    @Override
+    public void doSignUp(String name, String email, String age, String bg, String add, String phone, String pass) {
+        RetrofitCalls retrofitCalls = new RetrofitCalls();
+        retrofitCalls.doSignUp(name,email,age,bg,add,phone,pass,mHandler);
+    }
+
     android.os.Handler mHandler = new android.os.Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -35,6 +42,13 @@ public class MMobileNoActivity implements IMMobileActivity {
                     String message = (String) msg.obj;
                     ipMobileActivity.onSendOTPFailure(message);
                     break;
+                case APIInterface.SIGNUP_SUCCESS:
+                    SignUpResponseModel signUpResponseModel = (SignUpResponseModel) msg.obj;
+                    ipMobileActivity.onSignUpResponseSuccessFromModel(signUpResponseModel);
+                    break;
+                case APIInterface.SIGNUP_FAILED:
+                    String msgg = (String) msg.obj;
+                    ipMobileActivity.onSignUpResponseFailureFromModel(msgg);
             }
         }
     };

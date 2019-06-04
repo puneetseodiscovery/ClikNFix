@@ -170,19 +170,19 @@ See README(https://goo.gl/l4GJaQ) for more.
         <activity
             android:name=".mobile.MobileNoActivity"
             android:theme="@style/AppTheme.StatusBarWithNoActionbar">
-            <intent-filter>
+            <!--<intent-filter>
                     <action android:name="android.intent.action.MAIN" />
                     <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".splash.SplashActivity"
             android:theme="@style/AppTheme.StatusBarWithNoActionbar">
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity
             android:name=".login.LoginActivity"

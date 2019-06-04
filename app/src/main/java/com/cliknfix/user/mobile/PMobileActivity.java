@@ -3,6 +3,7 @@ package com.cliknfix.user.mobile;
 import android.util.Log;
 
 import com.cliknfix.user.responseModels.MobileNoResponseModel;
+import com.cliknfix.user.responseModels.SignUpResponseModel;
 
 public class PMobileActivity implements IPMobileActivity {
 
@@ -27,5 +28,20 @@ public class PMobileActivity implements IPMobileActivity {
     @Override
     public void onSendOTPFailure(String message) {
         iMobileNoActivity.onSendOTPFailureFromPresenter(message);
+    }
+
+    @Override
+    public void doSignUp(String name, String email, String age, String bg, String add, String phone, String pass) {
+        imMobileActivity.doSignUp(name,email,age,bg,add,phone,pass);
+    }
+
+    @Override
+    public void onSignUpResponseSuccessFromModel(SignUpResponseModel signUpResponseModel) {
+        iMobileNoActivity.onSignUpResponseSuccessFromPresenter(signUpResponseModel);
+    }
+
+    @Override
+    public void onSignUpResponseFailureFromModel(String msgg) {
+        iMobileNoActivity.onSignUpResponseFailureFromPresenter(msgg);
     }
 }

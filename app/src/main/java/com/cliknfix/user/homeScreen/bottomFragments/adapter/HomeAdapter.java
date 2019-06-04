@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.cliknfix.user.R;
 import com.cliknfix.user.homeScreen.HomeScreenActivity;
 import com.cliknfix.user.responseModels.CategoriesListResponseModel;
-import com.cliknfix.user.submitProblem.BlankFragment;
 import com.cliknfix.user.submitProblem.SubmitProblemFragmentt;
 import com.cliknfix.user.util.Utility;
 import com.squareup.picasso.Picasso;

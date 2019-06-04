@@ -87,5 +87,7 @@ dependencies {
     implementation 'com.payumoney.sdkui:plug-n-play:1.4.4'
 
     implementation 'com.github.stfalcon:smsverifycatcher:0.3.2'
+
+    implementation 'com.nabinbhandari.android:permissions:3.8'
 }
 apply plugin: 'com.google.gms.google-services'
