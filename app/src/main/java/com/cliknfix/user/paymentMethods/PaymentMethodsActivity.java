@@ -27,7 +27,7 @@ public class PaymentMethodsActivity extends BaseClass {
     ArrayList<BeanPayment> paymentArrayList ;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    String phone,amount;
+    String phone,amount,techId,techName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,8 @@ public class PaymentMethodsActivity extends BaseClass {
     private void init() {
         phone = getIntent().getStringExtra("phone");
         amount = getIntent().getStringExtra("amount");
+        techId = getIntent().getStringExtra("techId");
+        techName = getIntent().getStringExtra("techName");
 
         tvTitle.setTypeface(Utility.typeFaceForBoldText(this));
         paymentArrayList=new ArrayList<>();
@@ -52,7 +54,7 @@ public class PaymentMethodsActivity extends BaseClass {
 
 
         rvPayment.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
-        PaymentAdapter adapter = new PaymentAdapter(this, paymentArrayList,phone,amount);
+        PaymentAdapter adapter = new PaymentAdapter(this, paymentArrayList,phone,amount,techId,techName);
         rvPayment.setNestedScrollingEnabled(false);
         rvPayment.setAdapter(adapter);
     }

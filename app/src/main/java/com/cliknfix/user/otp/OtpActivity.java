@@ -30,10 +30,9 @@ import com.cliknfix.user.R;
 import com.cliknfix.user.base.BaseClass;
 import com.cliknfix.user.homeScreen.HomeScreenActivity;
 import com.cliknfix.user.login.LoginActivity;
+import com.cliknfix.user.responseModels.MobileNoResponseModel;
 import com.cliknfix.user.responseModels.OTPResponseModel;
 import com.cliknfix.user.util.Utility;
-import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
-import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,13 +105,6 @@ public class OtpActivity extends BaseClass implements IOtpActivity {
         user_id = getIntent().getExtras().getString("userId");
         /*LocalBroadcastManager.getInstance(this).
                 registerReceiver(receiver, new IntentFilter("otp"));*/
-
-        SmsVerifyCatcher smsVerifyCatcher = new SmsVerifyCatcher(this, new OnSmsCatchListener<String>() {
-            @Override
-            public void onSmsCatch(String message) {
-                Toast.makeText(OtpActivity.this, "" + message, Toast.LENGTH_SHORT).show();
-            }
-        });
 
         setRequestFocus();
     }
@@ -217,6 +209,7 @@ public class OtpActivity extends BaseClass implements IOtpActivity {
     }
 
     public void onResendOtpClicked(View view) {
+        ipOtp.resendOTP(phone, user_id, "1");
     }
 
     @Override
@@ -231,6 +224,18 @@ public class OtpActivity extends BaseClass implements IOtpActivity {
 
     @Override
     public void onFillOTPFailureFromPresenter(String message) {
+        progressDialog.dismiss();
+        Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResendOTPSuccessFromPresenter(MobileNoResponseModel mobileNoResponseModel) {
+        progressDialog.dismiss();
+        Toast.makeText(this, "" + mobileNoResponseModel.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResendOTPFailureFromPresenter(String msgg) {
         progressDialog.dismiss();
         Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
     }

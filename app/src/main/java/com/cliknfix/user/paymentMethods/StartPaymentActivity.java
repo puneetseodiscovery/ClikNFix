@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cliknfix.user.R;
@@ -17,11 +18,18 @@ import com.payumoney.core.PayUmoneySdkInitializer;
 import com.payumoney.core.entity.TransactionResponse;
 import com.payumoney.sdkui.ui.utils.PayUmoneyFlowManager;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class StartPaymentActivity extends AppCompatActivity implements IStartPaymentActivity {
+
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.tv_start_payment)
+    TextView tvStartPayment;
 
     PayUmoneySdkInitializer.PaymentParam.Builder builder = new PayUmoneySdkInitializer.PaymentParam.Builder();
     //declare paymentParam object
@@ -30,7 +38,7 @@ public class StartPaymentActivity extends AppCompatActivity implements IStartPay
 
     String TAG ="mainActivity", txnid ="40124012", amount ="", phone ="",
             prodname ="Android Payment", firstname ="Puneet Sharma", email ="puneetsharmabd@gmail.com",
-            merchantId ="6720730", merchantkey="s1mSSokb";  //   first test key only
+            merchantId ="6720730", merchantkey="s1mSSokb",techId,techName;  //   first test key only
 
 
    /* String TAG ="mainActivity", txnid ="401204012", amount ="1", phone ="9816255767",
@@ -45,12 +53,17 @@ public class StartPaymentActivity extends AppCompatActivity implements IStartPay
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startpayment);
+        ButterKnife.bind(this);
+        tvTitle.setTypeface(Utility.typeFaceForBoldText(this));
+        tvStartPayment.setTypeface(Utility.typeFaceForText(this));
 
         ipStartPaymentActivity = new PStartPaymentActivity(this);
         context = this.context;
         Intent intent = getIntent();
         phone = intent.getExtras().getString("phone");
         amount = intent.getExtras().getString("amount");
+        techId = intent.getExtras().getString("techId");
+        techName = intent.getExtras().getString("techName");
 
 
         startpay();
@@ -164,7 +177,7 @@ public class StartPaymentActivity extends AppCompatActivity implements IStartPay
     @Override
     public void paymentDoneSuccessFromPresenter(PaymentDoneResponseModel paymentDoneResponseModel) {
         progressDialog.dismiss();
-        startActivity(new Intent(StartPaymentActivity.this,PaymentSuccessActivity.class));
+        startActivity(new Intent(StartPaymentActivity.this,PaymentSuccessActivity.class).putExtra("techId",techId).putExtra("techName",techName));
     }
 
     @Override

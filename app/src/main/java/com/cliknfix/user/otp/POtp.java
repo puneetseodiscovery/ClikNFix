@@ -1,5 +1,6 @@
 package com.cliknfix.user.otp;
 
+import com.cliknfix.user.responseModels.MobileNoResponseModel;
 import com.cliknfix.user.responseModels.OTPResponseModel;
 
 public class POtp implements IPOtp {
@@ -25,5 +26,20 @@ public class POtp implements IPOtp {
     @Override
     public void onFillOTPFailure(String message) {
         iOtpActivity.onFillOTPFailureFromPresenter(message);
+    }
+
+    @Override
+    public void resendOTP(String phone, String user_id, String resend_otp) {
+        imOtp.resendOTP(phone,user_id,resend_otp);
+    }
+
+    @Override
+    public void onResendOTPSuccess(MobileNoResponseModel mobileNoResponseModel) {
+        iOtpActivity.onResendOTPSuccessFromPresenter(mobileNoResponseModel);
+    }
+
+    @Override
+    public void onResendOTPFailure(String msgg) {
+        iOtpActivity.onResendOTPFailureFromPresenter(msgg);
     }
 }

@@ -28,13 +28,15 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
 
     Context context;
     ArrayList<BeanPayment> list = new ArrayList<>();
-    String amount,phone;
+    String amount,phone,techId,techName;
 
-    public PaymentAdapter(Context context, ArrayList<BeanPayment> list,String phone, String amount) {
+    public PaymentAdapter(Context context, ArrayList<BeanPayment> list,String phone, String amount, String techId,String techName) {
         this.context = context;
         this.list = list;
         this.phone = phone;
         this.amount = amount;
+        this.techId = techId;
+        this.techName = techName;
     }
 
     @NonNull
@@ -90,6 +92,8 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
             Intent intent = new Intent(context, StartPaymentActivity.class);
             intent.putExtra("phone", phone);
             intent.putExtra("amount", amount);
+            intent.putExtra("techId", techId);
+            intent.putExtra("techName", techName);
             context.startActivity(intent);
             //context.startActivity(new Intent(context, AmountDetails.class));
         }

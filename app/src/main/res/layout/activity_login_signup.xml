@@ -25,7 +25,7 @@
                 android:layout_height="@dimen/onetwozero_dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/threetwo_dp"
-                android:src="@drawable/login_logo" />
+                android:src="@mipmap/login_logo" />
 
 
             <TextView

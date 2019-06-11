@@ -34,6 +34,7 @@ public class TechReviewActivity extends BaseClass implements ITechReviewActivity
 
     ProgressDialog progressDialog;
     IPTechReviewActivity ipTechReviewActivity;
+    String techId,techName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class TechReviewActivity extends BaseClass implements ITechReviewActivity
         if (Utility.isNetworkConnected(this)) {
             if(etReview.getText().toString().length() > 0 && ratingBar.getNumStars()>0){
                 progressDialog = Utility.showLoader(this);
-                ipTechReviewActivity.submitTechReview(String.valueOf(ratingBar.getNumStars()),etReview.getText().toString().trim(),28,Utility.getToken());
+                ipTechReviewActivity.submitTechReview(String.valueOf(ratingBar.getNumStars()),etReview.getText().toString().trim(), Integer.parseInt(techId),Utility.getToken());
             } else {
                 if(ratingBar.getNumStars() == 0){
                     Toast.makeText(this, "Please provide rating to Technician.", Toast.LENGTH_SHORT).show();
@@ -69,6 +70,10 @@ public class TechReviewActivity extends BaseClass implements ITechReviewActivity
         tvTitle.setTypeface(Utility.typeFaceForBoldText(this));
         tvTechName.setTypeface(Utility.typeFaceForBoldText(this));
         btnSubmit.setTypeface(Utility.typeFaceForBoldText(this));
+
+        techId= getIntent().getStringExtra("techId");
+        techName= getIntent().getStringExtra("techName");
+        tvTechName.setText(techName);
     }
 
     @Override

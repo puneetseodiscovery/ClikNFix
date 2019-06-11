@@ -94,9 +94,11 @@ public class RetrofitCalls {
         call.enqueue(new Callback<SignUpResponseModel>() {
             @Override
             public void onResponse(Call<SignUpResponseModel> call, Response<SignUpResponseModel> response) {
-
+                Log.e("response","" + response);
+                Log.e("response.body()","" + response.body());
                 if (response.body() != null) {
-                    if (response.body().getStatus().equals("200")) {
+                    Log.e("Status","" + response.body().getStatus());
+                    if (response.body().getStatus().equalsIgnoreCase("200")) {
                         message.what = apiInterface.SIGNUP_SUCCESS;
                         message.obj = response.body();
                         mHandler.sendMessage(message);
@@ -112,7 +114,9 @@ public class RetrofitCalls {
             public void onFailure(Call<SignUpResponseModel> call, Throwable t) {
                 message.what = apiInterface.SIGNUP_FAILED;
                 message.obj = t.getMessage();
+                Log.d("Error msg:" ,"" +t.getMessage());
                 mHandler.sendMessage(message);
+
             }
         });
     }
@@ -538,6 +542,7 @@ public class RetrofitCalls {
             @Override
             public void onResponse(Call<SocialLoginResponseModel> call, Response<SocialLoginResponseModel> response) {
                 if (response.body() != null) {
+                    Log.e("response body","" + response.body());
                     if (response.body().getStatus().equalsIgnoreCase("200")) {
                         message.what = apiInterface.SOCIAL_LOGIN_SUCCESS;
                         message.obj = response.body();
@@ -555,6 +560,16 @@ public class RetrofitCalls {
                     } else if(response.body().getStatus().equalsIgnoreCase("401")){
                         message.what = apiInterface.SOCIAL_OTP_NOT_VERIFIED;
                         message.obj = response.body();
+                        String token = response.body().getData().get(0).getRememberToken();
+                        int id = response.body().getData().get(0).getId();
+                        Log.d("+++++++++", "++ access token++" + token);
+                        Log.d("+++++++++", "++ id++" + id);
+                        new PreferenceHandler().writeString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_TOKEN, token);
+                        new PreferenceHandler().writeInteger(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_USER_ID, id);
+                        String mLoginToken = new PreferenceHandler().readString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_TOKEN, "");
+                        int userId = new PreferenceHandler().readInteger(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_USER_ID, 0);
+                        Log.d("+++++++++", "++ access token read++" + mLoginToken);
+                        Log.d("+++++++++", "++ id read++" + userId);
                         mHandler.sendMessage(message);
                     }else {
                         message.what = apiInterface.SOCIAL_LOGIN_FAILED;
@@ -662,5 +677,35 @@ public class RetrofitCalls {
             }
         });
 
+    }
+
+    public void resendOTP(String phone, String user_id, String resend_otp, final Handler mHandler) {
+        final Message message = new Message();
+        Call<MobileNoResponseModel> call = apiInterface.sendOTP(phone,user_id,resend_otp);
+        call.enqueue(new Callback<MobileNoResponseModel>() {
+            @Override
+            public void onResponse(Call<MobileNoResponseModel> call, Response<MobileNoResponseModel> response) {
+                if (response.body() != null) {
+                    if (response.body().getStatus().equals("200")) {
+                        Log.e("response1:","" + response.body().getStatus());
+                        message.what = apiInterface.RESEND_OTP_SUCCESS;
+                        message.obj = response.body();
+                        mHandler.sendMessage(message);
+                    } else {
+                        Log.e("response2:","" + response.body().getStatus());
+                        message.what = apiInterface.RESEND_OTP_FAILED;
+                        message.obj = response.body().getMessage();
+                        mHandler.sendMessage(message);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<MobileNoResponseModel> call, Throwable t) {
+                message.what = apiInterface.RESEND_OTP_FAILED;
+                message.obj = t.getMessage();
+                Log.e("+++++","++ t message ++"+t.getMessage());
+                mHandler.sendMessage(message);
+            }
+        });
     }
 }

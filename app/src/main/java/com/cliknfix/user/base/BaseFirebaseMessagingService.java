@@ -63,14 +63,6 @@ public class BaseFirebaseMessagingService extends FirebaseMessagingService {
                 sendNotification();*/
             }
         });
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            @SuppressLint("WrongConstant")
-            NotificationChannel notificationChannel=new NotificationChannel("my_notification","n_channel",NotificationManager.IMPORTANCE_MAX);
-            notificationChannel.setDescription("description");
-            notificationChannel.setName("Channel Name");
-            //notificationManager.createNotificationChannel(notificationChannel);
-        }
     }
 
     @Override

@@ -47,8 +47,18 @@ import com.facebook.login.LoginResult;
 import com.firebase.client.Firebase;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.Status;
+
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.Task;
+/*import com.google.android.libraries.places.compat.Place;
+import com.google.android.libraries.places.compat.ui.PlaceAutocomplete;
+import com.google.android.libraries.places.compat.ui.PlacePicker;*/
 
 
 import org.json.JSONException;
@@ -85,7 +95,7 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
     @BindView(R.id.sp_bld_grp_signup)
     Spinner spBldGrp;
     @BindView(R.id.et_address_signup)
-    EditText etAddress;
+    TextView etAddress;
     @BindView(R.id.et_phone_signup)
     EditText etPhone;
     @BindView(R.id.et_password_signup)
@@ -118,13 +128,16 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
     boolean socialLogin;
     String email,username;
     SocialLoginResponseModel socialLoginResponseModel;
-
+    public static final int PLACE_PICKER_REQUEST = 2;
+    SignUpActivity context;
+    String select_latitude="",select_longitude="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
+        context= SignUpActivity.this;
         ipSignUp = new PSignUp(this);
         init();
         //printHashKey();
@@ -382,6 +395,21 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
             // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleGoogleSignInResult(task);
+        } else if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(context, data);
+                Log.e("Tag", "Place: "
+                        + place.getAddress()
+                        + place.getPhoneNumber()
+                        + place.getLatLng().latitude);
+                select_latitude = String.valueOf(place.getLatLng().latitude);
+                select_longitude = String.valueOf(place.getLatLng().longitude);
+
+                etAddress.setText(place.getAddress().toString());
+//Completed_Address(curent_lat, current_lang);
+
+
+            }
         }
         //LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
     }
@@ -419,6 +447,7 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
         tvOr.setTypeface(Utility.typeFaceForText(this));
         btnLogin.setTypeface(Utility.typeFaceForBoldText(this));
         loadSpinner();
+
     }
 
     public void loadSpinner() {
@@ -529,7 +558,6 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
         if(model.getData().get(0).getEmailVerifiedAt() == null || model.getData().get(0).getEmailVerifiedAt().equals("")){
             Intent intent = new Intent(SignUpActivity.this, MobileNoActivity.class);
             intent.putExtra("socialMedia","1");
-            intent.putExtra("phone", "" + model.getData().get(0).getPhone());
             intent.putExtra("name",model.getData().get(0).getName().toString());
             intent.putExtra("email",model.getData().get(0).getEmail().toString());
             intent.putExtra("userId", "" + model.getData().get(0).getId().toString());
@@ -542,6 +570,17 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
             intent.putExtra("userId",model.getData().get(0).getId().toString());
             startActivity(intent);
         }
+       /*if(model.getData().get(0).getEmailVerifiedAt().equals("2")){
+
+       } else {
+           Intent intent = new Intent(SignUpActivity.this, MobileNoActivity.class);
+           intent.putExtra("socialMedia","1");
+           intent.putExtra("name",model.getData().get(0).getName().toString());
+           intent.putExtra("email",model.getData().get(0).getEmail().toString());
+           intent.putExtra("userId", "" + model.getData().get(0).getId().toString());
+           startActivity(intent);
+       }*/
+
     }
 
     private void loginUsertoFirebase(final String userId, final String password) {
@@ -590,4 +629,17 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
         RequestQueue rQueue = Volley.newRequestQueue(SignUpActivity.this);
         rQueue.add(request);
     }
+
+    public void onAddressFieldClick(View view) {
+        //etAddress.setEnabled(false);
+        PlacePicker.IntentBuilder builder=new PlacePicker.IntentBuilder();
+        try {
+            startActivityForResult(builder.build(SignUpActivity.this), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

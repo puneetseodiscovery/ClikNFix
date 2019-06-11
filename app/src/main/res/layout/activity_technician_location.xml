@@ -1,9 +1,113 @@
-<?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
+<!-- TODO: Update blank fragment layout -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    />
+    android:background="@color/whiteColor"
+    android:orientation="vertical">
+
+    <RelativeLayout android:id="@+id/tv_home_title"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/edittextHintColor">
+
+        <RelativeLayout
+            android:id="@+id/iv_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:onClick="onBackClicked">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/back_icon_header" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:text="Provider"
+            android:textSize="19sp"
+            android:gravity="center"
+            android:layout_weight="9"
+            android:textColor="@color/whiteColor"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:layout_below="@+id/tv_home_title"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/contact_us"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:layout_marginLeft="@dimen/threezero_dp"
+        android:layout_marginRight="@dimen/threezero_dp"
+        android:layout_marginBottom="@dimen/fivezero_dp"
+        android:padding="@dimen/onefive_dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:id="@+id/ll_location">
+
+    <ImageView
+        android:id="@+id/iv_cross"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:src="@mipmap/cross_icon"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:layout_gravity="center"
+        android:onClick="onCrossClicked"/>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="@dimen/twofive_dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:text="Provider"
+            android:textSize="19sp"
+            android:gravity="center"
+            android:layout_weight="9"
+            android:textColor="@color/black"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:text="Provider"
+            android:textSize="19sp"
+            android:gravity="center"
+            android:layout_weight="9"
+            android:textColor="@color/red"
+            android:layout_centerInParent="true"/>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

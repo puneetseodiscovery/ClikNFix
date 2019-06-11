@@ -3,12 +3,34 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:orientation="vertical">
+
+    <RelativeLayout android:id="@+id/tv_home_title"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/edittextHintColor">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:text="@string/payment"
+            android:textSize="19sp"
+            android:gravity="center"
+            android:layout_weight="9"
+            android:textColor="@color/whiteColor"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
     <TextView
+        android:id="@+id/tv_start_payment"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:text="Payment start from Here"
         android:textColor="#000000"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:gravity="center"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

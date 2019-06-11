@@ -134,7 +134,7 @@
                 android:textCursorDrawable="@null"
                 android:imeOptions="actionNext"/>
 
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_address_signup"
@@ -152,6 +152,7 @@
                 android:paddingLeft="@dimen/twofive_dp"
                 android:paddingBottom="@dimen/ten_dp"
                 android:paddingTop="@dimen/ten_dp"
+                android:onClick="onAddressFieldClick"
                 android:paddingRight="@dimen/ten_dp"
                 android:textColor="@color/edittextHintColor"
                 android:textCursorDrawable="@null"

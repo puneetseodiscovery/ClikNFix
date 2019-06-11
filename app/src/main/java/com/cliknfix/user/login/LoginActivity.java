@@ -69,6 +69,8 @@ public class LoginActivity extends BaseClass implements ILoginActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         iPresenterLogin = new PLogin(this);
+        getDeviceToken();
+        Log.e("device token","" + deviceToken);
         init();
     }
 
@@ -77,15 +79,14 @@ public class LoginActivity extends BaseClass implements ILoginActivity {
             if (etEmail.getText().toString().length() > 0 && etPassword.getText().toString().length() > 0) {
                 if (Utility.validEmail(etEmail.getText().toString().trim())) {
                     if(cbRemember.isChecked()){
-                        new PreferenceHandler().writeString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_USER_EMAIL, etEmail.getText().toString());
-                        new PreferenceHandler().writeString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_USER_PASSWORD, etPassword.getText().toString());
+                        new PreferenceHandler().writeREMString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_USER_EMAIL, etEmail.getText().toString());
+                        new PreferenceHandler().writeREMString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_USER_PASSWORD, etPassword.getText().toString());
                     } else {
-                        new PreferenceHandler().clearSavedPrefrences(MyApp.getInstance().getApplicationContext());
+                        new PreferenceHandler().clearREMSavedPrefrences(MyApp.getInstance().getApplicationContext());
                     }
 
-                    if(deviceToken == null){
+                    if(deviceToken == null || deviceToken == "")
                         getDeviceToken();
-                    }
 
                     progressDialog = Utility.showLoader(this);
                     iPresenterLogin.doLogin(etEmail.getText().toString().trim().toLowerCase(), etPassword.getText().toString().trim(), deviceToken);
@@ -235,17 +236,21 @@ public class LoginActivity extends BaseClass implements ILoginActivity {
             }
         });
 
-        String email = new PreferenceHandler().readString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_USER_EMAIL, "");
-        String password = new PreferenceHandler().readString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_USER_PASSWORD, "");
+        String email = new PreferenceHandler().readREMString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_USER_EMAIL, "");
+        String password = new PreferenceHandler().readREMString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_USER_PASSWORD, "");
         Log.e("login data:", "email:" + email + ",pass:" + password);
         //Toast.makeText(this, "email:" + email + ",pass:" + password, Toast.LENGTH_SHORT).show();
         if(email.length()>0 && password.length()>0){
             etEmail.setText(email);
             etPassword.setText(password);
+            cbRemember.setChecked(true);
         } else {
             etEmail.setText("");
             etPassword.setText("");
+            cbRemember.setChecked(false);
         }
+
+
     }
 
     public void onSignUpClicked(View view) {

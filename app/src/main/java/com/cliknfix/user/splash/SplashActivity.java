@@ -39,7 +39,7 @@ public class SplashActivity extends BaseClass {
 
     String session;
     String[] permissions = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.SEND_SMS,
-            Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_SMS};
+            Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_SMS,Manifest.permission.CALL_PHONE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,7 @@ public class SplashActivity extends BaseClass {
         Permissions.check(this/*context*/, permissions, null/*rationale*/, null/*options*/, new PermissionHandler() {
             @Override
             public void onGranted() {
+                //getDeviceToken();
                 // do your task.
                 new Handler().postDelayed(new Runnable(){
                     @Override

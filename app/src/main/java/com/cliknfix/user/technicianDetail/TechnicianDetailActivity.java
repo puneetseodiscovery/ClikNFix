@@ -72,6 +72,7 @@ public class TechnicianDetailActivity extends BaseClass {
     ArrayList<String> al = new ArrayList<>();
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,10 +103,10 @@ public class TechnicianDetailActivity extends BaseClass {
         userId= getIntent().getStringExtra("user_id");
         techId= getIntent().getStringExtra("technician_id");
         Log.e("data:","name:" +name +",rating:" + rating + ",labour:" + labour+ ",otp:" + otp + ",userId:" + userId+ "techId:"+ techId);
-        //Toast.makeText(this, ""+"name:" +name +",rating:" + rating + ",labour:" + labour+ ",otp:" + otp + ",userId:" + userId+ "techId:"+ techId, Toast.LENGTH_SHORT).show();
         tvOTP.setText(otp);
 
-        //tvTechName.setText(getIntent().getStringExtra("name"));
+        tvTechName.setText(getIntent().getStringExtra("name"));
+        phone = "7018835041";
     }
 
     private String getOTP(String message) {
@@ -134,10 +135,20 @@ public class TechnicianDetailActivity extends BaseClass {
 
     public void onPaymentClicked(View view) {
         Intent intent = new Intent(TechnicianDetailActivity.this,PaymentMethodsActivity.class);
-        intent.putExtra("phone","7018835041");
+        intent.putExtra("techId",techId);
+        intent.putExtra("techName",name);
+        intent.putExtra("phone",phone);
         intent.putExtra("amount",labour);
         startActivity(intent);
         //startActivity(new Intent(this, PaymentMethodsActivity.class));
+    }
+
+    public void onPhoneClicked(View view) {
+        String mobileNo = phone;
+        String uri = "tel:" + mobileNo.trim();
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse(uri));
+        startActivity(intent);
     }
 
     public void onMsgIconClicked(View view) {
@@ -192,7 +203,9 @@ public class TechnicianDetailActivity extends BaseClass {
             if (checkLocationPermission()) {
                 Intent intent = new Intent(this, TechnicianLocationActivity.class);
                 intent.putExtra("techId",techId);
+                intent.putExtra("techName",name);
                 startActivity(intent);
+                //startActivity(new Intent(this,TechnicianLocationActivity.class));
             }
             else {
                 ActivityCompat.requestPermissions(TechnicianDetailActivity.this,

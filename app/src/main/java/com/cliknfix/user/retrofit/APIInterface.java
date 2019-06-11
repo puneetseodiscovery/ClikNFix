@@ -77,8 +77,8 @@ public interface APIInterface {
     public static final int PAYMENT_DONE_FAILED= 41;
     public static final int TECH_DETAIL_SUCCESS= 42;
     public static final int TECH_DETAIL_FAILED= 43;
-    public static final int GETNEARBYLIST_SUCCESS= 40;
-    public static final int GETNEARBYLIST_FAILED= 41;
+    public static final int RESEND_OTP_SUCCESS= 44;
+    public static final int RESEND_OTP_FAILED= 45;
     public static final int ADDTOBASKET_SUCCESS= 42;
     public static final int ADDTOBASKET_FAILED= 43;
 

@@ -2,8 +2,10 @@ package com.cliknfix.user.homeScreen.bottomFragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +17,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cliknfix.user.R;
+import com.cliknfix.user.homeScreen.HomeScreenActivity;
 import com.cliknfix.user.homeScreen.bottomFragments.presenter.IPUserProfileFragment;
 import com.cliknfix.user.homeScreen.bottomFragments.presenter.PUserProfileFragment;
 import com.cliknfix.user.responseModels.SaveUserProfileResponseModel;
 import com.cliknfix.user.responseModels.UserProfileResponseModel;
 import com.cliknfix.user.util.Utility;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class UserProfileFragment extends Fragment implements View.OnClickListener,IUserProfileFragment {
@@ -31,6 +41,7 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    String select_latitude="",select_longitude="";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -67,12 +78,14 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
     @BindView(R.id.tv_address_text)
     TextView tvAddressText;
     @BindView(R.id.et_address)
-    EditText etAddress;
+    TextView etAddress;
     @BindView(R.id.profilePic)
     CircleImageView ivProfilePic;
 
     IPUserProfileFragment ipUserProfileFragment;
     ProgressDialog progressDialog;
+
+    public static final int PLACE_PICKER_REQUEST = 2;
 
     public UserProfileFragment() {
         // Required empty public constructor
@@ -137,6 +150,8 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
 
         ivEdit.setOnClickListener(this);
         ivSave.setOnClickListener(this);
+        etAddress.setOnClickListener(this);
+        etAddress.setClickable(false);
     }
 
 
@@ -150,24 +165,27 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
                 ivSave.setVisibility(View.VISIBLE);
                 //etUserName.setEnabled(true);
                 etUserName.setFocusableInTouchMode(true);
-                etEmail.setFocusableInTouchMode(true);
+                //etEmail.setFocusableInTouchMode(true);
                 etPhone.setFocusableInTouchMode(true);
                 etAge.setFocusableInTouchMode(true);
                 etBldGrp.setFocusableInTouchMode(true);
-                etAddress.setFocusableInTouchMode(true);
+                etAddress.setClickable(true);
+                //etAddress.setEnabled(true);
                 etUserName.requestFocus();
                 mgr.showSoftInput(etUserName, InputMethodManager.SHOW_IMPLICIT);
+
                 break;
             case R.id.iv_save:
                 ivEdit.setVisibility(View.VISIBLE);
                 ivSave.setVisibility(View.GONE);
                 llUserProfile.clearFocus();
                 etUserName.setFocusable(false);
-                etEmail.setFocusable(false);
+                //etEmail.setFocusable(false);
                 etPhone.setFocusable(false);
                 etAge.setFocusable(false);
                 etBldGrp.setFocusable(false);
-                etAddress.setFocusable(false);
+                etAddress.setClickable(false);
+                //etAddress.setEnabled(false);
                 mgr.hideSoftInputFromWindow(v.getWindowToken(),0);
                 progressDialog = Utility.showLoader(getContext());
                 ipUserProfileFragment.saveUserProfile(etUserName.getText().toString().trim(),
@@ -177,6 +195,16 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
                         etAddress.getText().toString().trim(),
                         null,
                         Utility.getToken());
+                break;
+            case R.id.et_address:
+                PlacePicker.IntentBuilder builder=new PlacePicker.IntentBuilder();
+                try {
+                    startActivityForResult(builder.build((HomeScreenActivity)getContext()), PLACE_PICKER_REQUEST);
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }
@@ -212,5 +240,24 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
     public void saveUserProfileFailureFromPresenter(String msgg) {
         progressDialog.dismiss();
         Toast.makeText(getContext(), "" + msgg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PLACE_PICKER_REQUEST){
+            if (resultCode == RESULT_OK) {
+                //etAddress.setEnabled(true);
+                Place place = PlaceAutocomplete.getPlace((HomeScreenActivity)getContext(), data);
+                Log.e("Tag", "Place: "
+                        + place.getAddress()
+                        + place.getPhoneNumber()
+                        + place.getLatLng().latitude);
+                select_latitude = String.valueOf(place.getLatLng().latitude);
+                select_longitude = String.valueOf(place.getLatLng().longitude);
+
+                etAddress.setText(place.getAddress().toString());
+            }
+        }
     }
 }

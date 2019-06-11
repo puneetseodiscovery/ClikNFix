@@ -43,6 +43,7 @@ public class SocialLoginResponseModel {
     }
 
     public class Datum {
+
         @SerializedName("id")
         @Expose
         private Integer id;
@@ -57,7 +58,7 @@ public class SocialLoginResponseModel {
         private String password;
         @SerializedName("email_verified_at")
         @Expose
-        private Object emailVerifiedAt;
+        private String emailVerifiedAt;
         @SerializedName("phone")
         @Expose
         private String phone;
@@ -130,11 +131,11 @@ public class SocialLoginResponseModel {
             this.password = password;
         }
 
-        public Object getEmailVerifiedAt() {
+        public String getEmailVerifiedAt() {
             return emailVerifiedAt;
         }
 
-        public void setEmailVerifiedAt(Object emailVerifiedAt) {
+        public void setEmailVerifiedAt(String emailVerifiedAt) {
             this.emailVerifiedAt = emailVerifiedAt;
         }
 
@@ -241,6 +242,7 @@ public class SocialLoginResponseModel {
         public void setDeviceToken(String deviceToken) {
             this.deviceToken = deviceToken;
         }
+
     }
 
 }

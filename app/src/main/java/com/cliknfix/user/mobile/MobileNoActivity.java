@@ -163,9 +163,6 @@ public class MobileNoActivity extends BaseClass implements IMobileNoActivity
 
     public void init() {
         tvP1.setTypeface(Utility.typeFaceForText(this));
-        //user_id = "85";
-        //etMobile.setText("9463924817");
-        //socialMediaLogin = "0";
         socialMediaLogin = getIntent().getStringExtra("socialMedia");
         if(socialMediaLogin.equalsIgnoreCase("1"))
         {
@@ -196,7 +193,7 @@ public class MobileNoActivity extends BaseClass implements IMobileNoActivity
             if(etMobile.getText().toString().length()>0) {
                 progressDialog = Utility.showLoader(this);
                 phone = tvCC.getText() + " " + etMobile.getText().toString().trim().toLowerCase();
-                ipMobileActivity.doSignUp(name, email, "", "", "",phone, phone);
+                ipMobileActivity.sendOTP(phone, user_id, "0");
             } else {
                 etMobile.setError("Enter a valid email.");
                 etMobile.requestFocus();

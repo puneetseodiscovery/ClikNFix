@@ -72,4 +72,8 @@ public class ContactUsActivity extends BaseClass implements IContactUsActivity {
         progressDialog.dismiss();
         tvEmail.setText(contactUsResponseModel.getData().get(0).getEmail());
     }
+
+    public void onSendClicked(View view) {
+
+    }
 }

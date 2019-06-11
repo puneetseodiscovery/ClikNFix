@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <uses-feature android:name="android.hardware.location.gps" />
 
@@ -36,9 +37,12 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
+       <!-- <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="@string/map_api2" />
 
         <activity android:name=".TestActivity" />
 
@@ -50,6 +54,7 @@
         <activity
             android:name=".paymentMethods.StartPaymentActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.StatusBarWithNoActionbar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <service
@@ -81,16 +86,6 @@ See README(https://goo.gl/l4GJaQ) for more.
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <!--
-<service
-            android:name=".login.LoginFirebaseMessagingService"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-    </service>
-        -->
         <activity
             android:name=".aboutUs.AboutUsActivity"
             android:theme="@style/AppTheme.StatusBarWithNoActionbar" />
@@ -100,7 +95,8 @@ See README(https://goo.gl/l4GJaQ) for more.
             android:screenOrientation="portrait" />
         <activity
             android:name=".technicianDetail.PastTechDetailActivity"
-            android:theme="@style/AppTheme.StatusBarWithNoActionbar" />
+            android:theme="@style/AppTheme.StatusBarWithNoActionbar">
+        </activity>
         <activity
             android:name=".privacyPolicy.PrivacyPolicyActivity"
             android:theme="@style/AppTheme.StatusBarWithNoActionbar" />
@@ -143,7 +139,8 @@ See README(https://goo.gl/l4GJaQ) for more.
         <activity
             android:name=".technicianReview.TechReviewActivity"
             android:theme="@style/AppTheme.StatusBarWithNoActionbar"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden">
+        </activity>
         <activity
             android:name=".paymentMethods.CardDetailActivity"
             android:theme="@style/AppTheme.StatusBarWithNoActionbar"
@@ -156,7 +153,8 @@ See README(https://goo.gl/l4GJaQ) for more.
             android:theme="@style/AppTheme.StatusBarWithNoActionbar" />
         <activity
             android:name=".technicianDetail.TechnicianDetailActivity"
-            android:theme="@style/AppTheme.StatusBarWithNoActionbar" />
+            android:theme="@style/AppTheme.StatusBarWithNoActionbar">
+        </activity>
         <activity
             android:name=".search.SearchActivity"
             android:theme="@style/AppTheme.StatusBarWithNoActionbar" />
@@ -170,10 +168,6 @@ See README(https://goo.gl/l4GJaQ) for more.
         <activity
             android:name=".mobile.MobileNoActivity"
             android:theme="@style/AppTheme.StatusBarWithNoActionbar">
-            <!--<intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
-                    <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
         </activity>
         <activity
             android:name=".splash.SplashActivity"

@@ -3,6 +3,8 @@
 
     <!-- LOGIN SCREEN STRINGS -->
     <string name="signin">LOGIN</string>
+
+    <string name="map_api2">AIzaSyDKpkPtlJLZC0KR-p-cvb4QXG_5JtXFL40</string>
     <string name="email_phone_hint">Email/Phone</string>
     <string name="password_hint">Password</string>
     <string name="rem_me">Remember Me</string>
@@ -102,8 +104,6 @@
     <string name="job_date">Job Date:-</string>
     <string name="payable_amount">Payable Amount:-</string>
 
-    <!-- PAYMENT METHODS SCREEN STRINGS -->
-    <string name="payment">Payment</string>
 
     <!-- TECHNICIAN TRACKING METHODS SCREEN STRINGS -->
     <string name="provider">Provider</string>
@@ -131,6 +131,7 @@
     <string name="payment_approved">Your Payment is Approved</string>
     <string name="transaction_details_text">Please Check Your Email for Transaction Details</string>
     <string name="continue_text">CONTINUE</string>
+    <string name="payment">Payment</string>
 
     <!-- TECHNICIAN REVIEW SCREEN STRINGS -->
     <string name="reviews">Reviews</string>

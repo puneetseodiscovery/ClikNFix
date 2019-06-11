@@ -27,6 +27,7 @@ public class PaymentSuccessActivity extends BaseClass {
     @BindView(R.id.btn_continue)
     Button btnContinue;
 
+    String techId,techName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +43,12 @@ public class PaymentSuccessActivity extends BaseClass {
         tvApproveText.setTypeface(Utility.typeFaceForBoldText(this));
         tvTransactionDetailsText.setTypeface(Utility.typeFaceForText(this));
         btnContinue.setTypeface(Utility.typeFaceForBoldText(this));
+        techId= getIntent().getStringExtra("techId");
+        techName= getIntent().getStringExtra("techName");
     }
 
     public void onContinueClicked(View view) {
-        startActivity(new Intent(this, TechReviewActivity.class));
+        startActivity(new Intent(this, TechReviewActivity.class).putExtra("techId",techId));
     }
 
 }

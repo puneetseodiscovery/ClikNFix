@@ -107,6 +107,7 @@ public class HomeFragment extends Fragment implements IHomeFragment{
     public void getCategoriesList() {
         String token = new PreferenceHandler().readString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_LOGIN_TOKEN, "");
         Log.e("token:++++++","" + token);
+        Log.e("UserId","" + Utility.getUserId());
         progressDialog = Utility.showLoader(getContext());
         ipHomeFragment.getCategoriesList(Utility.getToken());
     }
