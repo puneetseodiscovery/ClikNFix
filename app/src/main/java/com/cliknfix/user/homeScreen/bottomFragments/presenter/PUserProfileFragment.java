@@ -7,6 +7,8 @@ import com.cliknfix.user.homeScreen.bottomFragments.model.MUserProfileFragment;
 import com.cliknfix.user.responseModels.SaveUserProfileResponseModel;
 import com.cliknfix.user.responseModels.UserProfileResponseModel;
 
+import okhttp3.MultipartBody;
+
 public class PUserProfileFragment implements IPUserProfileFragment {
 
     IUserProfileFragment iUserProfileFragment;
@@ -33,8 +35,8 @@ public class PUserProfileFragment implements IPUserProfileFragment {
     }
 
     @Override
-    public void saveUserProfile(String name, String phone, String blood_group, String age, String address, String imgUrl, String token) {
-        imUserProfileFragment.saveUserProfile(name,phone,blood_group,age,address,imgUrl,token);
+    public void saveUserProfile(String name, String phone, String blood_group, String age, String address, String image, String token) {
+        imUserProfileFragment.saveUserProfile(name,phone,blood_group,age,address,image,token);
     }
 
     @Override

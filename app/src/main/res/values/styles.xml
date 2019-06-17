@@ -22,4 +22,9 @@
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
+    <style name="CustomRatingBar" parent="Widget.AppCompat.RatingBar">
+        <item name="colorAccent">@color/reviewStarColor</item>
+        <item name="android:colorControlNormal">#cfcfcf</item>
+    </style>
+
 </resources>

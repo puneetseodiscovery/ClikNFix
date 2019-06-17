@@ -17,7 +17,6 @@
             android:id="@+id/iv_back"
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:gravity="center"
             android:layout_centerVertical="true"
             android:onClick="onBackClicked">
@@ -67,18 +66,37 @@
                     android:layout_marginTop="@dimen/onefivezero_dp"
                     android:padding="@dimen/onefive_dp">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/msg_icon"
-                        android:layout_alignParentLeft="true"
-                        android:onClick="onMsgIconClicked"/>
+                    <RelativeLayout
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:onClick="onMsgIconClicked"
+                        android:layout_alignParentLeft="true">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/phone_icon"
-                        android:layout_alignParentRight="true"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/msg_icon" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_centerVertical="true"
+                        android:onClick="onPhoneClicked"
+                        android:layout_alignParentRight="true">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/phone_icon" />
+                    </RelativeLayout>
+
+
+
+
                 </RelativeLayout>
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -87,7 +105,7 @@
                     android:layout_height="@dimen/onesixzero_dp"
                     android:layout_marginTop="@dimen/sixzero_dp"
                     android:src="@mipmap/user_img"
-                    android:onClick="onPhoneClicked"
+
                     app:civ_border_width="2dp"
                     app:civ_border_color="#FFFFFF" />
 
@@ -106,10 +124,10 @@
                 android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:numStars="5"
+                android:theme="@style/CustomRatingBar"
                 android:layout_gravity="center"
-                android:isIndicator="true"
-                android:layout_marginTop="@dimen/twozero_dp" />
+                android:layout_marginTop="@dimen/twozero_dp"
+                android:isIndicator="true"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

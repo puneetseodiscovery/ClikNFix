@@ -16,6 +16,9 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
 
     <uses-feature android:name="android.hardware.location.gps" />
 
@@ -154,6 +157,11 @@ See README(https://goo.gl/l4GJaQ) for more.
         <activity
             android:name=".technicianDetail.TechnicianDetailActivity"
             android:theme="@style/AppTheme.StatusBarWithNoActionbar">
+            <intent-filter>
+                <action android:name="confirmed" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".search.SearchActivity"

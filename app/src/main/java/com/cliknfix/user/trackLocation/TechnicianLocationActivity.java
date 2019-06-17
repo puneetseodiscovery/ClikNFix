@@ -12,6 +12,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -20,10 +22,12 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cliknfix.user.R;
+import com.cliknfix.user.TestActivity;
 import com.cliknfix.user.homeScreen.HomeScreenActivity;
 import com.cliknfix.user.technicianDetail.TechnicianDetailActivity;
 import com.cliknfix.user.util.Utility;
@@ -75,14 +79,26 @@ public class TechnicianLocationActivity extends FragmentActivity implements OnMa
     private HashMap<String, Marker> mMarkers = new HashMap<>();
     private GoogleMap mMap;
 
+
+
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.tv_distance)
+    /*@BindView(R.id.tv_distance)
     TextView tvDistance;
     @BindView(R.id.tv_time)
     TextView tvTime;
     @BindView(R.id.ll_location)
     LinearLayout llLocation;
+
+    @BindView(R.id.show)
+    View vShow;
+    @BindView(R.id.hide)
+    View vHide;
+
+
+    BottomSheetBehavior mBottomSheetBehaviour;*/
+    RelativeLayout iv_trigger;
+    CoordinatorLayout coordinatorLayout;
 
     private double userLat,techLat;
     private double userLong,techLong;
@@ -108,10 +124,17 @@ public class TechnicianLocationActivity extends FragmentActivity implements OnMa
     }
 
     private void init() {
-        llLocation.setVisibility(View.VISIBLE);
+        /*llLocation.setVisibility(View.VISIBLE);
+        View nestedScrollView = (View) findViewById(R.id.nestedScrollView);
+        mBottomSheetBehaviour = BottomSheetBehavior.from(nestedScrollView);
+
+        //Remove this line to disable peek
+        mBottomSheetBehaviour.setPeekHeight(0);*/
+
         tvTitle.setTypeface(Utility.typeFaceForBoldText(this));
-        tvDistance.setTypeface(Utility.typeFaceForText(this));
-        tvTime.setTypeface(Utility.typeFaceForText(this));
+        /*tvDistance.setTypeface(Utility.typeFaceForText(this));
+        tvTime.setTypeface(Utility.typeFaceForText(this));*/
+        //init_persistent_bottomsheet();
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -130,7 +153,7 @@ public class TechnicianLocationActivity extends FragmentActivity implements OnMa
                             userLong = location.getLongitude();
                             /*userLat = 30.7333;
                             userLong = 76.7794;*/
-                            Toast.makeText(TechnicianLocationActivity.this, userLat + "WORKS" + userLong, Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(TechnicianLocationActivity.this, userLat + "WORKS" + userLong, Toast.LENGTH_SHORT).show();
 
                             //subscribeToUpdates();
 
@@ -142,6 +165,61 @@ public class TechnicianLocationActivity extends FragmentActivity implements OnMa
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        /*vShow.setOnClickListener(new View.OnClickListener() {F
+            @Override
+            public void onClick(View view) {
+                mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_EXPANDED);
+                vShow.setVisibility(View.GONE);
+                vHide.setVisibility(View.VISIBLE);
+            }
+        });
+
+        vHide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                vShow.setVisibility(View.VISIBLE);
+                vHide.setVisibility(View.GONE);
+            }
+        });
+
+        mBottomSheetBehaviour.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                String state = "";
+
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_DRAGGING: {
+                        state = "DRAGGING";
+                        break;
+                    }
+                    case BottomSheetBehavior.STATE_SETTLING: {
+                        state = "SETTLING";
+                        break;
+                    }
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        state = "EXPANDED";
+                        break;
+                    }
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                        state = "COLLAPSED";
+                        break;
+                    }
+                    case BottomSheetBehavior.STATE_HIDDEN: {
+                        state = "HIDDEN";
+                        break;
+                    }
+                }
+
+                //Toast.makeText(TechnicianLocationActivity.this, "Bottom Sheet State Changed to: " + state, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });*/
     }
 
     private void drawPolyLine(LatLng tech) {
@@ -179,8 +257,11 @@ public class TechnicianLocationActivity extends FragmentActivity implements OnMa
                         String distance,time;
                         distance = String.valueOf(leg.distance);
                         time = String.valueOf(leg.duration) + " to reach";
-                        tvDistance.setText(distance);
-                        tvTime.setText(time);
+
+                        setBottomSheetBehaviour();
+
+                        /*tvDistance.setText(distance);
+                        tvTime.setText(time);*/
                         if (leg.steps != null) {
                             for (int j=0; j<leg.steps.length;j++){
                                 DirectionsStep step = leg.steps[j];
@@ -232,13 +313,20 @@ public class TechnicianLocationActivity extends FragmentActivity implements OnMa
 
     }
 
-    public void onBackClicked(View view){
-        startActivity(new Intent(this, TechnicianDetailActivity.class));
+    private void setBottomSheetBehaviour() {
+        /*mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_EXPANDED);
+        vShow.setVisibility(View.GONE);
+        vHide.setVisibility(View.VISIBLE);*/
+
     }
 
-    public void onCrossClicked(View view){
-        llLocation.setVisibility(View.GONE);
+    public void onBackClicked(View view){
+        startActivity(new Intent(this, TechnicianDetailActivity.class).putExtra("techId",techId).putExtra("techName",techName));
     }
+
+    /*public void onCrossClicked(View view){
+        llLocation.setVisibility(View.GONE);
+    }*/
 
 
     /**
@@ -347,5 +435,51 @@ public class TechnicianLocationActivity extends FragmentActivity implements OnMa
 
     private String getEndLocationTitle(DirectionsResult results){
         return  "Time :"+ results.routes[0].legs[0].duration.humanReadable + " Distance :" + results.routes[0].legs[0].distance.humanReadable;
+    }
+
+    public void init_persistent_bottomsheet() {
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
+        View persistentbottomSheet = coordinatorLayout.findViewById(R.id.bottomsheet);
+        iv_trigger = (RelativeLayout) persistentbottomSheet.findViewById(R.id.iv_rl_fab);
+        final BottomSheetBehavior behavior = BottomSheetBehavior.from(persistentbottomSheet);
+
+
+        iv_trigger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (behavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                    behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else {
+                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+        });
+
+        if (behavior != null)
+            behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+                @Override
+                public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                    //showing the different states
+                    switch (newState) {
+                        case BottomSheetBehavior.STATE_HIDDEN:
+                            break;
+                        case BottomSheetBehavior.STATE_EXPANDED:
+                            break;
+                        case BottomSheetBehavior.STATE_COLLAPSED:
+                            break;
+                        case BottomSheetBehavior.STATE_DRAGGING:
+                            break;
+                        case BottomSheetBehavior.STATE_SETTLING:
+                            break;
+                    }
+                }
+
+                @Override
+                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                    // React to dragging events
+
+                }
+            });
+
     }
 }

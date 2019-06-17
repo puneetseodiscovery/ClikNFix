@@ -20,6 +20,8 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,6 +43,8 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.view.KeyEvent.KEYCODE_DEL;
 
 public class OtpActivity extends BaseClass implements IOtpActivity {
     @BindView(R.id.tv_vpno)
@@ -94,15 +98,18 @@ public class OtpActivity extends BaseClass implements IOtpActivity {
         btnSubmit.setTypeface(Utility.typeFaceForBoldText(this));
         tvResendOTP.setTypeface(Utility.typeFaceForText(this));
 
+
         etOTP1.setSelection(0);
         etOTP2.setSelection(0);
         etOTP3.setSelection(0);
         etOTP4.setSelection(0);
 
+        etOTP1.requestFocus();
+
         socialMediaLogin = getIntent().getStringExtra("socialMedia");
 
-        phone = getIntent().getExtras().getString("phone");
-        user_id = getIntent().getExtras().getString("userId");
+        //phone = getIntent().getExtras().getString("phone");
+        //user_id = getIntent().getExtras().getString("userId");
         /*LocalBroadcastManager.getInstance(this).
                 registerReceiver(receiver, new IntentFilter("otp"));*/
 
@@ -121,7 +128,7 @@ public class OtpActivity extends BaseClass implements IOtpActivity {
                 if(etOTP1.getText().toString().length()>0)
                     etOTP2.requestFocus();
             }
-
+//cvvv
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -146,6 +153,7 @@ public class OtpActivity extends BaseClass implements IOtpActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
+                Toast.makeText(OtpActivity.this, ""+s, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -185,6 +193,95 @@ public class OtpActivity extends BaseClass implements IOtpActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        etOTP4.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent evnet) {
+                //You can identify which key pressed buy checking keyCode value with KeyEvent.KEYCODE_
+                if(keyCode == KEYCODE_DEL) {
+                    //this is for backspace
+                    if(etOTP4.getText().toString().length() == 0) {
+                        etOTP3.setText("");
+                        etOTP3.requestFocus();
+                    }
+                }
+                return false;
+            }
+        });
+
+        etOTP3.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent evnet) {
+                //You can identify which key pressed buy checking keyCode value with KeyEvent.KEYCODE_
+                if(keyCode == KEYCODE_DEL) {
+                    //this is for backspace
+                    if(etOTP3.getText().toString().length() == 0) {
+                        etOTP2.setText("");
+                        etOTP2.requestFocus();
+                    }
+                }
+                return false;
+            }
+        });
+
+        etOTP2.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent evnet) {
+                //You can identify which key pressed buy checking keyCode value with KeyEvent.KEYCODE_
+                if(keyCode == KEYCODE_DEL) {
+                    //this is for backspace
+                    if(etOTP2.getText().toString().length() == 0) {
+                        etOTP1.setText("");
+                        etOTP1.requestFocus();
+                    }
+                }
+                return false;
+            }
+        });
+
+        etOTP1.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(v.isFocusable())
+                {
+                    v.setFocusable(false);
+                }
+                return false;
+            }
+        });
+
+        etOTP2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(v.isFocusable())
+                {
+                    v.setFocusable(false);
+                }
+                return false;
+            }
+        });
+
+        etOTP3.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(v.isFocusable())
+                {
+                    v.setFocusable(false);
+                }
+                return false;
+            }
+        });
+
+        etOTP4.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(v.isFocusable())
+                {
+                    v.setFocusable(false);
+                }
+                return false;
             }
         });
     }

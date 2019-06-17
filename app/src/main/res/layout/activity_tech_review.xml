@@ -62,8 +62,7 @@
                 android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:numStars="5"
-                android:progressTint="@color/reviewStarColor"
+                android:theme="@style/CustomRatingBar"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/twozero_dp" />
 

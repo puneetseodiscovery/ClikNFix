@@ -32,7 +32,7 @@ public class MSettingsFragment implements IMSettingsFragment {
                     ipSettingsFragment.logoutSuccess(logoutResponseModel);
                     break;
 
-                case APIInterface.LOGIN_FAILED:
+                case APIInterface.LOGOUT_FAILED:
                     String message = (String) msg.obj;
                     ipSettingsFragment.logoutFailure(message);
                     break;

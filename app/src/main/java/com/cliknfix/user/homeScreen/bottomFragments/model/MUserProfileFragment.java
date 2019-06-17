@@ -10,6 +10,8 @@ import com.cliknfix.user.responseModels.UserProfileResponseModel;
 import com.cliknfix.user.retrofit.APIInterface;
 import com.cliknfix.user.retrofit.RetrofitCalls;
 
+import okhttp3.MultipartBody;
+
 public class MUserProfileFragment implements IMUserProfileFragment {
 
     IPUserProfileFragment ipUserProfileFragment;
@@ -25,9 +27,9 @@ public class MUserProfileFragment implements IMUserProfileFragment {
     }
 
     @Override
-    public void saveUserProfile(String name, String phone, String blood_group, String age, String address, String imgUrl, String token) {
+    public void saveUserProfile(String name, String phone, String blood_group, String age, String address, String image, String token) {
         RetrofitCalls retrofitCalls = new RetrofitCalls();
-        retrofitCalls.saveUserProfile(name,phone,blood_group,age,address,imgUrl,token,mHandler);
+        retrofitCalls.saveUserProfile(name,phone,blood_group,age,address,image,token,mHandler);
     }
 
     android.os.Handler mHandler = new android.os.Handler() {

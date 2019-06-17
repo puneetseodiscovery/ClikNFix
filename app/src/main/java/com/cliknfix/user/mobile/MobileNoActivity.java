@@ -170,7 +170,7 @@ public class MobileNoActivity extends BaseClass implements IMobileNoActivity
             email = getIntent().getStringExtra("email");
             name = getIntent().getStringExtra("name");
             Log.e("Mobile user_id", "" + user_id);
-            Toast.makeText(this, "userId:" + user_id, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "userId:" + user_id, Toast.LENGTH_SHORT).show();
             //etMobile.setEnabled(true);
             etMobile.setFocusableInTouchMode(true);
             etMobile.setFocusableInTouchMode(true);

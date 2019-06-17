@@ -72,7 +72,7 @@ public class TechnicianDetailActivity extends BaseClass {
     ArrayList<String> al = new ArrayList<>();
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    String phone;
+    String techPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,21 +92,35 @@ public class TechnicianDetailActivity extends BaseClass {
         btnTrack.setTypeface(Utility.typeFaceForBoldText(this));
         btnPayment.setTypeface(Utility.typeFaceForBoldText(this));
 
-        name = getIntent().getStringExtra("technician_name");
-        rating = getIntent().getStringExtra("rating");
-        labour = getIntent().getStringExtra("labour_rate");
-        tvTechName.setText(name);
-        ratingBar.setNumStars(Integer.parseInt(rating));
-        tvRate.setText(labour);
-        message = getIntent().getStringExtra("message");
-        otp = getOTP(message);
-        userId= getIntent().getStringExtra("user_id");
-        techId= getIntent().getStringExtra("technician_id");
-        Log.e("data:","name:" +name +",rating:" + rating + ",labour:" + labour+ ",otp:" + otp + ",userId:" + userId+ "techId:"+ techId);
-        tvOTP.setText(otp);
+        /*if(getIntent().getExtras()!=null) {
+            Log.e("message","" + getIntent().getStringExtra("message"));
+            Log.e("technician_id","" + getIntent().getStringExtra("technician_id"));
+            Log.e("user_id","" + getIntent().getStringExtra("user_id"));
+            Log.e("labour_rate","" + getIntent().getStringExtra("labour_rate"));
+            message = getIntent().getStringExtra("message");
+            technicianId = getIntent().getStringExtra("technician_id");
+            userId = getIntent().getStringExtra("user_id");
+            labourRate = getIntent().getStringExtra("labour_rate");
+            Log.e("Homescreen userId","" + userId);
+        }*/
+        if(getIntent().getExtras()!=null) {
+            name = getIntent().getStringExtra("technician_name");
+            rating = getIntent().getStringExtra("rating");
+            labour = getIntent().getStringExtra("labour_rate");
+            tvTechName.setText(name);
+            ratingBar.setNumStars(Integer.parseInt(rating));
+            tvRate.setText(labour);
+            message = getIntent().getStringExtra("message");
+            otp = getOTP(message);
+            userId = getIntent().getStringExtra("user_id");
+            techId = getIntent().getStringExtra("technician_id");
+            techPhone = getIntent().getStringExtra("technician_phone");
+            Log.e("data:", "name:" + name + ",rating:" + rating + ",labour:" + labour + ",otp:" + otp + ",userId:" + userId + "techId:" + techId + "phone:" + techPhone);
+            tvOTP.setText(otp);
 
-        tvTechName.setText(getIntent().getStringExtra("name"));
-        phone = "7018835041";
+            tvTechName.setText(getIntent().getStringExtra("name"));
+        }
+        //phone = "7018835041";
     }
 
     private String getOTP(String message) {
@@ -137,14 +151,14 @@ public class TechnicianDetailActivity extends BaseClass {
         Intent intent = new Intent(TechnicianDetailActivity.this,PaymentMethodsActivity.class);
         intent.putExtra("techId",techId);
         intent.putExtra("techName",name);
-        intent.putExtra("phone",phone);
+        intent.putExtra("phone",techPhone);
         intent.putExtra("amount",labour);
         startActivity(intent);
         //startActivity(new Intent(this, PaymentMethodsActivity.class));
     }
 
     public void onPhoneClicked(View view) {
-        String mobileNo = phone;
+        String mobileNo = techPhone;
         String uri = "tel:" + mobileNo.trim();
         Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse(uri));
@@ -160,7 +174,7 @@ public class TechnicianDetailActivity extends BaseClass {
                 Log.e("chat response","" + s);
                 doOnSuccess(s);
                 firebaseChatWith = techId;//String.valueOf(getArguments().getInt("id"));
-                startActivity(new Intent(TechnicianDetailActivity.this, ChatActivity.class));
+                startActivity(new Intent(TechnicianDetailActivity.this, ChatActivity.class).putExtra("technicianName",name));
             }
         },new Response.ErrorListener(){
             @Override
@@ -172,8 +186,8 @@ public class TechnicianDetailActivity extends BaseClass {
         RequestQueue rQueue = Volley.newRequestQueue(TechnicianDetailActivity.this);
         rQueue.add(request);
 
-        /*firebaseChatWith = techId;
-        startActivity(new Intent(TechnicianDetailActivity.this, ChatActivity.class));*/
+        firebaseChatWith = techId;
+        startActivity(new Intent(TechnicianDetailActivity.this, ChatActivity.class));
     }
 
     public void doOnSuccess(String s){

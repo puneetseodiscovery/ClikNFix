@@ -49,7 +49,7 @@ public class LoginFirebaseMessagingService extends FirebaseMessagingService {
                         // Get new Instance ID token
                         token = task.getResult().getToken();
                         Log.e("Firebase Token", token);
-                        Toast.makeText(LoginFirebaseMessagingService.this, "Firebase Token:"+ token, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(LoginFirebaseMessagingService.this, "Firebase Token:"+ token, Toast.LENGTH_SHORT).show();
                         new PreferenceHandler().writeString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_FIREBASE_TOKEN, token);
                         String mLoginToken = new PreferenceHandler().readString(MyApp.getInstance().getApplicationContext(), PreferenceHandler.PREF_KEY_FIREBASE_TOKEN, "");
                         Log.d("1mLoginToken", mLoginToken);

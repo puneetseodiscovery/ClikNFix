@@ -23,6 +23,7 @@ import com.cliknfix.user.responseModels.TechDetailResponseModel;
 import com.cliknfix.user.responseModels.UserProfileResponseModel;
 import com.cliknfix.user.signUp.BeanModelSignUp;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -30,7 +31,9 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface APIInterface {
@@ -147,6 +150,7 @@ public interface APIInterface {
             @Query("confirm_password") String confirm_password,
             @Header("token") String token);
 
+
     @Headers({"Accept: application/json"})
     @POST("/Cliknfixx/api/editProfile")
     Call<SaveUserProfileResponseModel> saveUserProfile(
@@ -155,8 +159,19 @@ public interface APIInterface {
             @Query("blood_group") String blood_group,
             @Query("age") String age,
             @Query("address") String address,
-            @Query("imgUrl") String imgUrl,
+            //@Query("user_image") String user_image,
             @Header("token") String token);
+
+    /*@Multipart
+    @POST("/Cliknfixx/api/editProfile")
+    Call<SaveUserProfileResponseModel> saveUserProfile(
+            @Part("name") String name,
+            @Part("phone") String phone,
+            @Part("blood_group") String blood_group,
+            @Part("age") String age,
+            @Part("address") String address,
+            @Part MultipartBody.Part user_image,
+            @Header("token") String token);*/
 
     @Headers({"Accept: application/json"})
     @POST("/Cliknfixx/api/addTechnicianReview")

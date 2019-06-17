@@ -94,6 +94,9 @@ public class SaveUserProfileResponseModel {
         @SerializedName("lng")
         @Expose
         private Object lng;
+        @SerializedName("device_token")
+        @Expose
+        private String deviceToken;
 
         public Integer getId() {
             return id;
@@ -229,6 +232,14 @@ public class SaveUserProfileResponseModel {
 
         public void setLng(Object lng) {
             this.lng = lng;
+        }
+
+        public String getDeviceToken() {
+            return deviceToken;
+        }
+
+        public void setDeviceToken(String deviceToken) {
+            this.deviceToken = deviceToken;
         }
 
     }

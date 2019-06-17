@@ -135,14 +135,16 @@ public class LoginActivity extends BaseClass implements ILoginActivity {
             @Override
             public void onResponse(String s) {
                 if(s.equals("null")){
-                    Toast.makeText(LoginActivity.this, "user not found", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(LoginActivity.this, "user not found", Toast.LENGTH_LONG).show();
+                    Log.e("firebase login", "user not found");
                 }
                 else{
                     try {
                         JSONObject obj = new JSONObject(s);
 
                         if(!obj.has(userId)){
-                            Toast.makeText(LoginActivity.this, "user not found", Toast.LENGTH_LONG).show();
+                            Log.e("firebase login", "user not found");
+                           // Toast.makeText(LoginActivity.this, "user not found", Toast.LENGTH_LONG).show();
                         }
                         else if(obj.getJSONObject(userId).getString("password").equals(password)){
                             firebaseUsername = userId;

@@ -30,6 +30,7 @@ import com.cliknfix.user.responseModels.UserProfileResponseModel;
 import com.cliknfix.user.signUp.BeanModelSignUp;
 import com.cliknfix.user.util.PreferenceHandler;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -286,7 +287,7 @@ public class RetrofitCalls {
             }
             @Override
             public void onFailure(Call<LogoutResponseModel> call, Throwable t) {
-                message.what = apiInterface.GETCATEGORYLIST_FAILED;
+                message.what = apiInterface.LOGOUT_FAILED;
                 message.obj = t.getMessage();
                 Log.d("+++++","++ t message ++"+t.getMessage());
                 mHandler.sendMessage(message);
@@ -380,9 +381,9 @@ public class RetrofitCalls {
         });
     }
 
-    public void saveUserProfile(String name, String phone, String blood_group, String age, String address, String imgUrl, String token, final Handler mHandler) {
+    public void saveUserProfile(String name, String phone, String blood_group, String age, String address, String user_image, String token, final Handler mHandler) {
         final Message message = new Message();
-        Call<SaveUserProfileResponseModel> call = apiInterface.saveUserProfile(name,phone,blood_group,age,address,imgUrl,token);
+        Call<SaveUserProfileResponseModel> call = apiInterface.saveUserProfile(name,phone,blood_group,age,address,token);
         call.enqueue(new Callback<SaveUserProfileResponseModel>() {
             @Override
             public void onResponse(Call<SaveUserProfileResponseModel> call, Response<SaveUserProfileResponseModel> response) {

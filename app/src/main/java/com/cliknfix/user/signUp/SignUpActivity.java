@@ -73,7 +73,7 @@ import butterknife.ButterKnife;
 
 public class SignUpActivity extends BaseClass implements ISignUpActivity {
 
-    String[] country = {
+    String[] bloodGroup = {
             "Select Blood Group",
             "A+",
             "AB+",
@@ -174,7 +174,7 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
 
                 if(s.equals("null")) {
                     reference.child(userId).child("password").setValue(password);
-                    Toast.makeText(SignUpActivity.this, "registration successful", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(SignUpActivity.this, "registration successful", Toast.LENGTH_LONG).show();
                 }
                 else {
                     try {
@@ -451,7 +451,7 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
     }
 
     public void loadSpinner() {
-        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, country);
+        ArrayAdapter aa = new ArrayAdapter(this, android.R.layout.simple_spinner_item, bloodGroup);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spBldGrp.setAdapter(aa);
         spBldGrp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -516,7 +516,7 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
         String password = signUpResponseModel.getData().get(0).getPassword().toString().trim();
         registerUserToFirebase(userId,password);
         progressDialog.dismiss();
-        Toast.makeText(this, "User Successfully Registered.", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "User Successfully Registered.", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(SignUpActivity.this, MobileNoActivity.class);
         intent.putExtra("socialMedia","0");
         intent.putExtra("phone", "" +signUpResponseModel.getData().get(0).getPhone().toString());
@@ -593,14 +593,16 @@ public class SignUpActivity extends BaseClass implements ISignUpActivity {
             @Override
             public void onResponse(String s) {
                 if(s.equals("null")){
-                    Toast.makeText(SignUpActivity.this, "user not found", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(SignUpActivity.this, "user not found", Toast.LENGTH_LONG).show();
+                    Log.e("firbase login", "user not found");
                 }
                 else{
                     try {
                         JSONObject obj = new JSONObject(s);
 
                         if(!obj.has(userId)){
-                            Toast.makeText(SignUpActivity.this, "user not found", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(SignUpActivity.this, "user not found", Toast.LENGTH_LONG).show();
+                            Log.e("firbase login", "user not found");
                         }
                         else if(obj.getJSONObject(userId).getString("password").equals(password)){
                             firebaseUsername = userId;

@@ -4,31 +4,126 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TestActivity">
+    tools:context=".otp.OtpActivity">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/idCardView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginTop="5dp"
-        app:cardCornerRadius="4dp">
-        <fragment
-            android:id="@+id/place_autocomplete_fragment"
-            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </android.support.v7.widget.CardView>
-    <TextView
-        android:id="@+id/placeName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No Place selected"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/threetwo_dp">
+
+            <RelativeLayout
+                android:id="@+id/skip"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize">
+
+                <RelativeLayout
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/activity_vertical_margin"
+                        android:src="@mipmap/back" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:id="@+id/ll"
+                android:weightSum="4"
+                android:layout_marginTop="@dimen/fivezero_dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/threetwo_dp"
+                android:layout_marginRight="@dimen/threetwo_dp"
+                android:layout_gravity="center_horizontal">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center"
+                    android:hint="2"
+                    android:textCursorDrawable="@null"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:maxLength="1"
+                    android:id="@+id/et1"
+                    android:padding="@dimen/ten_dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/active_yellow"
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|center"
+                    android:hint="5"
+                    android:textCursorDrawable="@null"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:id="@+id/et2"
+                    android:maxLength="1"
+                    android:padding="@dimen/ten_dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/active_yellow"
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/et3"
+                    android:textCursorDrawable="@null"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:padding="@dimen/ten_dp"
+                    android:gravity="center_vertical|center"
+                    android:paddingLeft="@dimen/ten_dp"
+                    android:hint="8"
+                    android:maxLength="1"
+                    android:textColor="@color/active_yellow"
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textCursorDrawable="@null"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:padding="@dimen/ten_dp"
+                    android:id="@+id/et4"
+                    android:gravity="center_vertical|center"
+                    android:hint="2"
+                    android:maxLength="1"
+                    android:textColor="@color/active_yellow"
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textResend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll"
+                android:layout_marginTop="@dimen/fivezero_dp"
+                android:gravity="center"
+                android:text="Resend"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp" />
+
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

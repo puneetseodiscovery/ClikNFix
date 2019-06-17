@@ -76,14 +76,32 @@
                         android:src="@mipmap/user_img"
                         app:civ_border_width="2dp"
                         app:civ_border_color="#FFFFFF"/>
-                    <de.hdodenhof.circleimageview.CircleImageView
+
+                    <RelativeLayout
+                        android:id="@+id/iv_cam"
+                        android:layout_width="@dimen/dimen_40dp"
+                        android:layout_height="@dimen/dimen_40dp"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="@dimen/twozero_dp"
+                        android:visibility="gone">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="bottom|right"
+                            android:src="@mipmap/cam"
+                            android:id="@+id/cam"/>
+                    </RelativeLayout>
+
+                    <!--<de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="bottom|right"
                         android:layout_marginRight="15dp"
                         android:layout_marginBottom="@dimen/twozero_dp"
                         android:src="@mipmap/cam"
-                        android:id="@+id/cam"/>
+                        android:id="@+id/cam"/>-->
                 </FrameLayout>
             </RelativeLayout>
 
@@ -255,7 +273,7 @@
                 android:background="@color/edittextHintColor"/>
 
             <LinearLayout android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/onefive_dp"
                 android:layout_marginLeft="@dimen/onefive_dp"
                 android:layout_marginRight="@dimen/onefive_dp"
@@ -277,6 +295,7 @@
                     android:layout_weight="1"
                     android:textColor="@color/blackColor"
                     android:background="@android:color/transparent"
+                    android:padding="@dimen/five_dp"
                     android:focusable="false"/>
 
             </LinearLayout>

@@ -1,5 +1,6 @@
 package com.cliknfix.user.chat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.cliknfix.user.R;
 import com.cliknfix.user.base.BaseClass;
 import com.cliknfix.user.login.FirebaseUserDetails;
+import com.cliknfix.user.technicianDetail.TechnicianDetailActivity;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -31,6 +33,7 @@ public class ChatActivity extends BaseClass {
     EditText messageArea;
     ScrollView scrollView;
     Firebase reference1, reference2;
+    String technicianName;
 
 
     @Override
@@ -44,6 +47,8 @@ public class ChatActivity extends BaseClass {
         messageArea = (EditText)findViewById(R.id.messageArea);
         scrollView = (ScrollView)findViewById(R.id.scrollView);
 
+
+        technicianName = getIntent().getStringExtra("technicianName");
         Firebase.setAndroidContext(this);
         reference1 = new Firebase("https://cliknfix-1558498832364.firebaseio.com/messages/" + firebaseUsername + "_" + firebaseChatWith);
         reference2 = new Firebase("https://cliknfix-1558498832364.firebaseio.com/messages/" + firebaseChatWith + "_" + firebaseUsername);
@@ -75,7 +80,8 @@ public class ChatActivity extends BaseClass {
                     addMessageBox("You:-\n" + message, 1);
                 }
                 else{
-                    addMessageBox(firebaseChatWith + ":-\n" + message, 2);
+                    //addMessageBox(firebaseChatWith + ":-\n" + message, 2);
+                    addMessageBox(technicianName + ":-\n" + message, 2);
                 }
             }
 
@@ -119,5 +125,9 @@ public class ChatActivity extends BaseClass {
         textView.setLayoutParams(lp2);
         layout.addView(textView);
         scrollView.fullScroll(View.FOCUS_DOWN);
+    }
+
+    public void onBackClicked(View view){
+        startActivity(new Intent(this, TechnicianDetailActivity.class));
     }
 }

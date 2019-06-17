@@ -22,6 +22,9 @@ import com.cliknfix.user.base.BaseClass;
 import com.cliknfix.user.base.MyApp;
 import com.cliknfix.user.homeScreen.HomeScreenActivity;
 import com.cliknfix.user.loginSignup.LoginSignupActivity;
+import com.cliknfix.user.technicianDetail.TechnicianDetailActivity;
+import com.cliknfix.user.technicianReview.TechReviewActivity;
+import com.cliknfix.user.trackLocation.TechnicianLocationActivity;
 import com.cliknfix.user.util.PreferenceHandler;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -39,7 +42,7 @@ public class SplashActivity extends BaseClass {
 
     String session;
     String[] permissions = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.SEND_SMS,
-            Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_SMS,Manifest.permission.CALL_PHONE};
+            Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_SMS,Manifest.permission.CALL_PHONE,Manifest.permission.CAMERA};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ public class SplashActivity extends BaseClass {
                             SplashActivity.this.startActivity(mainIntent);
                             SplashActivity.this.finish();
                         }
+                        //startActivity(new Intent(SplashActivity.this, TechnicianLocationActivity.class));
                     }
                 }, 1000);
             }

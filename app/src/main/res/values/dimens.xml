@@ -26,4 +26,12 @@
     <dimen name="onefourzero_dp">140dp</dimen>
     <dimen name="fivezero_dp">50dp</dimen>
     <dimen name="sixzero_dp">60dp</dimen>
+
+
+    <dimen name="inbetween_space">8dp</dimen>
+    <dimen name="bs_icon_size">24dp</dimen>
+    <dimen name="bs_item_height">48dp</dimen>
+    <dimen name="bs_peek_height">56dp</dimen>
+    <dimen name="bs_header_text">20sp</dimen>
+    <dimen name="bs_item_text">18sp</dimen>
 </resources>

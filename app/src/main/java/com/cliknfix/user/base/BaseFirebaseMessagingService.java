@@ -79,6 +79,7 @@ public class BaseFirebaseMessagingService extends FirebaseMessagingService {
         intent.putExtra("labour_rate",(String) data.get("labour_rate"));
         intent.putExtra("message",(String) data.get("message"));
         intent.putExtra("technician_id",(String) data.get("technician_id"));
+        intent.putExtra("technician_phone",(String) data.get("technician_phone"));
         startActivity(intent);
 
         //dsendNotification();

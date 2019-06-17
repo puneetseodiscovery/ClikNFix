@@ -64,6 +64,7 @@ public class TechReviewActivity extends BaseClass implements ITechReviewActivity
             Toast.makeText(this, getResources().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
         }
 
+
     }
 
     public void init() {

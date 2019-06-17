@@ -118,7 +118,7 @@ public class SubmitProblemFragmentt extends Fragment implements View.OnClickList
                     // Logic to handle location object
                     currentLatitude = location.getLatitude();
                     currentLongitude = location.getLongitude();
-                    Toast.makeText(context, currentLatitude + "WORKS" + currentLongitude, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, currentLatitude + "WORKS" + currentLongitude, Toast.LENGTH_SHORT).show();
                 }
             }
         });
